@@ -31,6 +31,7 @@ try:
 except:
     def LinearSegmentedColormap(colorlist,name): pass
     def register_cmap(name,cmap): pass
+    LinearSegmentedColormap.from_list=lambda n,c,N: None
 
 def rgb_to_hex(r,g,b):
     return '#%02x%02x%02x' % (r,g,b) 
