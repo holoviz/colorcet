@@ -2,7 +2,7 @@
 
 - Ensure all tests pass.
 
-- Update version number in `conda.recipe/meta.yaml`, `datashader/__init__.py`,
+- Update version number in `conda.recipe/meta.yaml`, `cetcolors/__init__.py`,
   and `setup.py`. Commit.
 
 - Tag commit and push to github
@@ -24,8 +24,8 @@ CONDA_DIR=~/anaconda/
 # Platform code. For me it's `osx-64`
 PLATFORM=osx-64
 
-# Version number of datashader being released (e.g. 0.2.0)
-VERSION=0.2.0
+# Version number of cetcolors being released (e.g. 0.9.0)
+VERSION=0.9.0
 ```
 
 This assumes `conda`, `conda-build`, and `anaconda-client` are installed (if
@@ -33,7 +33,9 @@ not, install `conda`, then use `conda` to install the others). From inside the
 toplevel directory:
 
 ```bash
-conda build conda.recipe/ --python 2.7 --python 3.4 --python 3.5
+conda build conda.recipe/ --python 2.7
+conda build conda.recipe/ --python 3.4
+conda build conda.recipe/ --python 3.5
 ```
 
 Next, `cd` into the folder where the builds end up.
@@ -46,9 +48,9 @@ Use `conda convert` to convert over the missing platforms (skipping the one for
 the platform you're currently on):
 
 ```bash
-conda convert --platform osx-64 datashader-$VERSION*.tar.bz2 -o ../
-conda convert --platform linux-64 datashader-$VERSION*.tar.bz2 -o ../
-conda convert --platform win-64 datashader-$VERSION*.tar.bz2 -o ../
+conda convert --platform   osx-64 cetcolors-$VERSION*.tar.bz2 -o ../
+conda convert --platform linux-64 cetcolors-$VERSION*.tar.bz2 -o ../
+conda convert --platform   win-64 cetcolors-$VERSION*.tar.bz2 -o ../
 ```
 
 Use `anaconda upload` to upload the build to the `bokeh` channel. This requires
@@ -57,7 +59,7 @@ the bokeh channel.
 
 ```bash
 anaconda login
-anaconda upload $CONDA_DIR/conda-bld/*/datashader-$VERSION*.tar.bz2 -u bokeh
+anaconda upload $CONDA_DIR/conda-bld/*/cetcolors-$VERSION*.tar.bz2 -u bokeh
 ```
 
 - Write the release notes:

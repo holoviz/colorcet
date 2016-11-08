@@ -1,1 +1,1 @@
-import datashader; datashader.test()
+import cetcolors; cetcolors.fire[255] == '#ffffff'
