@@ -9,7 +9,7 @@
 
 ```bash
 git tag -a x.x.x -m 'Version x.x.x'
-git push upstream master --tags
+git push --tags
 ```
 
 - Build conda packages
