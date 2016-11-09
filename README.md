@@ -16,7 +16,7 @@ corresponding colors, or vice versa.  For instance, the matplotlib
 colors change imperceptively, such as the yellow region in "hot" and
 the cyan/green region in "jet":
 
-![hot/jet](doc/images/hot_jet.png)
+![hot/jet](docs/images/hot_jet.png)
 
 When colormaps are used for visualizing scientific datasets, these
 perceptual nonlinearities can make interpretation of this data very
@@ -30,7 +30,7 @@ arXiv](https://arxiv.org/abs/1509.03700).  For instance, the
 perceptually uniform versions of the above colormaps are called "fire"
 and "rainbow" in this package:
 
-![fire/rainbow](doc/images/fire_rainbow.png)
+![fire/rainbow](docs/images/fire_rainbow.png)
 
 Peter provides [versions of 50 colormaps for a variety of different
 plotting programs](http://peterkovesi.com/projects/colourmaps), and
