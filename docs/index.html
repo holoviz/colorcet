@@ -11751,11 +11751,11 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="CET-perceptually-uniform-colormaps">CET perceptually uniform colormaps<a class="anchor-link" href="#CET-perceptually-uniform-colormaps">&#182;</a></h1><p>Peter Kovesi at the Center for Exploration Targeting created a very useful set of <a href="https://arxiv.org/abs/1509.03700">perceptually uniform colormaps</a>, many of which can replace the highly non-uniform colormaps provided with Python plotting programs.  Here we will show how to use them via the new <a href="https://github.com/bokeh/colorcet">colorcet</a> python package, listing all the ones available and allowing you to evaluate how perceptually uniform they are for you, your particular monitor, etc. 
-We will plot them using <a href="http://matplotlib.org">matplotlib</a> via <a href="http://holoviews.org">holoviews</a>, but identical <a href="http://bokeh.pydata.org">bokeh</a> palettes are also provided, and both Bokeh palettes and Matplotlib colormaps are usable in <a href="https://github.com/bokeh/datashader">datashader</a>.  Thus these colormaps can be used in any of those Python packages, as well as any other package that accepts a Python list of normalized RGB tuples or hex colors.  See 
+<h1 id="colorcet:-Perceptually-uniform-colormaps-from-CET"><a href="https://github.com/bokeh/colorcet"><code>colorcet</code></a>: Perceptually uniform colormaps from CET<a class="anchor-link" href="#colorcet:-Perceptually-uniform-colormaps-from-CET">&#182;</a></h1><p>Peter Kovesi at the Center for Exploration Targeting created a very useful set of <a href="https://arxiv.org/abs/1509.03700">perceptually uniform colormaps</a>, many of which can replace the highly non-uniform colormaps provided with Python plotting programs.  Here we will show how to use them via the new <a href="https://github.com/bokeh/colorcet">colorcet</a> python package, listing all the ones available and allowing you to evaluate how perceptually uniform they are for you, your particular monitor, etc. Download and installation instructions are at the <a href="https://github.com/bokeh/colorcet">github site</a>. Note that this web page is also a <a href="https://github.com/bokeh/colorcet/blob/master/docs/index.ipynb">notebook</a>, if you want to recreate the results yourself.</p>
+<p>We will plot them using <a href="http://matplotlib.org">matplotlib</a> via <a href="http://holoviews.org">holoviews</a>, but identical <a href="http://bokeh.pydata.org">bokeh</a> palettes are also provided, and both Bokeh palettes and Matplotlib colormaps are usable in <a href="https://github.com/bokeh/datashader">datashader</a>.  Thus these colormaps can be used in any of those Python packages, as well as any other package that accepts a Python list of normalized RGB tuples or hex colors.  See 
 <a href="http://peterkovesi.com/projects/colourmaps/">Peter's site</a> to download versions for other non-Python packages.</p>
 <p>We first make some utilities for sorting and visualizing colormaps:</p>
-
+<style>div.prompt {display:none}</style>
 </div>
 </div>
 </div>
@@ -11770,9 +11770,6 @@ We will plot them using <a href="http://matplotlib.org">matplotlib</a> via <a hr
 
 <span class="n">hv</span><span class="o">.</span><span class="n">notebook_extension</span><span class="p">()</span>
 
-<span class="kn">import</span> <span class="nn">param</span>
-<span class="k">with</span> <span class="n">param</span><span class="o">.</span><span class="n">logging_level</span><span class="p">(</span><span class="s1">&#39;CRITICAL&#39;</span><span class="p">):</span>
-    <span class="n">hv</span><span class="o">.</span><span class="n">plotting</span><span class="o">.</span><span class="n">mpl</span><span class="o">.</span><span class="n">LayoutPlot</span><span class="o">.</span><span class="n">v17_layout_format</span> <span class="o">=</span> <span class="bp">True</span>
 </pre></div>
 
 </div>
@@ -12357,7 +12354,7 @@ HoloViewsJS successfully loaded in this cell.
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Named-colormaps">Named colormaps<a class="anchor-link" href="#Named-colormaps">&#182;</a></h2><p>The full list of colormaps included will be shown below, but a useful subset of these maps that cover the various types have been given more convenient names, and we will focus on those first.</p>
-<p><strong>For Matplotlib users</strong>: After importing <code>colorcet</code>, all the colormaps shown here will be available by string name prefixed with <code>cet_</code>, along with reversed versions suffixed with <code>_r</code> (not shown below).  For instance, the <code>colorcet</code> version of "hot" is available as "cet_hot" and "cet_hot_r" (as well as the more verbose names "cet_linear_kryw_0_100_c71" and "cet_linear_kryw_0_100_c71_r" as described below).</p>
+<p><strong>For Matplotlib users</strong>: After importing <code>colorcet</code>, all the colormaps shown here will be available by string name prefixed with <code>cet_</code>, along with reversed versions suffixed with <code>_r</code> (not shown below).  For instance, "fire" is available as "cet_fire" and "cet_fire_r" (as well as the more verbose names "cet_linear_kryw_0_100_c71" and "cet_linear_kryw_0_100_c71_r" as described below).</p>
 <h3 id="Linear-(sequential)-colormaps,-for-plotting-magnitudes:">Linear (sequential) colormaps, for plotting magnitudes:<a class="anchor-link" href="#Linear-(sequential)-colormaps,-for-plotting-magnitudes:">&#182;</a></h3>
 </div>
 </div>
