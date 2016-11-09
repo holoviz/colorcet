@@ -36,7 +36,7 @@ Peter provides [versions of 50 colormaps for a variety of different
 plotting programs](http://peterkovesi.com/projects/colourmaps), and
 this package provides those colormaps ready to use from within Python
 programs.  The colormaps are all illustrated in an [example
-notebook](doc/index.html) that describes the different types available
+notebook](https://bokeh.github.io/colorcet) that describes the different types available
 and allows you to test how perceptually uniform they are on your
 particular display device.
 
