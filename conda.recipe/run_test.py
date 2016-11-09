@@ -1,1 +1,1 @@
-import cetcolors; cetcolors.fire[255] == '#ffffff'
+import colorcet; colorcet.fire[255] == '#ffffff'

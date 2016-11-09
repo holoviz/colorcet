@@ -8,7 +8,7 @@ http://peterkovesi.com/projects/colourmaps/CETperceptual_csv_0_1.zip
 import os, os.path, csv
 
 path = 'CETperceptual_csv_0_1'
-output_file = '../cetcolors/__init__.py'
+output_file = '../colorcet/__init__.py'
 header = '''\
 """
 Python versions of the 256-color colormaps provided in

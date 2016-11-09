@@ -1,7 +1,7 @@
-cetcolors
----------
+colorcet
+--------
 
-[cetcolors](https://github.com/bokeh/cetcolors) is a collection of
+[colorcet](https://github.com/bokeh/colorcet) is a collection of
 perceptually uniform colormaps for use with Python plotting programs like
 [bokeh](http://bokeh.pydata.org),
 [matplotlib](http://matplotlib.org),
@@ -43,25 +43,25 @@ particular display device.
 
 ## Installation
 
-cetcolors is available on most platforms using the `conda` package manager,
+colorcet is available on most platforms using the `conda` package manager,
 from the `bokeh` channel:
 
 ```
-conda install -c bokeh cetcolors
+conda install -c bokeh colorcet
 ```
 
 or by using pip:
 
 ```
-pip install cetcolors
+pip install colorcet
 ```
 
 Alternatively, you can manually install from the repository if you
 wish to be able to modify the code over time:
 
 ```
-git clone https://github.com/bokeh/cetcolors.git
-cd cetcolors
+git clone https://github.com/bokeh/colorcet.git
+cd colorcet
 python setup.py develop
 ```
 

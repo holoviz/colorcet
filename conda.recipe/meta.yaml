@@ -1,5 +1,5 @@
 package:
-  name: cetcolors
+  name: colorcet
   version: 0.9.0
 
 requirements:
@@ -14,8 +14,8 @@ test:
   requires:
     - pytest >=2.8.5
   imports:
-    - cetcolors
+    - colorcet
 
 about:
-  home: https://github.com/bokeh/cetcolors
+  home: https://github.com/bokeh/colorcet
   license: CC-BY
