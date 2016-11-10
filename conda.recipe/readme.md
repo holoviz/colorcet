@@ -62,6 +62,13 @@ anaconda login
 anaconda upload $CONDA_DIR/conda-bld/*/colorcet-$VERSION*.tar.bz2 -u bokeh
 ```
 
+- Build and release for pip
+
+(From http://peterdowns.com/posts/first-time-with-pypi.html)
+
+python setup.py sdist upload -r pypi
+
+
 - Write the release notes:
 
  1. Run `git log` to get a listing of all the changes
