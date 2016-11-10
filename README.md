@@ -13,7 +13,7 @@ perceptually nonuniform, which means that small changes in data values
 result in large changes in the perceptual appearance of the
 corresponding colors, or vice versa.  For instance, the matplotlib
 "hot" and "jet" colormaps have long stretches where the apparent
-colors change imperceptively, such as the yellow region in "hot" and
+colors change imperceptibly, such as the yellow region in "hot" and
 the cyan/green region in "jet":
 
 ![hot/jet](docs/images/hot_jet.png)
@@ -32,13 +32,29 @@ and "rainbow" in this package:
 
 ![fire/rainbow](docs/images/fire_rainbow.png)
 
-Peter provides [versions of 50 colormaps for a variety of different
-plotting programs](http://peterkovesi.com/projects/colourmaps), and
-this package provides those colormaps ready to use from within Python
-programs.  The colormaps are all illustrated in an [example
-notebook](https://bokeh.github.io/colorcet) that describes the different types available
-and allows you to test how perceptually uniform they are on your
-particular display device.
+You should be able to see the differences right away, revealing more
+detail, more faithfully than if you use non-uniform maps.  For
+instance, here is the same population-density dataset (from
+[datashader](https://github.com/bokeh/datashader) rendered with the
+original matplotlib "hot" colormap:
+
+![census_hot](docs/images/census_hot.png)
+
+and with colorcet's "fire" colormap:
+
+![census_fire](docs/images/census_fire.png)
+
+It should be obvious that the "hot" version completely washes out
+detail at the high end, as if the image is overexposed, while "fire"
+makes detail visible throughout the data range.
+
+Peter provides [versions of 50 perceptually uniform colormaps for a
+variety of different plotting programs](http://peterkovesi.com/projects/colourmaps), 
+and this package provides those colormaps ready to use from within Python
+programs.  The colormaps are all illustrated in an 
+[example notebook](https://bokeh.github.io/colorcet) that describes the 
+different types available and allows you to test how perceptually
+uniform they are on your particular display device.
 
 
 ## Installation
