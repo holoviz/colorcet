@@ -72,3 +72,13 @@ in [Peter Kovesi's 2015 arXiv paper](https://arxiv.org/pdf/1509.03700v1.pdf),
 and at the [matplotlib site](https://bids.github.io/colormap/),
 the [cmocean site](http://matplotlib.org/cmocean/), and a 
 [1996 paper from IBM](http://www.research.ibm.com/people/l/lloydt/color/color.HTM).
+
+# Samples
+
+All the colormaps that have short, memorable names (which are probably
+the most useful ones) are visible here:
+
+<img src="docs/images/named.png" width="800">
+
+But the complete set of 50+ is shown in the
+[example notebook](https://bokeh.github.io/colorcet).
