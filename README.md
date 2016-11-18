@@ -62,7 +62,7 @@ uniform they are on your particular display device.
 
 Note that Peter's methods differ from those used in Matplotlib's
 uniform colormaps (as implemented in their [viscm
-tool](https://github.com/matplotlib/viscm), which (apart from using a
+tool](https://github.com/matplotlib/viscm)), which (apart from using a
 different color model) are designed to satisfy different constraints.
 For instance, mpl's colormaps are always perceptually uniform in their
 monochrome representation, not just their original color
