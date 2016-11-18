@@ -75,7 +75,7 @@ In any case, this package focuses on making a set of useful colormaps
 readily available from within Python programs, rather than providing
 tools for building novel colormaps, for which see the 
 [viscm tool](https://github.com/matplotlib/viscm) and
-[Peter's original site]](http://peterkovesi.com/projects/colourmaps). 
+[Peter's original site](http://peterkovesi.com/projects/colourmaps). 
 
 
 ## Installation
