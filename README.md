@@ -37,7 +37,7 @@ and "rainbow" in this package:
 You should be able to see the differences right away, revealing more
 detail, more faithfully than if you use non-uniform maps.  For
 instance, here is the same population-density dataset (from
-[datashader](https://github.com/bokeh/datashader) rendered with the
+[datashader](https://github.com/bokeh/datashader)) rendered with the
 original matplotlib "hot" colormap:
 
 ![census_hot](docs/images/census_hot.png)
