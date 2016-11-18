@@ -48,7 +48,9 @@ and with colorcet's "fire" colormap:
 
 It should be obvious that the "hot" version completely washes out
 detail at the high end, as if the image is overexposed, while "fire"
-makes detail visible throughout the data range.
+makes detail visible throughout the data range.  Yet the qualitative
+effect is still roughly similar, allowing "fire" to be used in nearly
+situation the original "hot" was useful.
 
 Peter provides [versions of 50 perceptually uniform colormaps for a
 variety of different plotting programs](http://peterkovesi.com/projects/colourmaps), 
