@@ -8,15 +8,17 @@ perceptually uniform colormaps for use with Python plotting programs like
 [holoviews](http://holoviews.org), and
 [datashader](https://github.com/bokeh/datashader).
 
-Most colormaps provided for use in Python programs are highly
-perceptually nonuniform, which means that small changes in data values
+Apart from the four [uniform colormaps now provided with
+matplotlib](http://matplotlib.org/users/colormaps.html), most
+colormaps shipping with Python plotting Python programs are highly
+perceptually nonuniform.  That is, small changes in data values
 result in large changes in the perceptual appearance of the
-corresponding colors, or vice versa.  For instance, the matplotlib
+corresponding colors, or vice versa.  For instance, the popular matplotlib
 "hot" and "jet" colormaps have long stretches where the apparent
 colors change imperceptibly, such as the yellow region in "hot" and
 the cyan/green region in "jet":
 
-![hot/jet](docs/images/hot_jet.png)
+![hot/jet](docs/images/hot_jet.png)     
 
 When colormaps are used for visualizing scientific datasets, these
 perceptual nonlinearities can make interpretation of this data very
@@ -56,6 +58,23 @@ programs.  The colormaps are all illustrated in an
 different types available and allows you to test how perceptually
 uniform they are on your particular display device.
 
+Note that Peter's methods differ from those used in Matplotlib's
+uniform colormaps (as implemented in their [viscm
+tool](https://github.com/matplotlib/viscm), which (apart from using a
+different color model) are designed to satisfy different constraints.
+For instance, mpl's colormaps are always perceptually uniform in their
+monochrome representation, not just their original color
+representation, which is not necessarily true of these colormaps.  On
+the other hand, colormaps like "fire" above, i.e., a usable
+perceptually equivalent of matplotlib/matlab's "hot", are not
+obtainable using viscm in any straightforward way, making it more
+difficult to create the full range of useful colormaps with that tool.
+In any case, this package focuses on making a set of useful colormaps
+readily available from within Python programs, rather than providing
+tools for building novel colormaps, for which see the 
+[viscm tool](https://github.com/matplotlib/viscm) and
+[Peter's original site]](http://peterkovesi.com/projects/colourmaps). 
+
 
 ## Installation
 
@@ -83,15 +102,23 @@ python setup.py develop
 
 ## Learning more
 
-You see more perceptually uniform colormaps and learn more about them
-in [Peter Kovesi's 2015 arXiv paper](https://arxiv.org/pdf/1509.03700v1.pdf),
-and at the [matplotlib site](https://bids.github.io/colormap/),
-the [cmocean site](http://matplotlib.org/cmocean/), and a 
-[1996 paper from IBM](http://www.research.ibm.com/people/l/lloydt/color/color.HTM).
+You can see all the details about the methods used to create these
+colormaps in [Peter Kovesi's 2015 arXiv
+paper](https://arxiv.org/pdf/1509.03700v1.pdf).  Other useful
+background is available in a [1996 paper from
+IBM](http://www.research.ibm.com/people/l/lloydt/color/color.HTM).
+
+The matplotlib project also has a number of relevant resources,
+including an excellent 
+[2015 SciPy talk](https://www.youtube.com/watch?v=xAoljeRJ3lU), the
+[viscm tool for creating maps like the four in mpl](https://github.com/matplotlib/viscm), the
+[cmocean site](http://matplotlib.org/cmocean/) collecting a set of maps created by viscm, 
+and the [discussion of how the mpl maps were created](https://bids.github.io/colormap/).
+
 
 # Samples
 
-All the colormaps that have short, memorable names (which are probably
+All the colorcet colormaps that have short, memorable names (which are probably
 the most useful ones) are visible here:
 
 <img src="docs/images/named.png" width="800">
