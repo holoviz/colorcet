@@ -22,7 +22,7 @@ inspired by Matplotlib colormaps of the same name and others
 based on the qualitative appearance.
 """
 
-__version__ = '0.9.0'
+__version__ = '0.9.1'
 
 from collections import OrderedDict
 try:
