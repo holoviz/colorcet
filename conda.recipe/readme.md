@@ -3,7 +3,7 @@
 - Ensure all tests pass.
 
 - Update version number in `conda.recipe/meta.yaml`, `colorcet/__init__.py`,
-  and `setup.py`. Commit.
+  `setup.py`, and this file (below). Commit.
 
 - Tag commit and push to github
 
@@ -24,8 +24,8 @@ CONDA_DIR=~/anaconda/
 # Platform code. For me it's `osx-64`
 PLATFORM=osx-64
 
-# Version number of colorcet being released (e.g. 0.9.0)
-VERSION=0.9.0
+# Version number of colorcet being released
+VERSION=0.9.1
 ```
 
 This assumes `conda`, `conda-build`, and `anaconda-client` are installed (if
@@ -44,8 +44,8 @@ Next, `cd` into the folder where the builds end up.
 cd $CONDA_DIR/conda-bld/$PLATFORM
 ```
 
-Use `conda convert` to convert over the missing platforms (skipping the one for
-the platform you're currently on):
+Use `conda convert` to convert over the missing platforms (where you
+can skip the one for the platform you're currently using):
 
 ```bash
 conda convert --platform   osx-64 colorcet-$VERSION*.tar.bz2 -o ../
@@ -66,7 +66,10 @@ anaconda upload $CONDA_DIR/conda-bld/*/colorcet-$VERSION*.tar.bz2 -u bokeh
 
 (From http://peterdowns.com/posts/first-time-with-pypi.html)
 
+```
+cd ~/colorcet
 python setup.py sdist upload -r pypi
+```
 
 
 - Write the release notes:

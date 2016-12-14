@@ -1,7 +1,7 @@
 from setuptools import setup
 
 setup(name='colorcet',
-      version='0.9.0',
+      version='0.9.1',
       description='Collection of perceptually uniform colormaps',
       url='http://github.com/bokeh/colorcet',
       maintainer='James A. Bednar',
