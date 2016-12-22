@@ -11770,6 +11770,9 @@ div#notebook {
 
 <span class="n">hv</span><span class="o">.</span><span class="n">notebook_extension</span><span class="p">()</span>
 
+<span class="kn">import</span> <span class="nn">param</span>
+<span class="k">with</span> <span class="n">param</span><span class="o">.</span><span class="n">logging_level</span><span class="p">(</span><span class="s1">&#39;CRITICAL&#39;</span><span class="p">):</span>
+    <span class="n">hv</span><span class="o">.</span><span class="n">plotting</span><span class="o">.</span><span class="n">mpl</span><span class="o">.</span><span class="n">LayoutPlot</span><span class="o">.</span><span class="n">v17_layout_format</span> <span class="o">=</span> <span class="bp">True</span>
 </pre></div>
 
 </div>
@@ -12337,7 +12340,7 @@ HoloViewsJS successfully loaded in this cell.
 <span class="k">def</span> <span class="nf">colormaps</span><span class="p">(</span><span class="n">named_cms</span><span class="p">,</span><span class="n">cols</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span><span class="n">array</span><span class="o">=</span><span class="n">xs</span><span class="p">):</span>
     <span class="n">images</span> <span class="o">=</span> <span class="p">[</span><span class="n">hv</span><span class="o">.</span><span class="n">Image</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="n">group</span><span class="o">=</span><span class="n">name</span><span class="p">)(</span><span class="n">style</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">cmap</span><span class="o">=</span><span class="n">cm</span><span class="p">))</span> 
               <span class="k">for</span> <span class="n">name</span><span class="p">,</span><span class="n">cm</span> <span class="ow">in</span> <span class="n">named_cms</span><span class="p">]</span>
-    <span class="k">return</span> <span class="n">hv</span><span class="o">.</span><span class="n">Layout</span><span class="p">(</span><span class="n">lay_out_in_columns</span><span class="p">(</span><span class="n">images</span><span class="p">,</span><span class="n">cols</span><span class="p">,</span><span class="n">hv</span><span class="o">.</span><span class="n">Empty</span><span class="p">()))</span><span class="o">.</span><span class="n">display</span><span class="p">(</span><span class="s1">&#39;all&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">cols</span><span class="p">(</span><span class="n">cols</span>
+    <span class="k">return</span> <span class="n">hv</span><span class="o">.</span><span class="n">Layout</span><span class="p">(</span><span class="n">lay_out_in_columns</span><span class="p">(</span><span class="n">images</span><span class="p">,</span><span class="n">cols</span><span class="p">,</span><span class="n">hv</span><span class="o">.</span><span class="n">Empty</span><span class="p">()))</span><span class="o">.</span><span class="n">display</span><span class="p">(</span><span class="s1">&#39;all&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">cols</span><span class="p">(</span><span class="n">cols</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -12350,8 +12353,24 @@ HoloViewsJS successfully loaded in this cell.
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Accessing-the-colormaps">Accessing the colormaps<a class="anchor-link" href="#Accessing-the-colormaps">&#182;</a></h2><p>After importing <code>colorcet</code> as <code>cc</code>, all the colormaps shown in this notebook will be available for use in different forms, with hopefully at least one such form convenient for any particular application.  There are two different basic versions for each colormap, each of which is fundamentally a list of 256 distinct colors:</p>
+<ol>
+<li>A Bokeh-style palette, i.e., a Python list of RGB colors as hex strings, like <code>['#000000', ..., '#ffffff']</code></li>
+<li>If matplotlib is installed and importable, a Matplotlib <code>LinearSegmentedColormap</code> using normalized magnitudes, like <code>LinearSegmentedColormap.from_list("fire",[ [0.0,0.0,0.0], ..., [1.0,1.0,1.0] ], 256)</code></li>
+</ol>
+<p>The Bokeh-compatible palettes are provided as attributes in the <code>colorcet</code> namespace, with long names prefixed with <code>b_</code> or a short name (if any) with no prefix.  E.g. <code>linear_kryw_0_100_c71</code> can be accessed as <code>cc.b_linear_kryw_0_100_c71</code> or by the short name <code>cc.fire</code>, which both return the same Bokeh palette.  These names should tab complete once <code>cc</code> has been imported.  Because Bokeh palettes are just Python lists, you can always reverse them using normal Python syntax, e.g. <code>list(reversed(cc.fire))</code>.  If you want to access the palettes by string name, they are also collected into a dictionary named <code>palette</code>, so you can use <code>cc.palette["linear_kryw_0_100_c71"]</code> or  <code>cc.palette["fire"]</code> instead if that is more convenient.</p>
+<p>The Matplotlib colormaps are also provided as tab-completable attributes, but consistently with a prefix <code>m_</code>, e.g. <code>cc.m_linear_kryw_0_100_c71</code> or <code>cc.m_fire</code>.  Already reversed versions are also available, as <code>cc.m_linear_kryw_0_100_c71_r</code> or <code>cc.m_fire_r</code>.  The same colormaps are also registered with matplotlib's string-based dictionary with the prefix <code>cet_</code>, making them available by name within various matplotlib functions (e.g. <code>cet_linear_kryw_0_100_c71</code>, <code>cet_linear_kryw_0_100_c71_r</code>, <code>cet_fire</code>, or  <code>cet_fire_r</code>).  Finally, if you want to access the colormaps by string name without using Matplotlib's registry, they are also stored in the <code>cc.cm</code> dictionary, e.g. <code>cc.cm["linear_kryw_0_100_c71"]</code>, <code>cc.cm["linear_kryw_0_100_c71_r"]</code>, <code>cc.cm["fire"]</code>, or <code>cc.cm["fire_r"]</code>.</p>
+<p>In each case, the names used are the shortest ones that are expected to be unique in that context, and in practice you are only likely to need one of these forms for any particular application.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Named-colormaps">Named colormaps<a class="anchor-link" href="#Named-colormaps">&#182;</a></h2><p>The full list of colormaps included will be shown below, but a useful subset of these maps that cover the various types have been given more convenient names, and we will focus on those first.</p>
-<p><strong>For Matplotlib users</strong>: After importing <code>colorcet</code>, all the colormaps shown here will be available by string name prefixed with <code>cet_</code>, along with reversed versions suffixed with <code>_r</code> (not shown below).  For instance, "fire" is available as "cet_fire" and "cet_fire_r" (as well as the more verbose names "cet_linear_kryw_0_100_c71" and "cet_linear_kryw_0_100_c71_r" as described below).</p>
 <h3 id="Linear-(sequential)-colormaps,-for-plotting-magnitudes:">Linear (sequential) colormaps, for plotting magnitudes:<a class="anchor-link" href="#Linear-(sequential)-colormaps,-for-plotting-magnitudes:">&#182;</a></h3>
 </div>
 </div>
