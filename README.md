@@ -25,7 +25,10 @@ perceptual nonlinearities can make interpretation of this data very
 difficult, because false boundaries appear in the data, and genuine
 boundaries and changes can be obscured.
 
-To combat these issues, Peter Kovesi at the Center for Exploration
+Matplotlib now offers a [tool to construct uniform
+colormaps](https://github.com/matplotlib/viscm), but it doesn't yet
+allow construction of colormaps like those above.  To address this
+need, Peter Kovesi at the Center for Exploration
 Targeting created a set of colormaps that are sampled uniformly in a
 perceptual color space, using methods he describes in a [paper on
 arXiv](https://arxiv.org/abs/1509.03700).  For instance, the
@@ -36,13 +39,13 @@ and "rainbow" in this package:
 
 You should be able to see the differences right away, revealing more
 detail, more faithfully than if you use non-uniform maps.  For
-instance, here is the same population-density dataset (from
+instance, here is a population-density dataset (from
 [datashader](https://github.com/bokeh/datashader)) rendered with the
 original matplotlib "hot" colormap:
 
 ![census_hot](docs/images/census_hot.png)
 
-and with colorcet's "fire" colormap:
+and the same dataset rendered with colorcet's "fire" colormap:
 
 ![census_fire](docs/images/census_fire.png)
 
@@ -60,17 +63,17 @@ programs.  The colormaps are all illustrated in an
 different types available and allows you to test how perceptually
 uniform they are on your particular display device.
 
-Note that Peter's methods differ from those used in Matplotlib's
+Peter's methods differ from those used in Matplotlib's
 uniform colormaps (as implemented in their [viscm
 tool](https://github.com/matplotlib/viscm)), which (apart from using a
 different color model) are designed to satisfy different constraints.
 For instance, mpl's colormaps are always perceptually uniform in their
 monochrome representation, not just their original color
-representation, which is not necessarily true of these colormaps.  On
-the other hand, colormaps like "fire" above, i.e., a usable
-perceptually equivalent of matplotlib/matlab's "hot", are not
-obtainable using viscm in any straightforward way, making it more
-difficult to create the full range of useful colormaps with that tool.
+representation, and are safe for colorblind viewers, neither of which
+are necessarily true of these colormaps.  On the other hand, colormaps
+like "fire" above, i.e., a usable perceptually equivalent of
+matplotlib/matlab's "hot", are not obtainable using viscm in any
+straightforward way, limiting the range of useful colormaps that can be created.
 In any case, this package focuses on making a set of useful colormaps
 readily available from within Python programs, rather than providing
 tools for building novel colormaps, for which see the 
