@@ -39,10 +39,10 @@ from collections import OrderedDict
 
 class AttrODict(OrderedDict):
     """Ordered dictionary with attribute access (e.g. for tab completion)"""
+    def __dir__(self): return self.keys()
     def __getattr__(self, name): return self[name]
     def __delattr__(self, name): del self[name]
     def __setattr__(self, name, value): self[name] = value
-
 
 try:
     from matplotlib.colors import LinearSegmentedColormap
@@ -13814,3 +13814,6 @@ m_rainbow_bgyrm_35_85_c71 = mpl_cm('rainbow_bgyrm_35_85_c71',rainbow_bgyrm_35_85
 m_rainbow_bgyrm_35_85_c71_r = mpl_cm('rainbow_bgyrm_35_85_c71_r',list(reversed(rainbow_bgyrm_35_85_c71)))
 
 
+
+palette_n = AttrODict(sorted(palette_n.items()))
+cm_n = AttrODict(sorted(cm_n.items()))
