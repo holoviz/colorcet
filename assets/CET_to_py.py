@@ -53,7 +53,6 @@ class AttrODict(OrderedDict):
     def __delattr__(self, name): del self[name]
     def __setattr__(self, name, value): self[name] = value
 
-
 try:
     from matplotlib.colors import LinearSegmentedColormap
     from matplotlib.cm import register_cmap
@@ -79,6 +78,11 @@ cm = AttrODict()
 palette_n = AttrODict()
 cm_n = AttrODict()
 '''
+
+footer = """
+palette_n = AttrODict(sorted(palette_n.items()))
+cm_n = AttrODict(sorted(cm_n.items()))
+"""
 
 # Here #mpl indicates a colormap name taken from Matplotlib
 aliases = dict(
@@ -134,3 +138,4 @@ with open(output_file, "w") as output:
                 output.write("register_cmap('cet_{0}',m_{1})\n".format(alias,base))
                 output.write("register_cmap('cet_{0}_r',m_{1}_r)\n".format(alias,base))
             output.write("\n\n")
+    output.write(footer)     
