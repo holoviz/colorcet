@@ -29,7 +29,7 @@ shorter names tend to be the most useful subset, and for
 cases like automatic population of a GUI widget these
 colormaps are are provided as a separate subset:
 
-  palette['name'] or palette_n.name
+  palette_n['name'] or palette_n.name
   cm_n['name'] or cm_n.name
 """
 
