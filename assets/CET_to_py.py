@@ -43,7 +43,7 @@ colormaps are provided as a separate subset:
   cm_n['name'] or cm_n.name
 """
 
-__version__ = '0.9.1'
+__version__ = '1.0.0'
 
 from collections import OrderedDict
 

@@ -25,7 +25,7 @@ CONDA_DIR=~/anaconda/
 PLATFORM=osx-64
 
 # Version number of colorcet being released
-VERSION=0.9.1
+VERSION=1.0.0
 ```
 
 This assumes `conda`, `conda-build`, and `anaconda-client` are installed (if

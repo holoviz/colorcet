@@ -1,6 +1,6 @@
 package:
   name: colorcet
-  version: 0.9.1
+  version: 1.0.0
 
 requirements:
   build:
