@@ -2,8 +2,6 @@
 Generate Python versions for each of the colormaps provided in
 http://peterkovesi.com/projects/colourmaps/CETperceptual_csv_0_1.zip
 """
-# The linear_kryw_mycarta map is from
-# https://mycarta.wordpress.com/2012/10/14/the-rainbow-is-deadlong-live-the-rainbow-part-4-cie-lab-heated-body/
 
 import os, os.path, csv
 
@@ -22,6 +20,11 @@ Matplotlib colormap, either by string name:
 
 or as Python attributes:
 
+  palette.name
+  cm.name
+
+or as individually importable Python attributes:
+
   m_name
   b_name
 
@@ -31,12 +34,26 @@ All colormaps are named using Peter Kovesi\'s naming scheme:
 
 but some have shorter, more convenient aliases, some of which are 
 inspired by Matplotlib colormaps of the same name and others
-based on the qualitative appearance.
+based on the qualitative appearance.  The colormaps with 
+shorter names tend to be the most useful subset, and for
+cases like automatic population of a GUI widget these
+colormaps are provided as a separate subset:
+
+  palette_n['name'] or palette_n.name
+  cm_n['name'] or cm_n.name
 """
 
-__version__ = '0.9.0'
+__version__ = '0.9.1'
 
 from collections import OrderedDict
+
+class AttrODict(OrderedDict):
+    """Ordered dictionary with attribute access (e.g. for tab completion)"""
+    def __dir__(self): return self.keys()
+    def __getattr__(self, name): return self[name]
+    def __delattr__(self, name): del self[name]
+    def __setattr__(self, name, value): self[name] = value
+
 try:
     from matplotlib.colors import LinearSegmentedColormap
     from matplotlib.cm import register_cmap
@@ -57,9 +74,16 @@ def mpl_cm(name,colorlist):
     register_cmap("cet_"+name, cmap=cm[name])
     return cm[name]
 
-palette = OrderedDict()
-cm = OrderedDict()
+palette = AttrODict()
+cm = AttrODict()
+palette_n = AttrODict()
+cm_n = AttrODict()
 '''
+
+footer = """
+palette_n = AttrODict(sorted(palette_n.items()))
+cm_n = AttrODict(sorted(cm_n.items()))
+"""
 
 # Here #mpl indicates a colormap name taken from Matplotlib
 aliases = dict(
@@ -75,11 +99,11 @@ aliases = dict(
   linear_blue_5_95_c73                   = 'kbc',
   linear_blue_95_50_c20                  = 'blues',    #mpl
   linear_bmw_5_95_c89                    = 'bmw',
-  linear_bmy_10_95_c78                   = 'inferno',  #mpl
+  linear_bmy_10_95_c78                   = 'bmy',
   linear_green_5_95_c69                  = 'kgy',
   linear_grey_0_100_c0                   = 'gray',     #mpl
   linear_grey_10_95_c0                   = 'dimgray',
-  linear_kryw_0_100_c71                  = 'fire',      #mpl
+  linear_kryw_0_100_c71                  = 'fire', 
   linear_ternary_blue_0_44_c57           = 'kb',
   linear_ternary_green_0_46_c42          = 'kg',
   linear_ternary_red_0_50_c52            = 'kr',
@@ -93,7 +117,7 @@ with open(output_file, "w") as output:
         if filename.endswith(".csv"):
             base = filename[:-4].replace("-","_").replace("_n256","")
             output.write("\n\n"+base+" = [\\\n")
-            with open(os.path.join(path,filename),'rb') as csvfile:
+            with open(os.path.join(path,filename),'r') as csvfile:
                 reader = csv.reader(csvfile)
                 for row in reader:
                     output.write("["+', '.join(row)+"],\n")
@@ -107,8 +131,12 @@ with open(output_file, "w") as output:
                 output.write("m_{0} = m_{1}\n".format(alias,base))
                 output.write("m_{0}_r = m_{1}_r\n".format(alias,base))
                 output.write("palette['{0}'] = b_{1}\n".format(alias,base))
+                output.write("palette_n['{0}'] = b_{1}\n".format(alias,base))
                 output.write("cm['{0}'] = m_{1}\n".format(alias,base))
                 output.write("cm['{0}_r'] = m_{1}_r\n".format(alias,base))
+                output.write("cm_n['{0}'] = mpl_cm('{0}',{1})\n".format(alias,base))
+                output.write("cm_n['{0}_r'] = mpl_cm('{0}_r',list(reversed({1})))\n".format(alias,base))
                 output.write("register_cmap('cet_{0}',m_{1})\n".format(alias,base))
                 output.write("register_cmap('cet_{0}_r',m_{1}_r)\n".format(alias,base))
             output.write("\n\n")
+    output.write(footer)     
