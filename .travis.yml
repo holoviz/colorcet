@@ -1,0 +1,42 @@
+language: generic
+
+os:
+  - linux
+
+sudo: false
+
+stages:
+  - name: docs
+    if: branch = docs
+
+# TODO: stage=docs (above) only on tag once initial version is
+# up. Same for gh pages deploy section (at the bottom).
+
+jobs:
+  include:
+    - stage: docs
+      env: PYTHON_VERSION="3.6"
+      install:
+      - source ./etc/travis-miniconda.sh
+      - conda create -n test-environment python=$PYTHON_VERSION
+      - source activate test-environment
+      # TODO: temp do dev install instead
+      - conda install -c bokeh colorcet
+      - conda install -c conda-forge notebook ipython sphinx beautifulsoup4 graphviz selenium phantomjs
+      - pip install nbsite sphinx_ioam_theme
+      script:
+      - cd docs
+      #- nbsite_nbpagebuild.py bokeh colorcet . .
+      - sphinx-build -b html . ./_build/html
+      - nbsite_fix_links.py _build/html
+      - touch ./_build/html/.nojekyll
+      - nbsite_cleandisthtml.py ./_build/html take_a_chance
+      - cp -r images ./_build/html/
+
+deploy:
+  provider: pages
+  skip_cleanup: true
+  github_token: $GITHUB_TOKEN
+  local_dir: ./_build/html
+  on:
+    branch: docs
