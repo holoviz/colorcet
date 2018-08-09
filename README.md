@@ -105,6 +105,29 @@ cd colorcet
 python setup.py develop
 ```
 
+## Usage
+
+There are multiple ways to access the colormaps, but here is a typical 
+example in Bokeh:
+
+```
+[example]
+```
+
+Here is a typical example in matplotlib:
+
+```
+import matplotlib.pyplot as plt
+import numpy as np
+import colorcet as cc
+
+data = np.random.rand(40, 40)
+plt.imshow(data, cmap=cc.cm.fire)
+```
+
+Other ways of accessing the colormaps are described in 
+http://colorcet.pyviz.org/#Accessing-the-colormaps
+
 ## Learning more
 
 You can see all the details about the methods used to create these
