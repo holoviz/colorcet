@@ -1,5 +1,5 @@
+<<<<<<< HEAD
 *.py[cod]
-#*#
 *~
 *.egg
 *.egg-info
@@ -14,3 +14,5 @@
 !/doc/Reference_Manual/index.rst
 .ipynb_checkpoints
 .coverage
+__pycache__
+.doit*

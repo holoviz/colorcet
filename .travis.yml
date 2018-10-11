@@ -1,0 +1,108 @@
+language: generic
+
+env:
+  global:
+    - CHANS_DEV="-c pyviz/label/dev"
+    - CHANS_REL="-c pyviz"
+    - LABELS_DEV="--label dev"
+    - LABELS_REL="--label dev --label main"
+    - PYENV_VERSION=3.6
+    - PKG_TEST_PYTHON="--test-python=py36 --test-python=py27"
+
+stages:
+  - test
+  - name: conda_dev_package
+    if: tag =~ ^v(\d+|\.)+[a-z]\d+$
+  - name: pip_dev_package
+    if: tag =~ ^v(\d+|\.)+[a-z]\d+$
+  - name: conda_package
+    if: tag =~ ^v(\d+|\.)+[^a-z]\d+$
+  - name: pip_package
+    if: tag =~ ^v(\d+|\.)+[^a-z]\d+$
+  - name: website_dev
+    if: tag =~ ^v(\d+|\.)+[a-z]\d+$ OR tag = website_dev
+  - name: website_release
+    if: tag =~ ^v(\d+|\.)+[^a-z]\d+$ OR tag = website
+
+jobs:
+  include:
+    - &default
+      stage: test
+      os: linux
+      install:
+        - pip install pyctdev && doit miniconda_install && pip uninstall -y doit pyctdev
+        - export PATH="$HOME/miniconda/bin:$PATH" && hash -r
+        - conda config --set always_yes True
+        - conda install -c pyviz/label/dev pyctdev && doit ecosystem_setup
+      before_script:
+        - doit env_create --name=colorcet --python=$PYENV_VERSION
+        - source activate colorcet
+        - doit develop_install $CHANS_DEV -o examples
+        - doit env_capture
+      script:
+        - doit test_all
+
+
+    - &website
+      <<: *default
+      stage: website_release
+      script:
+        # TODO: set chans according to dev/rel
+        - doit develop_install $CHANS_DEV -o doc -o examples
+        - nbsite generate-rst --org pyviz --project-name colorcet --repo colorcet --offset 1
+        - nbsite build --what=html --output=builtdocs
+        - touch ./builtdocs/.nojekyll # for github pages
+        - nbsite_cleandisthtml.py ./builtdocs take_a_chance
+      deploy:
+        - provider: pages
+          skip_cleanup: true
+          github_token: $GITHUB_TOKEN
+          local_dir: ./builtdocs
+          fqdn: colorcet.pyviz.org
+          on:
+            tags: true
+            all_branches: true
+           
+    - <<: *website
+      stage: website_dev
+      deploy:
+        - provider: pages
+          skip_cleanup: true
+          github_token: $GITHUB_TOKEN
+          local_dir: ./builtdocs
+          repo: ioam-docs/colorcet-dev
+          on:
+            tags: true
+            all_branches: true
+
+    ## dev packages
+
+    - &pip_pkg
+      env: PYPI=testpypi PYPIUSER=$TPPU PYPIPASS=$TPPP
+      stage: pip_dev_package
+      install: pip install pyctdev && doit ecosystem=pip ecosystem_setup
+      before_script:
+        - doit ecosystem=pip package_build $PKG_TEST_PYTHON --test-group=unit --test-group=examples --sdist-install-build-deps
+      script: doit ecosystem=pip package_upload -u $PYPIUSER -p $PYPIPASS --pypi ${PYPI}
+
+    - &conda_pkg
+      <<: *default
+      stage: conda_dev_package
+      env: LABELS=$LABELS_DEV CHANS=$CHANS_DEV
+      before_script:
+        - doit package_build $CHANS $PKG_TEST_PYTHON --test-group=unit --test-group=examples
+        - doit package_test $CHANS $PKG_TEST_PYTHON --test-group=examples
+      script: doit package_upload --token=$ANACONDA_TOKEN $LABELS
+
+    ## release packages
+
+    - <<: *pip_pkg
+      env: PYPI=pypi PYPIUSER=$PPU PYPIPASS=$PPP
+      stage: pip_package
+
+    - <<: *conda_pkg
+      stage: conda_package
+      env: LABELS=$LABELS_REL CHANS=$CHANS_REL
+
+notifications:
+  email: false
