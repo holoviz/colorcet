@@ -33,7 +33,8 @@ colormaps are provided as a separate subset:
   cm_n['name'] or cm_n.name
 """
 
-__version__ = '1.0.0'
+import param
+__version__ = str(param.Version(fpath=__file__,archive_commit="$Format:%h$",reponame="colorcet"))
 
 from collections import OrderedDict
 
@@ -13820,3 +13821,18 @@ m_rainbow_bgyrm_35_85_c71_r = mpl_cm('rainbow_bgyrm_35_85_c71_r',list(reversed(r
 
 palette_n = AttrODict(sorted(palette_n.items()))
 cm_n = AttrODict(sorted(cm_n.items()))
+
+
+# make pyct's example/data commands available if possible
+from functools import partial
+try:
+    from pyct.cmd import copy_examples as _copy, fetch_data as _fetch, examples as _examples
+    copy_examples = partial(_copy, 'colorcet')
+    fetch_data = partial(_fetch, 'colorcet')
+    examples = partial(_examples, 'colorcet')
+except ImportError:
+    def _missing_cmd(*args,**kw): return("install pyct[cmd] to enable this command (e.g. `pip install pyct[cmd]` or conda install -c pyviz pyct`)")
+    _copy = _fetch = _examples = _missing_cmd
+    def _err(): raise ValueError(_missing_cmd())
+    fetch_data = copy_examples = examples = _err
+del partial, _examples, _copy, _fetch

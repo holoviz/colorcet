@@ -1,9 +1,17 @@
 from setuptools import setup
+import os, sys, shutil
 
-setup(name='colorcet',
-      version='1.0.0',
-      description='Collection of perceptually uniform colormaps',
-      url='http://github.com/bokeh/colorcet',
-      maintainer='James A. Bednar',
-      maintainer_email='jbednar@continuum.io',
-      packages=['colorcet'])
+import pyct.build
+
+if __name__=="__main__":
+    # TODO: hope to eliminate the examples handling from here
+    # (i.e. all lines except setup()), moving it to pyct
+    example_path = os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                                'colorcet','examples')
+    if 'develop' not in sys.argv:
+        pyct.build.examples(example_path, __file__, force=True)
+
+    setup()
+
+    if os.path.isdir(example_path):
+        shutil.rmtree(example_path)
