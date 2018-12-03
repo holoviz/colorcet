@@ -1,0 +1,16 @@
+*.py[cod]
+#*#
+*~
+*.egg
+*.egg-info
+*.swp
+*.DS_Store
+*.so
+*.o
+*.out
+*.lock
+/doc/_build
+/doc/Reference_Manual/*
+!/doc/Reference_Manual/index.rst
+.ipynb_checkpoints
+.coverage
