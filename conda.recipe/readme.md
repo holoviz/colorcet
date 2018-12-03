@@ -36,6 +36,7 @@ toplevel directory:
 conda build conda.recipe/ --python 2.7
 conda build conda.recipe/ --python 3.4
 conda build conda.recipe/ --python 3.5
+conda build conda.recipe/ --python 3.6
 ```
 
 Next, `cd` into the folder where the builds end up.
