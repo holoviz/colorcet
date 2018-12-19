@@ -18,7 +18,7 @@ corresponding colors, or vice versa.  For instance, the popular matplotlib
 colors change imperceptibly, such as the yellow region in "hot" and
 the cyan/green region in "jet":
 
-![hot/jet](docs/images/hot_jet.png)     
+![hot/jet](doc/images/hot_jet.png)     
 
 When colormaps are used for visualizing scientific datasets, these
 perceptual nonlinearities can make interpretation of this data very
@@ -35,7 +35,7 @@ arXiv](https://arxiv.org/abs/1509.03700).  For instance, the
 perceptually uniform versions of the above colormaps are called "fire"
 and "rainbow" in this package:
 
-![fire/rainbow](docs/images/fire_rainbow.png)
+![fire/rainbow](doc/images/fire_rainbow.png)
 
 You should be able to see the differences right away, revealing more
 detail, more faithfully than if you use non-uniform maps.  For
@@ -43,11 +43,11 @@ instance, here is a population-density dataset (from
 [datashader](https://github.com/bokeh/datashader)) rendered with the
 original matplotlib "hot" colormap:
 
-![census_hot](docs/images/census_hot.png)
+![census_hot](doc/images/census_hot.png)
 
 and the same dataset rendered with colorcet's "fire" colormap:
 
-![census_fire](docs/images/census_fire.png)
+![census_fire](doc/images/census_fire.png)
 
 It should be obvious that the "hot" version completely washes out
 detail at the high end, as if the image is overexposed, while "fire"
@@ -126,7 +126,7 @@ and the [discussion of how the mpl maps were created](https://bids.github.io/col
 All the colorcet colormaps that have short, memorable names (which are probably
 the most useful ones) are visible here:
 
-<img src="docs/images/named.png" width="800">
+<img src="doc/images/named.png" width="800">
 
 But the complete set of 50+ is shown in the
 [example notebook](https://bokeh.github.io/colorcet).
