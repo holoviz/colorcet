@@ -100,7 +100,7 @@ Alternatively, you can manually install from the repository if you
 wish to be able to modify the code over time:
 
 ```
-git clone https://github.com/bokeh/colorcet.git
+git clone https://github.com/pyviz/colorcet.git
 cd colorcet
 python setup.py develop
 ```
@@ -129,4 +129,4 @@ the most useful ones) are visible here:
 <img src="doc/images/named.png" width="800">
 
 But the complete set of 50+ is shown in the
-[example notebook](https://bokeh.github.io/colorcet).
+[example notebook](https://pyviz.github.io/colorcet).
