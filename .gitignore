@@ -16,3 +16,6 @@
 .coverage
 __pycache__
 .doit*
+*.egg-info
+*/.version
+pip-wheel-metadata

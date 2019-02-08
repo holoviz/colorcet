@@ -49,10 +49,8 @@ jobs:
       script:
         # TODO: set chans according to dev/rel
         - doit develop_install $CHANS_DEV -o doc -o examples
-        - nbsite generate-rst --org pyviz --project-name colorcet --repo colorcet --offset 1
-        - nbsite build --what=html --output=builtdocs
-        - touch ./builtdocs/.nojekyll # for github pages
-        - nbsite_cleandisthtml.py ./builtdocs take_a_chance
+        - doit build_website
+
       deploy:
         - provider: pages
           skip_cleanup: true
@@ -62,7 +60,7 @@ jobs:
           on:
             tags: true
             all_branches: true
-           
+
     - <<: *website
       stage: website_dev
       deploy:
