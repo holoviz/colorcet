@@ -1,0 +1,33 @@
+{% set sdata = load_setup_py_data() %}
+
+package:
+  name: colorcet
+  version: {{ sdata['version'] }}
+
+source:
+  path: ..
+
+build:
+  noarch: python
+  script: python setup.py install --single-version-externally-managed --record record.txt
+
+requirements:
+  build:
+    - python {{ sdata['python_requires'] }}
+    {% for dep in sdata['extras_require']['build'] %}
+    - {{ dep }}
+    {% endfor %}
+  run:
+    - python {{ sdata['python_requires'] }}
+    {% for dep in sdata.get('install_requires',{}) %}
+    - {{ dep }}
+    {% endfor %}
+
+test:
+  imports:
+    - colorcet
+
+about:
+  home: {{ sdata['url'] }}
+  summary: {{ sdata['description'] }}
+  license: {{ sdata['license'] }}

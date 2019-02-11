@@ -30,14 +30,14 @@ _NAV = (
 
 _SOCIAL = (
     ('Gitter', '//gitter.im/pyviz/pyviz'),
-    ('Github', '//github.com/pyviz/colorcet'),
+    ('Github', '//github.com/pyviz/' + project),
 )
 
 html_context.update({
     'PROJECT': project,
     'DESCRIPTION': description,
     'AUTHOR': authors,
-    'WEBSITE_SERVER': 'https://colorcet.pyviz.org',
+    'WEBSITE_SERVER': 'http://{}.pyviz.org'.format(project),
     'VERSION': version,
     'NAV': _NAV ,
     # by default, footer links are same as those in header
