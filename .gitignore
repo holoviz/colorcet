@@ -19,3 +19,4 @@ __pycache__
 *.egg-info
 */.version
 pip-wheel-metadata
+**.ipynb_checkpoints

@@ -6,6 +6,6 @@ from pyctdev import * # noqa: api
 
 def task_build_website():
     return {'actions': [
-        "nbsite generate-rst --org pyviz --project-name colorcet --repo colorcet --offset 0"
-        "nbsite build --what=html --output=builtdocs"
+        "nbsite generate-rst --org pyviz --project-name colorcet --offset 0",
+        "nbsite build --what=html --output=builtdocs",
     ]}
