@@ -5,7 +5,7 @@
 
 .. raw:: html
 
-  <h1><img src="_static/logo_stacked.png" width="150"></h1>
+  <h1><img src="_static/logo_stacked.png" width="200"></h1>
 
 .. notebook:: colorcet ../examples/index.ipynb
     :offset: 0
