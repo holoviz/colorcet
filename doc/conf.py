@@ -18,7 +18,7 @@ html_theme = 'sphinx_ioam_theme'
 
 
 html_theme_options = {
-    'logo':'pyviz-logo.png',
+    'logo':'logo.png',
     'favicon':'favicon.ico',
     'custom_css':'site.css'
 }
