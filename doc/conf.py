@@ -25,7 +25,9 @@ html_theme_options = {
 
 _NAV = (
     ('Introduction', 'index'),
-    ('About', 'about')
+    ('Getting Started', 'getting_started/index'),
+    ('User Guide', 'user_guide/index'),
+    ('About', 'about'),
 )
 
 _SOCIAL = (

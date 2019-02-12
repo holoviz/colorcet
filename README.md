@@ -20,7 +20,7 @@ perceptually uniform colormaps for use with Python plotting programs like
 [matplotlib](http://matplotlib.org),
 [holoviews](http://holoviews.org), and
 [datashader](https://github.com/bokeh/datashader) based on the
-set of [perceptually uniform colormaps](https://arxiv.org/abs/1509.03700) created 
+set of [perceptually uniform colormaps](https://arxiv.org/abs/1509.03700) created
 by Peter Kovesi at the Center for Exploration Targeting.
 
 
@@ -29,7 +29,9 @@ by Peter Kovesi at the Center for Exploration Targeting.
 Colorcet supports Python 2.7, 3.5, 3.6 and 3.7 on Linux, Windows, or Mac
 and can be installed with conda:
 
+```
     conda install colorcet
+```
 
 or with pip:
 
