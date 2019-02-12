@@ -39,7 +39,7 @@ or with pip:
     pip install colorcet
 ```
 
-For more information take a look at [Getting Started](http://colorcet.pyviz.org/getting_started)
+For more information take a look at [Getting Started](http://colorcet.pyviz.org/getting_started).
 
 ## Learning more
 
@@ -62,7 +62,7 @@ and the [discussion of how the mpl maps were created](https://bids.github.io/col
 All the colorcet colormaps that have short, memorable names (which are probably
 the most useful ones) are visible here:
 
-<img src="examples/images/named.png" width="800">
+<img src="./examples/assets/images/named.png" width="800">
 
 But the complete set of 50+ is shown in the [User Guide](http://colorcet.pyviz.org/user_guide).
 
