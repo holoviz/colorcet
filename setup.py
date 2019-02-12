@@ -1,5 +1,6 @@
 import os
 import sys
+import shutil
 import json
 import hashlib
 from setuptools import setup, find_packages
@@ -31,6 +32,7 @@ def get_setup_version(reponame):
 
 install_requires = [
     'param >=1.7.0',
+    'pyct >=0.4.4',
 ]
 
 examples = [
@@ -48,6 +50,14 @@ extras_require = {
     'doc': examples + [
         'nbsite',
         'sphinx_ioam_theme',
+    ],
+    # until pyproject.toml/equivalent is widely supported (setup_requires
+    # doesn't work well with pip)
+    'build': [
+        'param >=1.7.0',
+        'pyct >=0.4.4',
+        'setuptools >=30.3.0',
+        'wheel',
     ]
 }
 
@@ -95,3 +105,6 @@ if __name__=="__main__":
         pyct.build.examples(example_path, __file__, force=True)
 
     setup(**setup_args)
+
+    if os.path.isdir(example_path):
+        shutil.rmtree(example_path)
