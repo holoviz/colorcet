@@ -16,6 +16,7 @@ html_static_path += ['_static']
 html_theme = 'sphinx_ioam_theme'
 # logo file etc should be in html_static_path, e.g. _static
 
+templates_path = ['_templates']
 
 html_theme_options = {
     'logo':'logo.png',
@@ -31,8 +32,9 @@ _NAV = (
 )
 
 _SOCIAL = (
-    ('Gitter', '//gitter.im/pyviz/pyviz'),
-    ('Github', '//github.com/pyviz/' + project),
+    ('Github', 'https://github.com/pyviz/' + project),
+    ('Gitter', 'https://gitter.im/pyviz/pyviz'),
+    ('PyViz', 'http://pyviz.org')
 )
 
 html_context.update({
