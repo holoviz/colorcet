@@ -22,9 +22,9 @@ All colormaps are named using Peter Kovesi's naming scheme:
 
 <category>_<huesequence>_<lightnessrange>_c<meanchroma>[_s<colorshift>_[r<ifreversed>]]
 
-but some have shorter, more convenient aliases, some of which are 
+but some have shorter, more convenient aliases, some of which are
 inspired by Matplotlib colormaps of the same name and others
-based on the qualitative appearance.  The colormaps with 
+based on the qualitative appearance.  The colormaps with
 shorter names tend to be the most useful subset, and for
 cases like automatic population of a GUI widget these
 colormaps are provided as a separate subset:
@@ -57,7 +57,7 @@ except:
     LinearSegmentedColormap.from_list=lambda n,c,N: None
 
 def rgb_to_hex(r,g,b):
-    return '#%02x%02x%02x' % (r,g,b) 
+    return '#%02x%02x%02x' % (r,g,b)
 
 def bokeh_palette(name,colorlist):
     palette[name] = [rgb_to_hex(int(r*255),int(g*255),int(b*255)) for r,g,b in colorlist]
@@ -13821,18 +13821,3 @@ m_rainbow_bgyrm_35_85_c71_r = mpl_cm('rainbow_bgyrm_35_85_c71_r',list(reversed(r
 
 palette_n = AttrODict(sorted(palette_n.items()))
 cm_n = AttrODict(sorted(cm_n.items()))
-
-
-# make pyct's example/data commands available if possible
-from functools import partial
-try:
-    from pyct.cmd import copy_examples as _copy, fetch_data as _fetch, examples as _examples
-    copy_examples = partial(_copy, 'colorcet')
-    fetch_data = partial(_fetch, 'colorcet')
-    examples = partial(_examples, 'colorcet')
-except ImportError:
-    def _missing_cmd(*args,**kw): return("install pyct[cmd] to enable this command (e.g. `pip install pyct[cmd]` or conda install -c pyviz pyct`)")
-    _copy = _fetch = _examples = _missing_cmd
-    def _err(): raise ValueError(_missing_cmd())
-    fetch_data = copy_examples = examples = _err
-del partial, _examples, _copy, _fetch

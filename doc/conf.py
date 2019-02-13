@@ -4,7 +4,7 @@ from nbsite.shared_conf import *
 
 project = 'colorcet'
 authors = u'Anaconda'
-copyright = u'2019 ' + authors
+copyright = u'2017-2019 ' + authors
 description = 'Collection of perceptually uniform colormaps'
 
 import colorcet

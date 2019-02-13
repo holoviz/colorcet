@@ -68,7 +68,7 @@ jobs:
           skip_cleanup: true
           github_token: $GITHUB_TOKEN
           local_dir: ./builtdocs
-          repo: ioam-docs/colorcet-dev
+          repo: pyviz-dev/colorcet
           on:
             tags: true
             all_branches: true
