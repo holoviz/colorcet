@@ -37,16 +37,21 @@ examples = [
     'matplotlib',
 ]
 
+tests = [
+    'flake8',
+    'nbsmoke >=0.2.6',
+    'pytest >=2.8.5',
+]
+
 extras_require = {
-    'tests': [
-        'flake8',
-        'nbsmoke >=0.2.6',
-        'pytest >=2.8.5',
-    ],
+    'tests': tests,
     'examples': examples,
     'doc': examples + [
         'nbsite',
         'sphinx_ioam_theme',
+    ],
+    'tests_extra': tests + [
+        'pytest-mpl'  # only available on pip and conda-forge
     ],
     # until pyproject.toml/equivalent is widely supported (setup_requires
     # doesn't work well with pip)
