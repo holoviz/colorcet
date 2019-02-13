@@ -22,9 +22,9 @@ All colormaps are named using Peter Kovesi's naming scheme:
 
 <category>_<huesequence>_<lightnessrange>_c<meanchroma>[_s<colorshift>_[r<ifreversed>]]
 
-but some have shorter, more convenient aliases, some of which are 
+but some have shorter, more convenient aliases, some of which are
 inspired by Matplotlib colormaps of the same name and others
-based on the qualitative appearance.  The colormaps with 
+based on the qualitative appearance.  The colormaps with
 shorter names tend to be the most useful subset, and for
 cases like automatic population of a GUI widget these
 colormaps are provided as a separate subset:
@@ -33,7 +33,8 @@ colormaps are provided as a separate subset:
   cm_n['name'] or cm_n.name
 """
 
-__version__ = '1.0.0'
+import param
+__version__ = str(param.Version(fpath=__file__,archive_commit="$Format:%h$",reponame="colorcet"))
 
 from collections import OrderedDict
 
@@ -56,7 +57,7 @@ except:
     LinearSegmentedColormap.from_list=lambda n,c,N: None
 
 def rgb_to_hex(r,g,b):
-    return '#%02x%02x%02x' % (r,g,b) 
+    return '#%02x%02x%02x' % (r,g,b)
 
 def bokeh_palette(name,colorlist):
     palette[name] = [rgb_to_hex(int(r*255),int(g*255),int(b*255)) for r,g,b in colorlist]

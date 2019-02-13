@@ -1,5 +1,4 @@
 *.py[cod]
-#*#
 *~
 *.egg
 *.egg-info
@@ -14,3 +13,18 @@
 !/doc/Reference_Manual/index.rst
 .ipynb_checkpoints
 .coverage
+__pycache__
+.doit*
+*.egg-info
+*/.version
+pip-wheel-metadata
+**.ipynb_checkpoints
+
+# nbsite
+# these files normally shouldn't be checked in as they should be
+# dynamically built from notebooks
+doc/**/*.rst
+doc/**/*.ipynb
+doc/**/*.json
+# this dir contains the whole website and should not be checked in on master
+builtdocs/
