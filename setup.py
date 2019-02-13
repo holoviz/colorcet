@@ -33,7 +33,8 @@ install_requires = [
 
 examples = [
     'numpy',
-    'holoviews'
+    'holoviews',
+    'matplotlib',
 ]
 
 extras_require = {

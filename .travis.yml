@@ -80,7 +80,7 @@ jobs:
       stage: pip_dev_package
       install: pip install pyctdev && doit ecosystem=pip ecosystem_setup
       before_script:
-        - doit ecosystem=pip package_build $PKG_TEST_PYTHON --test-group=unit --test-group=examples --sdist-install-build-deps
+        - doit ecosystem=pip package_build $PKG_TEST_PYTHON --test-group=unit --sdist-install-build-deps
       script: doit ecosystem=pip package_upload -u $PYPIUSER -p $PYPIPASS --pypi ${PYPI}
 
     - &conda_pkg
@@ -89,8 +89,6 @@ jobs:
       env: LABELS=$LABELS_DEV CHANS=$CHANS_DEV
       before_script:
         - travis_wait 60 doit package_build $CHANS $PKG_TEST_PYTHON --package-name colorcet --test-group=unit
-        # TODO: is package_test supposed to take --package-name? Seems to work with leftover conda.recipe from build.
-        - doit package_test $CHANS $PKG_TEST_PYTHON --test-group=examples
       script: doit package_upload --token=$ANACONDA_TOKEN $LABELS
 
     ## release packages
