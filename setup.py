@@ -97,6 +97,11 @@ setup_args = dict(
     python_requires=">=2.7",
     install_requires=install_requires,
     extras_require=extras_require,
+    entry_points={
+        'console_scripts': [
+            'colorcet = colorcet.__main__:main'
+        ]
+    },
 )
 
 
