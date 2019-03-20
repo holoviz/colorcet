@@ -35,6 +35,7 @@ examples = [
     'numpy',
     'holoviews',
     'matplotlib',
+    'bokeh',
 ]
 
 tests = [
