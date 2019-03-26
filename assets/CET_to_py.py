@@ -2,7 +2,7 @@
 Generate Python versions for each of the colormaps provided in
 http://peterkovesi.com/projects/colourmaps/CETperceptual_csv_0_1.zip
 
-Adding in those in Glasbey which were created using: https://github.com/taketwo/glasbey.git
+Also adds Glasbey colormaps created using: https://github.com/taketwo/glasbey.git
 see https://github.com/pyviz/colorcet/issues/11 for more details
 """
 
@@ -36,7 +36,7 @@ All colormaps are named using Peter Kovesi\'s naming scheme:
 <category>_<huesequence>_<lightnessrange>_c<meanchroma>[_s<colorshift>_[r<ifreversed>]]
 
 but some have shorter, more convenient aliases, some of which are
-inspired by Matplotlib colormaps of the same name and others
+inspired by Matplotlib colormaps with similar names and others
 based on the qualitative appearance.  The colormaps with
 shorter names tend to be the most useful subset, and for
 cases like automatic population of a GUI widget these
