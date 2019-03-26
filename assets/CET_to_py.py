@@ -48,7 +48,7 @@ colormaps are provided as a separate subset:
 Also included are some sets of 256 Glasbey colors. These are available via the
 same methods described above and are named:
 
-  glasbey_<starting_palette>[_no_black<if_no_black>]
+  glasbey_<starting_palette>[_<no_gray|dark|light>]
 
 The no_black versions are aliased to their starting palette names.
 """
@@ -121,9 +121,9 @@ aliases = dict(
   linear_ternary_green_0_46_c42          = 'kg',
   linear_ternary_red_0_50_c52            = 'kr',
   rainbow_bgyr_35_85_c73                 = 'rainbow',
-  glasbey_bw_no_black                    = 'glasbey',
-  glasbey_category10_no_black            = 'Category10',  #bokeh
-  glasbey_category20_no_black            = 'Category20',  #bokeh
+  glasbey_bw_no_gray                     = 'glasbey',
+  glasbey_category10_no_gray             = 'glasbey_cat10',
+  glasbey_category20                     = 'glasbey_cat20',
 )
 
 
