@@ -3,7 +3,7 @@ import colorcet as cc
 
 def test_matplotlib_colormaps_available():
     pytest.importorskip('matplotlib')
-    assert len(cc.cm.items()) == 162
+    assert len(cc.cm.items()) == 166
     assert len(cc.cm_n.items()) == 48
 
 

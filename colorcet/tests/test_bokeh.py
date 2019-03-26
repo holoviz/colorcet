@@ -2,7 +2,7 @@ import pytest  # noqa
 import colorcet as cc
 
 def test_bokeh_palettes_available():
-    assert len(cc.palette.items()) == 81
+    assert len(cc.palette.items()) == 83
     assert len(cc.palette_n.items()) == 24
 
 def test_bokeh_palette_is_a_list():
@@ -12,7 +12,7 @@ def test_bokeh_palette_is_a_list():
     assert cc.blues[-1] == '#3a7bb1'
 
 def test_bokeh_palette_glasbey_do_not_start_with_bw():
-    for cmap in [cc.glasbey, cc.Category10, cc.Category20]:
+    for cmap in [cc.glasbey, cc.glasbey_cat10, cc.glasbey_cat20]:
         assert isinstance(cmap, list)
         assert len(cmap) == 256
         assert {cmap[0], cmap[1]} != {'#00000', '#ffffff'}
