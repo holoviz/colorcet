@@ -91,7 +91,7 @@ def get_aliases(name):
     """Get the aliases for a given colormap name"""
     for k, v in aliases.items():
         if name == k or name == v:
-            name = '{0}, {1}'.format(v, k)
+            name = '{0},  {1}'.format(v, k)
     return name
 
 def all_original_names(group=None, not_group=None, only_aliased=False):
