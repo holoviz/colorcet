@@ -2,7 +2,7 @@
 Generate Python versions for each of the colormaps provided in
 http://peterkovesi.com/projects/colourmaps/CETperceptual_csv_0_1.zip
 
-Also adds Glasbey colormaps created using: https://github.com/taketwo/glasbey.git
+Also adds Glasbey colormaps created using: https://github.com/jsignell/glasbey/tree/filtering
 see https://github.com/pyviz/colorcet/issues/11 for more details
 """
 
@@ -36,7 +36,7 @@ All colormaps are named using Peter Kovesi\'s naming scheme:
 <category>_<huesequence>_<lightnessrange>_c<meanchroma>[_s<colorshift>_[r<ifreversed>]]
 
 but some have shorter, more convenient aliases, some of which are
-inspired by Matplotlib colormaps with similar names and others
+named for the color ranges included and others
 based on the qualitative appearance.  The colormaps with
 shorter names tend to be the most useful subset, and for
 cases like automatic population of a GUI widget these
@@ -48,9 +48,9 @@ colormaps are provided as a separate subset:
 Also included are some sets of 256 Glasbey colors. These are available via the
 same methods described above and are named:
 
-  glasbey_<starting_palette>[_<no_gray|dark|light>]
+  glasbey_<starting_palette>[_<min|max>c_<chroma_value>][_<min|max>l_<lightness_value>][_hue_<start>_<end>]
 
-The no_black versions are aliased to their starting palette names.
+Some of these the glasbey sets are aliased to short names as explained in the User Guide.
 """
 
 __version__ = '1.0.0'
