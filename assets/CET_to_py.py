@@ -121,9 +121,11 @@ aliases = dict(
   linear_ternary_green_0_46_c42          = 'kg',
   linear_ternary_red_0_50_c52            = 'kr',
   rainbow_bgyr_35_85_c73                 = 'rainbow',
-  glasbey_bw_no_gray                     = 'glasbey',
-  glasbey_category10_no_gray             = 'glasbey_cat10',
-  glasbey_category20                     = 'glasbey_cat20',
+  glasbey_bw_minc_20                     = 'glasbey',
+  glasbey_bw_minc_20_minl_30             = 'glasbey_light',
+  glasbey_bw_minc_20_maxl_70             = 'glasbey_dark',
+  glasbey_bw_minc_20_hue_320_110         = 'glasbey_warm',
+  glasbey_bw_minc_20_hue_140_290         = 'glasbey_cool',
 )
 
 
