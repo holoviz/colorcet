@@ -81,11 +81,13 @@ def get_aliases(name):
             name = '{0}, {1}'.format(v, k)
     return name
 
-def all_original_names(group=None, only_aliased=False):
+def all_original_names(group=None, not_group=None, only_aliased=False):
     """Get all original names - optionally in a particular group - or only those with aliases"""
     names = palette.keys()
     if group:
         names = filter(lambda x: group in x, names)
+    if not_group:
+        names = filter(lambda x: not_group not in x, names)
     if only_aliased:
         names = filter(lambda x: x in aliases.keys(), names)
     else:
@@ -95,43 +97,41 @@ def all_original_names(group=None, only_aliased=False):
 def colormap(name, cmap=None, bounds=None, array=None,**kwargs):
     """Plot a colormap using matplotlib or bokeh via holoviews"""
     import holoviews as hv; from holoviews import opts
-    backends = hv.Store.loaded_backends()
-    backend_opts = []
-    if 'bokeh' in backends:
-        backend_opts.append(opts.Image(backend='bokeh', width=900, height=100, toolbar='above',
-                                       default_tools=['xwheel_zoom', 'xpan', 'save', 'reset'],
-                                       cmap=cmap or palette[name]))
-    if 'matplotlib' in backends:
-        backend_opts.append(opts.Image(backend='matplotlib', aspect=15, fig_size=350,
-                                       cmap=cmap or cm[name]))
 
-    if cmap is None:
-        name = get_aliases(name)
+    title = name if cmap else get_aliases(name)
     if bounds is None:
         bounds = (0, 0, 256, 1)
     if array is None:
         import numpy as np
         array = np.meshgrid(np.linspace(0, 1, 256), np.linspace(0, 1, 10))[0]
 
-    default_kwargs = dict(xaxis=None, yaxis=None)
-    default_kwargs.update(**kwargs)
+    plot = hv.Image(array, bounds=bounds, group=title)
+    backends = hv.Store.loaded_backends()
+    if 'bokeh' in backends:
+        plot.opts(opts.Image(backend='bokeh', width=900, height=100, toolbar='above',
+                             default_tools=['xwheel_zoom', 'xpan', 'save', 'reset'],
+                             cmap=cmap or palette[name]))
+    if 'matplotlib' in backends:
+        plot.opts(opts.Image(backend='matplotlib', aspect=15, fig_size=350,
+                             cmap=cmap or cm[name]))
+    return plot.opts(opts.Image(xaxis=None, yaxis=None), opts.Image(**kwargs))
 
-    return (hv.Image(array, bounds=bounds, group=name)
-            .opts(*backend_opts)
-            .opts(opts.Image(**default_kwargs)))
-
-def colormaps(*args, group=None, only_aliased=False, **kwargs):
-    """Plotted colormaps for given names or names in group"""
+def colormaps(*args, group=None, not_group=None, only_aliased=False, cols=1, **kwargs):
+    """Plot colormaps for given names or names in group"""
     import holoviews as hv; from holoviews import opts
 
-    args = args or all_original_names(group=group, only_aliased=only_aliased)
-    plot = hv.Layout([colormap(name, **kwargs) for name in args]).cols(1)
+    args = args or all_original_names(group=group, not_group=not_group,
+                                      only_aliased=only_aliased)
+    plot = hv.Layout([
+      colormap(arg, **kwargs) if isinstance(arg, str) else
+      colormap(*arg, **kwargs) for
+      arg in args]).cols(cols)
 
     backends = hv.Store.loaded_backends()
     if 'matplotlib' in backends:
-        plot.opts(opts.Layout(backend='matplotlib', sublabel_format=None, fig_size=350))
-
-    return plot.opts(opts.Layout(**kwargs))
+        plot.opts(opts.Layout(backend='matplotlib', sublabel_format=None,
+                              fig_size=kwargs.get('fig_size', 350)))
+    return plot
 
 palette = AttrODict()
 cm = AttrODict()

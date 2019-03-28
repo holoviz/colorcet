@@ -8,31 +8,17 @@ import panel as pn
 
 hv.extension('bokeh')
 
-xs, _ = np.meshgrid(np.linspace(0, 1, 256), np.linspace(0, 1, 10))
+sine = np.load("../assets/colourmaptest.npy")
 
-def colormap(name, cmap=None, bounds=(0, 0, 256, 1), array=xs, **kwargs):
-    if cmap is None:
-        cmap = cc.palette[name]
-    options = opts.Image(xaxis=None, yaxis=None, width=400, height=150, cmap=cmap, toolbar=None, **kwargs)
-    return hv.Image(array, bounds=bounds, group=name).opts(options)
-   
-sine = np.load("./colourmaptest.npy")
+diverging_n = cc.all_original_names(group='diverging', only_aliased=True)
+linear_n = cc.all_original_names(group='linear', not_group='diverging', only_aliased=True)
+cat_n = cc.all_original_names(group='glasbey', only_aliased=True)
+misc_n = sorted([k for k in cc.aliases if k not in cat_n + diverging_n + linear_n])
 
-def get_names_for_group(group='diverging'):
-    palettes = [v for k, v in cc.palette.items() if group in k]
-    return sorted([k for k, v in cc.palette_n.items() if v in palettes])
-    
-diverging_n = get_names_for_group('diverging')
-diverging_col = pn.Column('#Diverging', *[colormap(c, array=sine) for c in diverging_n])
-
-linear_n = get_names_for_group('linear')
-linear_col = pn.Column('#Linear', *[colormap(c, array=sine) for c in linear_n])
-
-cat_n = get_names_for_group('glasbey')
-cat_col = pn.Column('#Categorical', *[colormap(c) for c in cat_n])
-
-misc_n = sorted([k for k in cc.palette_n.keys() if k not in cat_n + diverging_n + linear_n])
-misc_col = pn.Column('#Misc', *[colormap(c, array=sine) for c in misc_n])
+diverging_col = pn.Column('#Diverging', cc.colormaps(*diverging_n, array=sine, width=400, height=150).opts(toolbar=None))
+linear_col = pn.Column('#Linear', cc.colormaps(*linear_n, array=sine, width=400, height=150).opts(toolbar=None))
+cat_col = pn.Column('#Categorical', cc.colormaps(*cat_n, width=400, height=150).opts(toolbar=None))
+misc_col = pn.Column('#Misc', cc.colormaps(*misc_n, array=sine, width=400, height=150).opts(toolbar=None))
 
 all_named = pn.Row(
     linear_col, pn.Spacer(width=100), 
