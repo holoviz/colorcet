@@ -2,8 +2,6 @@ import colorcet as cc
 import numpy as np
 
 import holoviews as hv
-from holoviews import opts
-
 import panel as pn
 
 hv.extension('bokeh')
@@ -21,10 +19,10 @@ cat_col = pn.Column('#Categorical', cc.colormaps(*cat_n, width=400, height=150).
 misc_col = pn.Column('#Misc', cc.colormaps(*misc_n, array=sine, width=400, height=150).opts(toolbar=None))
 
 all_named = pn.Row(
-    linear_col, pn.Spacer(width=100), 
+    linear_col, pn.Spacer(width=100),
     pn.Column(
-        diverging_col, pn.Spacer(height=102), 
-        cat_col, pn.Spacer(height=102), 
+        diverging_col, pn.Spacer(height=102),
+        cat_col, pn.Spacer(height=102),
         misc_col))
 
 all_named.save('./images/named.png')
