@@ -87,6 +87,65 @@ def mpl_cm(name,colorlist):
     register_cmap("cet_"+name, cmap=cm[name])
     return cm[name]
 
+def get_aliases(name):
+    """Get the aliases for a given colormap name"""
+    for k, v in aliases.items():
+        if name == k or name == v:
+            name = '{0}, {1}'.format(v, k)
+    return name
+
+def all_original_names(group=None, only_aliased=False):
+    """Get all original names - optionally in a particular group - or only those with aliases"""
+    names = palette.keys()
+    if group:
+        names = filter(lambda x: group in x, names)
+    if only_aliased:
+        names = filter(lambda x: x in aliases.keys(), names)
+    else:
+        names = filter(lambda x: x not in aliases.values(), names)
+    return sorted(list(names))
+
+def colormap(name, cmap=None, bounds=None, array=None,**kwargs):
+    """Plot a colormap using matplotlib or bokeh via holoviews"""
+    import holoviews as hv; from holoviews import opts
+    backends = hv.Store.loaded_backends()
+    backend_opts = []
+    if 'bokeh' in backends:
+        backend_opts.append(opts.Image(backend='bokeh', width=900, height=100, toolbar='above',
+                                       default_tools=['xwheel_zoom', 'xpan', 'save', 'reset'],
+                                       cmap=cmap or palette[name]))
+    if 'matplotlib' in backends:
+        backend_opts.append(opts.Image(backend='matplotlib', aspect=15, fig_size=350,
+                                       cmap=cmap or cm[name]))
+
+    if cmap is None:
+        name = get_aliases(name)
+    if bounds is None:
+        bounds = (0, 0, 256, 1)
+    if array is None:
+        import numpy as np
+        array = np.meshgrid(np.linspace(0, 1, 256), np.linspace(0, 1, 10))[0]
+
+    default_kwargs = dict(xaxis=None, yaxis=None)
+    default_kwargs.update(**kwargs)
+
+    return (hv.Image(array, bounds=bounds, group=name)
+            .opts(*backend_opts)
+            .opts(opts.Image(**default_kwargs)))
+
+def colormaps(*args, group=None, only_aliased=False, **kwargs):
+    """Plotted colormaps for given names or names in group"""
+    import holoviews as hv; from holoviews import opts
+
+    args = args or all_original_names(group=group, only_aliased=only_aliased)
+    plot = hv.Layout([colormap(name, **kwargs) for name in args]).cols(1)
+
+    backends = hv.Store.loaded_backends()
+    if 'matplotlib' in backends:
+        plot.opts(opts.Layout(backend='matplotlib', sublabel_format=None, fig_size=350))
+
+    return plot.opts(opts.Layout(**kwargs))
+
 palette = AttrODict()
 cm = AttrODict()
 palette_n = AttrODict()
@@ -124,13 +183,14 @@ aliases = dict(
   glasbey_bw_minc_20                     = 'glasbey',
   glasbey_bw_minc_20_minl_30             = 'glasbey_light',
   glasbey_bw_minc_20_maxl_70             = 'glasbey_dark',
-  glasbey_bw_minc_20_hue_320_110         = 'glasbey_warm',
-  glasbey_bw_minc_20_hue_140_290         = 'glasbey_cool',
+  glasbey_bw_minc_20_hue_330_100         = 'glasbey_warm',
+  glasbey_bw_minc_20_hue_150_280         = 'glasbey_cool',
 )
 
 
 with open(output_file, "w") as output:
     output.write(header)
+    output.write("aliases = {}\n".format(aliases))
     for path in paths:
       for filename in os.listdir(path):
           if filename.endswith(".csv"):

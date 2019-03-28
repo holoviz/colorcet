@@ -74,10 +74,70 @@ def mpl_cm(name,colorlist):
     register_cmap("cet_"+name, cmap=cm[name])
     return cm[name]
 
+def get_aliases(name):
+    """Get the aliases for a given colormap name"""
+    for k, v in aliases.items():
+        if name == k or name == v:
+            name = '{0}, {1}'.format(v, k)
+    return name
+
+def all_original_names(group=None, only_aliased=False):
+    """Get all original names - optionally in a particular group - or only those with aliases"""
+    names = palette.keys()
+    if group:
+        names = filter(lambda x: group in x, names)
+    if only_aliased:
+        names = filter(lambda x: x in aliases.keys(), names)
+    else:
+        names = filter(lambda x: x not in aliases.values(), names)
+    return sorted(list(names))
+
+def colormap(name, cmap=None, bounds=None, array=None,**kwargs):
+    """Plot a colormap using matplotlib or bokeh via holoviews"""
+    import holoviews as hv; from holoviews import opts
+    backends = hv.Store.loaded_backends()
+    backend_opts = []
+    if 'bokeh' in backends:
+        backend_opts.append(opts.Image(backend='bokeh', width=900, height=100, toolbar='above',
+                                       default_tools=['xwheel_zoom', 'xpan', 'save', 'reset'],
+                                       cmap=cmap or palette[name]))
+    if 'matplotlib' in backends:
+        backend_opts.append(opts.Image(backend='matplotlib', aspect=15, fig_size=350,
+                                       cmap=cmap or cm[name]))
+
+    if cmap is None:
+        name = get_aliases(name)
+    if bounds is None:
+        bounds = (0, 0, 256, 1)
+    if array is None:
+        import numpy as np
+        array = np.meshgrid(np.linspace(0, 1, 256), np.linspace(0, 1, 10))[0]
+
+    default_kwargs = dict(xaxis=None, yaxis=None)
+    default_kwargs.update(**kwargs)
+
+    return (hv.Image(array, bounds=bounds, group=name)
+            .opts(*backend_opts)
+            .opts(opts.Image(**default_kwargs)))
+
+def colormaps(*args, group=None, only_aliased=False, **kwargs):
+    """Plotted colormaps for given names or names in group"""
+    import holoviews as hv; from holoviews import opts
+
+    args = args or all_original_names(group=group, only_aliased=only_aliased)
+    plot = hv.Layout([colormap(name, **kwargs) for name in args]).cols(1)
+
+    backends = hv.Store.loaded_backends()
+    if 'matplotlib' in backends:
+        plot.opts(opts.Layout(backend='matplotlib', sublabel_format=None, fig_size=350))
+
+    return plot.opts(opts.Layout(**kwargs))
+
 palette = AttrODict()
 cm = AttrODict()
 palette_n = AttrODict()
 cm_n = AttrODict()
+aliases = {'cyclic_mygbm_30_95_c78_s25': 'colorwheel', 'diverging_bkr_55_10_c35': 'bkr', 'diverging_bky_60_10_c30': 'bky', 'diverging_bwr_40_95_c42': 'coolwarm', 'diverging_gwv_55_95_c39': 'gwv', 'diverging_linear_bjy_30_90_c45': 'bjy', 'isoluminant_cgo_80_c38': 'isolum', 'linear_bgy_10_95_c74': 'bgy', 'linear_bgyw_15_100_c68': 'bgyw', 'linear_blue_5_95_c73': 'kbc', 'linear_blue_95_50_c20': 'blues', 'linear_bmw_5_95_c89': 'bmw', 'linear_bmy_10_95_c78': 'bmy', 'linear_green_5_95_c69': 'kgy', 'linear_grey_0_100_c0': 'gray', 'linear_grey_10_95_c0': 'dimgray', 'linear_kryw_0_100_c71': 'fire', 'linear_ternary_blue_0_44_c57': 'kb', 'linear_ternary_green_0_46_c42': 'kg', 'linear_ternary_red_0_50_c52': 'kr', 'rainbow_bgyr_35_85_c73': 'rainbow', 'glasbey_bw_minc_20': 'glasbey', 'glasbey_bw_minc_20_minl_30': 'glasbey_light', 'glasbey_bw_minc_20_maxl_70': 'glasbey_dark', 'glasbey_bw_minc_20_hue_330_100': 'glasbey_warm', 'glasbey_bw_minc_20_hue_150_280': 'glasbey_cool'}
 
 
 diverging_isoluminant_cjm_75_c23 = [\
@@ -14628,6 +14688,17 @@ glasbey_bw_minc_20_hue_330_100 = [\
 b_glasbey_bw_minc_20_hue_330_100 = bokeh_palette('glasbey_bw_minc_20_hue_330_100',glasbey_bw_minc_20_hue_330_100)
 m_glasbey_bw_minc_20_hue_330_100 = mpl_cm('glasbey_bw_minc_20_hue_330_100',glasbey_bw_minc_20_hue_330_100)
 m_glasbey_bw_minc_20_hue_330_100_r = mpl_cm('glasbey_bw_minc_20_hue_330_100_r',list(reversed(glasbey_bw_minc_20_hue_330_100)))
+glasbey_warm = b_glasbey_bw_minc_20_hue_330_100
+m_glasbey_warm = m_glasbey_bw_minc_20_hue_330_100
+m_glasbey_warm_r = m_glasbey_bw_minc_20_hue_330_100_r
+palette['glasbey_warm'] = b_glasbey_bw_minc_20_hue_330_100
+palette_n['glasbey_warm'] = b_glasbey_bw_minc_20_hue_330_100
+cm['glasbey_warm'] = m_glasbey_bw_minc_20_hue_330_100
+cm['glasbey_warm_r'] = m_glasbey_bw_minc_20_hue_330_100_r
+cm_n['glasbey_warm'] = mpl_cm('glasbey_warm',glasbey_bw_minc_20_hue_330_100)
+cm_n['glasbey_warm_r'] = mpl_cm('glasbey_warm_r',list(reversed(glasbey_bw_minc_20_hue_330_100)))
+register_cmap('cet_glasbey_warm',m_glasbey_bw_minc_20_hue_330_100)
+register_cmap('cet_glasbey_warm_r',m_glasbey_bw_minc_20_hue_330_100_r)
 
 
 
@@ -15710,6 +15781,17 @@ glasbey_bw_minc_20_hue_150_280 = [\
 b_glasbey_bw_minc_20_hue_150_280 = bokeh_palette('glasbey_bw_minc_20_hue_150_280',glasbey_bw_minc_20_hue_150_280)
 m_glasbey_bw_minc_20_hue_150_280 = mpl_cm('glasbey_bw_minc_20_hue_150_280',glasbey_bw_minc_20_hue_150_280)
 m_glasbey_bw_minc_20_hue_150_280_r = mpl_cm('glasbey_bw_minc_20_hue_150_280_r',list(reversed(glasbey_bw_minc_20_hue_150_280)))
+glasbey_cool = b_glasbey_bw_minc_20_hue_150_280
+m_glasbey_cool = m_glasbey_bw_minc_20_hue_150_280
+m_glasbey_cool_r = m_glasbey_bw_minc_20_hue_150_280_r
+palette['glasbey_cool'] = b_glasbey_bw_minc_20_hue_150_280
+palette_n['glasbey_cool'] = b_glasbey_bw_minc_20_hue_150_280
+cm['glasbey_cool'] = m_glasbey_bw_minc_20_hue_150_280
+cm['glasbey_cool_r'] = m_glasbey_bw_minc_20_hue_150_280_r
+cm_n['glasbey_cool'] = mpl_cm('glasbey_cool',glasbey_bw_minc_20_hue_150_280)
+cm_n['glasbey_cool_r'] = mpl_cm('glasbey_cool_r',list(reversed(glasbey_bw_minc_20_hue_150_280)))
+register_cmap('cet_glasbey_cool',m_glasbey_bw_minc_20_hue_150_280)
+register_cmap('cet_glasbey_cool_r',m_glasbey_bw_minc_20_hue_150_280_r)
 
 
 
