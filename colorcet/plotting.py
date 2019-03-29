@@ -8,8 +8,6 @@ array = np.meshgrid(np.linspace(0, 1, 256), np.linspace(0, 1, 10))[0]
 
 def swatch(name, cmap=None, bounds=None, array=array, **kwargs):
     """Show swatch using matplotlib or bokeh via holoviews"""
-    import holoviews as hv; from holoviews import opts
-
     title = name if cmap else get_aliases(name)
     if bounds is None:
         bounds = (0, 0, 256, 1)
@@ -27,8 +25,6 @@ def swatch(name, cmap=None, bounds=None, array=array, **kwargs):
 
 def swatches(*args, group=None, not_group=None, only_aliased=False, cols=1, **kwargs):
     """Show swatches for given names or names in group"""
-    import holoviews as hv; from holoviews import opts
-
     args = args or all_original_names(group=group, not_group=not_group,
                                       only_aliased=only_aliased)
     plot = hv.Layout([
