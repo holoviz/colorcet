@@ -2,7 +2,7 @@
 Generate Python versions for each of the colormaps provided in
 http://peterkovesi.com/projects/colourmaps/CETperceptual_csv_0_1.zip
 
-Also adds Glasbey colormaps created using: https://github.com/jsignell/glasbey/tree/filtering
+Also adds Glasbey colormaps created using: https://github.com/taketwo/glasbey
 see https://github.com/pyviz/colorcet/issues/11 for more details
 """
 
@@ -107,49 +107,11 @@ def all_original_names(group=None, not_group=None, only_aliased=False):
         names = filter(lambda x: x not in aliases.values(), names)
     return sorted(list(names))
 
-def colormap(name, cmap=None, bounds=None, array=None,**kwargs):
-    """Plot a colormap using matplotlib or bokeh via holoviews"""
-    import holoviews as hv; from holoviews import opts
-
-    title = name if cmap else get_aliases(name)
-    if bounds is None:
-        bounds = (0, 0, 256, 1)
-    if array is None:
-        import numpy as np
-        array = np.meshgrid(np.linspace(0, 1, 256), np.linspace(0, 1, 10))[0]
-
-    plot = hv.Image(array, bounds=bounds, group=title)
-    backends = hv.Store.loaded_backends()
-    if 'bokeh' in backends:
-        plot.opts(opts.Image(backend='bokeh', width=900, height=100, toolbar='above',
-                             default_tools=['xwheel_zoom', 'xpan', 'save', 'reset'],
-                             cmap=cmap or palette[name]))
-    if 'matplotlib' in backends:
-        plot.opts(opts.Image(backend='matplotlib', aspect=15, fig_size=350,
-                             cmap=cmap or cm[name]))
-    return plot.opts(opts.Image(xaxis=None, yaxis=None), opts.Image(**kwargs))
-
-def colormaps(*args, group=None, not_group=None, only_aliased=False, cols=1, **kwargs):
-    """Plot colormaps for given names or names in group"""
-    import holoviews as hv; from holoviews import opts
-
-    args = args or all_original_names(group=group, not_group=not_group,
-                                      only_aliased=only_aliased)
-    plot = hv.Layout([
-      colormap(arg, **kwargs) if isinstance(arg, str) else
-      colormap(*arg, **kwargs) for
-      arg in args]).cols(cols)
-
-    backends = hv.Store.loaded_backends()
-    if 'matplotlib' in backends:
-        plot.opts(opts.Layout(backend='matplotlib', sublabel_format=None,
-                              fig_size=kwargs.get('fig_size', 350)))
-    return plot
-
 palette = AttrODict()
 cm = AttrODict()
 palette_n = AttrODict()
 cm_n = AttrODict()
+
 '''
 
 footer = """

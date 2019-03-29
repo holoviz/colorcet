@@ -4,7 +4,7 @@ import colorcet as cc
 pytest.importorskip('matplotlib')
 
 def test_matplotlib_colormaps_available():
-    assert len(cc.cm.items()) == 168
+    assert len(cc.cm.items()) == 170
     assert len(cc.cm_n.items()) == 52
 
 
@@ -29,5 +29,6 @@ def test_matplotlib_glasbey():
 def test_matplotlib_default_colormap_plot_blues():
     hv = pytest.importorskip('holoviews')
     hv.extension('matplotlib')
-    fig = hv.render(cc.colormap('blues'), backend='matplotlib')
+    from colorcet.plotting import swatch
+    fig = hv.render(swatch('blues'), backend='matplotlib')
     return fig

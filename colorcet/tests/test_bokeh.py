@@ -2,7 +2,7 @@ import pytest  # noqa
 import colorcet as cc
 
 def test_bokeh_palettes_available():
-    assert len(cc.palette.items()) == 84
+    assert len(cc.palette.items()) == 85
     assert len(cc.palette_n.items()) == 26
 
 def test_bokeh_palette_is_a_list():
