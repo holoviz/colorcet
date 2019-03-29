@@ -1,3 +1,9 @@
+"""
+This module is not required for colorcet - it contains functions
+to facilitate plotting of colormaps - and is mainly used in the
+documentation.
+"""
+
 import numpy as np
 import holoviews as hv
 from holoviews import opts
