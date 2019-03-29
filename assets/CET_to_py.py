@@ -50,7 +50,7 @@ same methods described above and are named:
 
   glasbey_<starting_palette>[_<min|max>c_<chroma_value>][_<min|max>l_<lightness_value>][_hue_<start>_<end>]
 
-Some of these the glasbey sets are aliased to short names as explained in the User Guide.
+Some of the Glasbey sets are aliased to short names as explained in the User Guide.
 """
 
 __version__ = '1.0.0'
