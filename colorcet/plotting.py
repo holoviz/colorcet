@@ -7,9 +7,9 @@ documentation.
 import numpy as np
 import holoviews as hv
 from holoviews import opts
-from sineramp import sineramp
 
 from . import get_aliases, all_original_names, palette, cm
+from .sineramp import sineramp
 
 array = np.meshgrid(np.linspace(0, 1, 256), np.linspace(0, 1, 10))[0]
 

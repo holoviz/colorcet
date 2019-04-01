@@ -105,11 +105,11 @@ June  2014  Default wavelength changed from 10 to 8.
 """
 import numpy as np
 
-def sineramp(sze=(256, 512), amp=12.5, wavelen=8, p=2):
-    if len(sze) == 1:
-        rows = col s= sze
-    elif len(s) == 2:
-        rows, cols = s
+def sineramp(size=(256, 512), amp=12.5, wavelen=8, p=2):
+    if len(size) == 1:
+        rows = cols = size
+    elif len(size) == 2:
+        rows, cols = size
     else:
         raise ValueError('size must be of length 1 or 2')
 
