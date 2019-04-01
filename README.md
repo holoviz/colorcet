@@ -39,6 +39,31 @@ or with pip:
     pip install colorcet
 ```
 
+Once installed you can copy the examples into the current directory using the colorcet command and run them using the Jupyter notebook:
+
+```
+colorcet examples
+cd colorcet-examples
+jupyter notebook
+```
+
+(Here colorcet examples is a shorthand for colorcet copy-examples --path colorcet-examples && colorcet fetch-data --path colorcet-examples.)
+
+To work with JupyterLab you will also need the PyViz JupyterLab extension:
+
+```
+conda install -c conda-forge jupyterlab
+jupyter labextension install @pyviz/jupyterlab_pyviz
+```
+
+Once you have installed JupyterLab and the extension launch it with:
+
+```
+jupyter-lab
+```
+
+If you want to try out the latest features between releases, you can get the latest dev release by specifying -c pyviz/label/dev in place of -c pyviz.
+
 For more information take a look at [Getting Started](http://colorcet.pyviz.org/getting_started).
 
 ## Learning more
