@@ -1,17 +1,34 @@
 import pytest
 import colorcet as cc
 
+pytest.importorskip('matplotlib')
+
 def test_matplotlib_colormaps_available():
-    pytest.importorskip('matplotlib')
-    assert len(cc.cm.items()) == 144
-    assert len(cc.cm_n.items()) == 42
+    assert len(cc.cm.items()) == 170
+    assert len(cc.cm_n.items()) == 52
 
 
 @pytest.mark.mpl_image_compare
 def test_matplotlib():
-    pytest.importorskip('matplotlib')
     import numpy as np
     import matplotlib.pyplot as plt
     xs, _ = np.meshgrid(np.linspace(0, 1, 80), np.linspace(0, 1, 10))
     fig = plt.imshow(xs, cmap=cc.cm.colorwheel).get_figure()
+    return fig
+
+
+@pytest.mark.mpl_image_compare
+def test_matplotlib_glasbey():
+    import numpy as np
+    import matplotlib.pyplot as plt
+    xs, _ = np.meshgrid(np.linspace(0, 1, 256), np.linspace(0, 1, 10))
+    fig = plt.imshow(xs, cmap=cc.cm.glasbey).get_figure()
+    return fig
+
+@pytest.mark.mpl_image_compare
+def test_matplotlib_default_colormap_plot_blues():
+    hv = pytest.importorskip('holoviews')
+    hv.extension('matplotlib')
+    from colorcet.plotting import swatch
+    fig = hv.render(swatch('blues'), backend='matplotlib')
     return fig
