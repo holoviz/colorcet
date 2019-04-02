@@ -22,34 +22,52 @@ def swatch(name, cmap=None, bounds=None, array=array, **kwargs):
     plot = hv.Image(array, bounds=bounds, group=title)
     backends = hv.Store.loaded_backends()
     if 'bokeh' in backends:
-        plot.opts(opts.Image(backend='bokeh', width=900, height=100, toolbar='above',
+        width = kwargs.pop('width', 900)
+        height = kwargs.pop('height', 100)
+        plot.opts(opts.Image(backend='bokeh', width=width, height=height, toolbar='above',
                              default_tools=['xwheel_zoom', 'xpan', 'save', 'reset'],
                              cmap=cmap or palette[name]))
     if 'matplotlib' in backends:
-        plot.opts(opts.Image(backend='matplotlib', aspect=15, fig_size=350,
+        aspect = kwargs.pop('aspect', 15)
+        fig_size = kwargs.pop('fig_size', 350)
+        plot.opts(opts.Image(backend='matplotlib', aspect=aspect, fig_size=fig_size,
                              cmap=cmap or cm[name]))
     return plot.opts(opts.Image(xaxis=None, yaxis=None), opts.Image(**kwargs))
 
-def swatches(*args, group=None, not_group=None, only_aliased=False, cols=1, **kwargs):
+def swatches(*args, group=None, not_group=None, only_aliased=False, cols=None, **kwargs):
     """Show swatches for given names or names in group"""
     args = args or all_original_names(group=group, not_group=not_group,
                                       only_aliased=only_aliased)
-    plot = hv.Layout([
-      swatch(arg, **kwargs) if isinstance(arg, str) else
-      swatch(*arg, **kwargs) for
-      arg in args]).cols(cols)
+    if not cols:
+        cols = 3 if len(args) >= 3 else 1
 
     backends = hv.Store.loaded_backends()
     if 'matplotlib' in backends:
+        if 'aspect' not in kwargs:
+            kwargs['aspect'] = 12 // cols
+        if 'fig_size' not in kwargs:
+            kwargs['fig_size'] = 500 // cols
+    if 'bokeh' in backends:
+        if 'height' not in kwargs:
+            kwargs['height'] = 100
+        if 'width' not in kwargs:
+            kwargs['width'] = (9 * kwargs['height']) // 3
+
+    plot = hv.Layout([
+        swatch(arg, **kwargs) if isinstance(arg, str) else
+        swatch(*arg, **kwargs) for
+        arg in args]).cols(cols)
+
+    if 'matplotlib' in backends:
         plot.opts(opts.Layout(backend='matplotlib', sublabel_format=None,
-                              fig_size=kwargs.get('fig_size', 350)))
+                              fig_size=kwargs.get('fig_size', 150)))
     return plot
+
+sine = sineramp()
 
 def sine_comb(name, cmap=None, **kwargs):
     """Show sine_comb using matplotlib or bokeh via holoviews"""
     title = name if cmap else get_aliases(name)
-
-    sine = sineramp()
     plot = hv.Image(sine, group=title)
 
     backends = hv.Store.loaded_backends()
@@ -67,9 +85,9 @@ def sine_combs(*args, group=None, not_group=None, only_aliased=False, cols=1, **
     args = args or all_original_names(group=group, not_group=not_group,
                                       only_aliased=only_aliased)
     plot = hv.Layout([
-      sine_comb(arg, **kwargs) if isinstance(arg, str) else
-      sine_comb(*arg, **kwargs) for
-      arg in args]).cols(cols)
+        sine_comb(arg, **kwargs) if isinstance(arg, str) else
+        sine_comb(*arg, **kwargs) for
+        arg in args]).cols(cols)
 
     backends = hv.Store.loaded_backends()
     if 'matplotlib' in backends:
