@@ -4,8 +4,8 @@ import colorcet as cc
 pytest.importorskip('matplotlib')
 
 def test_matplotlib_colormaps_available():
-    assert len(cc.cm.items()) == 170
-    assert len(cc.cm_n.items()) == 52
+    assert len(cc.cm.items()) == 326
+    assert len(cc.cm_n.items()) == 168
 
 
 @pytest.mark.mpl_image_compare
@@ -31,4 +31,13 @@ def test_matplotlib_default_colormap_plot_blues():
     hv.extension('matplotlib')
     from colorcet.plotting import swatch
     fig = hv.render(swatch('blues'), backend='matplotlib')
+    return fig
+
+
+@pytest.mark.mpl_image_compare
+def test_matplotlib_default_colormap_plot_kbc():
+    hv = pytest.importorskip('holoviews')
+    hv.extension('matplotlib')
+    from colorcet.plotting import swatch
+    fig = hv.render(swatch('kbc'), backend='matplotlib')
     return fig
