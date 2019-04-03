@@ -51,7 +51,7 @@ def swatches(*args, group=None, not_group=None, only_aliased=False, cols=None, *
         if 'height' not in kwargs:
             kwargs['height'] = 100
         if 'width' not in kwargs:
-            kwargs['width'] = (9 * kwargs['height']) // 3
+            kwargs['width'] = (9 * kwargs['height']) // cols
 
     plot = hv.Layout([
         swatch(arg, **kwargs) if isinstance(arg, str) else
