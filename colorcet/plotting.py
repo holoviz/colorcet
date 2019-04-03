@@ -53,10 +53,11 @@ def swatches(*args, group=None, not_group=None, only_aliased=False, cols=None, *
         if 'width' not in kwargs:
             kwargs['width'] = (9 * kwargs['height']) // cols
 
-    plot = hv.Layout([
-        swatch(arg, **kwargs) if isinstance(arg, str) else
-        swatch(*arg, **kwargs) for
-        arg in args]).cols(cols)
+    images = [swatch(arg, **kwargs) if isinstance(arg, str) else
+              swatch(*arg, **kwargs) for
+              arg in args]
+
+    plot = hv.Layout(images).opts(plot=dict(transpose=True)).cols(int(np.ceil(len(images)*1.0/cols)))
 
     if 'matplotlib' in backends:
         plot.opts(opts.Layout(backend='matplotlib', sublabel_format=None,
@@ -84,10 +85,11 @@ def sine_combs(*args, group=None, not_group=None, only_aliased=False, cols=1, **
     """Show sine_combs for given names or names in group"""
     args = args or all_original_names(group=group, not_group=not_group,
                                       only_aliased=only_aliased)
-    plot = hv.Layout([
-        sine_comb(arg, **kwargs) if isinstance(arg, str) else
-        sine_comb(*arg, **kwargs) for
-        arg in args]).cols(cols)
+    images = [sine_comb(arg, **kwargs) if isinstance(arg, str) else
+              sine_comb(*arg, **kwargs) for
+              arg in args]
+
+    plot = hv.Layout(images).opts(plot=dict(transpose=True)).cols(int(np.ceil(len(images)*1.0/cols)))
 
     backends = hv.Store.loaded_backends()
     if 'matplotlib' in backends:
