@@ -237,16 +237,18 @@ aliases_v2 = {
   'linear_blue_5_95_c73': 'linear_kbc_5_95_c73',
 }
 
-def create_alias(alias, base, output):
+def create_alias(alias, base, output, is_name=True):
     output.write("{0} = b_{1}\n".format(alias,base))
     output.write("m_{0} = m_{1}\n".format(alias,base))
     output.write("m_{0}_r = m_{1}_r\n".format(alias,base))
     output.write("palette['{0}'] = b_{1}\n".format(alias,base))
-    output.write("palette_n['{0}'] = b_{1}\n".format(alias,base))
+    if is_name:
+        output.write("palette_n['{0}'] = b_{1}\n".format(alias,base))
     output.write("cm['{0}'] = m_{1}\n".format(alias,base))
     output.write("cm['{0}_r'] = m_{1}_r\n".format(alias,base))
-    output.write("cm_n['{0}'] = mpl_cm('{0}',{1})\n".format(alias,base))
-    output.write("cm_n['{0}_r'] = mpl_cm('{0}_r',list(reversed({1})))\n".format(alias,base))
+    if is_name:
+        output.write("cm_n['{0}'] = mpl_cm('{0}',{1})\n".format(alias,base))
+        output.write("cm_n['{0}_r'] = mpl_cm('{0}_r',list(reversed({1})))\n".format(alias,base))
     output.write("register_cmap('cet_{0}',m_{1})\n".format(alias,base))
     output.write("register_cmap('cet_{0}_r',m_{1}_r)\n".format(alias,base))
 
@@ -277,7 +279,7 @@ with open(output_file, "w") as output:
                   create_alias(alias, base, output)
               if base in mapping_flipped:
                   alias = mapping_flipped[base]
-                  create_alias(alias, base, output)
+                  create_alias(alias, base, output, is_name=False)
               output.write("\n\n")
               cmaps.append(base)
     output.write(footer)
