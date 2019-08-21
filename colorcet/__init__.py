@@ -670,8 +670,6 @@ cm['dimgray'] = m_linear_grey_10_95_c0
 cm['dimgray_r'] = m_linear_grey_10_95_c0_r
 cm_n['dimgray'] = mpl_cm('dimgray',linear_grey_10_95_c0)
 cm_n['dimgray_r'] = mpl_cm('dimgray_r',list(reversed(linear_grey_10_95_c0)))
-register_cmap('cet_dimgray',m_linear_grey_10_95_c0)
-register_cmap('cet_dimgray_r',m_linear_grey_10_95_c0_r)
 CET_L2 = b_linear_grey_10_95_c0
 m_CET_L2 = m_linear_grey_10_95_c0
 m_CET_L2_r = m_linear_grey_10_95_c0_r
