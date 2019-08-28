@@ -48,7 +48,7 @@ extras_require = {
     'tests': tests,
     'examples': examples,
     'doc': examples + [
-        'nbsite',
+        'nbsite >=0.6.1',
         'sphinx_ioam_theme',
     ],
     'tests_extra': tests + [
