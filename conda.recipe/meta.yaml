@@ -31,7 +31,7 @@ requirements:
 
 test:
   imports:
-    - nbsite
+    - colorcet
   requires:
     {% for dep in sdata['extras_require']['tests'] %}
     - "{{ dep }}"
