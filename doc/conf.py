@@ -34,14 +34,14 @@ _NAV = (
 _SOCIAL = (
     ('Github', 'https://github.com/pyviz/' + project),
     ('Gitter', 'https://gitter.im/pyviz/pyviz'),
-    ('PyViz', 'http://pyviz.org')
+    ('HoloViz', 'http://holoviz.org')
 )
 
 html_context.update({
     'PROJECT': project,
     'DESCRIPTION': description,
     'AUTHOR': authors,
-    'WEBSITE_SERVER': 'http://{}.pyviz.org'.format(project),
+    'WEBSITE_SERVER': 'http://{}.holoviz.org'.format(project),
     'VERSION': version,
     'NAV': _NAV ,
     # by default, footer links are same as those in header
