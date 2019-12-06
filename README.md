@@ -1,4 +1,4 @@
-<img src="https://github.com/pyviz/colorcet/blob/master/doc/_static/logo.png" width=200><br>
+<img src="https://github.com/holoviz/colorcet/blob/master/doc/_static/logo.png" width=200><br>
 
 -----------------
 
@@ -6,10 +6,10 @@
 
 |    |    |
 | --- | --- |
-| Build Status | [![Linux/MacOS Build Status](https://travis-ci.org/pyviz/colorcet.svg?branch=master)](https://travis-ci.org/pyviz/colorcet) [![Windows Build status](https://img.shields.io/appveyor/ci/pyviz/colorcet/master.svg?logo=appveyor)](https://ci.appveyor.com/project/pyviz/colorcet/branch/master) |
-| Latest dev release | [![Github tag](https://img.shields.io/github/tag/pyviz/colorcet.svg?label=tag&colorB=11ccbb)](https://github.com/pyviz/colorcet/tags) |
-| Latest release | [![Github release](https://img.shields.io/github/release/pyviz/colorcet.svg?label=tag&colorB=11ccbb)](https://github.com/pyviz/colorcet/releases) [![PyPI version](https://img.shields.io/pypi/v/colorcet.svg?colorB=cc77dd)](https://pypi.python.org/pypi/colorcet) [![colorcet version](https://img.shields.io/conda/v/pyviz/colorcet.svg?colorB=4488ff&style=flat)](https://anaconda.org/pyviz/colorcet) [![conda-forge version](https://img.shields.io/conda/v/conda-forge/colorcet.svg?label=conda%7Cconda-forge&colorB=4488ff)](https://anaconda.org/conda-forge/colorcet) [![defaults version](https://img.shields.io/conda/v/anaconda/colorcet.svg?label=conda%7Cdefaults&style=flat&colorB=4488ff)](https://anaconda.org/anaconda/colorcet) |
-| Docs | [![gh-pages](https://img.shields.io/github/last-commit/pyviz/colorcet/gh-pages.svg)](https://github.com/pyviz/colorcet/tree/gh-pages) [![site](https://img.shields.io/website-up-down-green-red/http/colorcet.pyviz.org.svg)](http://colorcet.pyviz.org) |
+| Build Status | [![Linux/MacOS Build Status](https://travis-ci.org/holoviz/colorcet.svg?branch=master)](https://travis-ci.org/holoviz/colorcet) [![Windows Build status](https://img.shields.io/appveyor/ci/holoviz/colorcet/master.svg?logo=appveyor)](https://ci.appveyor.com/project/holoviz/colorcet/branch/master) |
+| Latest dev release | [![Github tag](https://img.shields.io/github/tag/holoviz/colorcet.svg?label=tag&colorB=11ccbb)](https://github.com/holoviz/colorcet/tags) |
+| Latest release | [![Github release](https://img.shields.io/github/release/holoviz/colorcet.svg?label=tag&colorB=11ccbb)](https://github.com/holoviz/colorcet/releases) [![PyPI version](https://img.shields.io/pypi/v/colorcet.svg?colorB=cc77dd)](https://pypi.python.org/pypi/colorcet) [![colorcet version](https://img.shields.io/conda/v/holoviz/colorcet.svg?colorB=4488ff&style=flat)](https://anaconda.org/holoviz/colorcet) [![conda-forge version](https://img.shields.io/conda/v/conda-forge/colorcet.svg?label=conda%7Cconda-forge&colorB=4488ff)](https://anaconda.org/conda-forge/colorcet) [![defaults version](https://img.shields.io/conda/v/anaconda/colorcet.svg?label=conda%7Cdefaults&style=flat&colorB=4488ff)](https://anaconda.org/anaconda/colorcet) |
+| Docs | [![gh-pages](https://img.shields.io/github/last-commit/holoviz/colorcet/gh-pages.svg)](https://github.com/holoviz/colorcet/tree/gh-pages) [![site](https://img.shields.io/website-up-down-green-red/http/colorcet.holoviz.org.svg)](http://colorcet.holoviz.org) |
 
 
 ## What is it?
@@ -64,7 +64,7 @@ jupyter-lab
 
 If you want to try out the latest features between releases, you can get the latest dev release by specifying -c pyviz/label/dev in place of -c pyviz.
 
-For more information take a look at [Getting Started](http://colorcet.pyviz.org/getting_started).
+For more information take a look at [Getting Started](http://colorcet.holoviz.org/getting_started).
 
 ## Learning more
 
@@ -74,7 +74,7 @@ paper](https://arxiv.org/pdf/1509.03700v1.pdf).  Other useful
 background is available in a [1996 paper from
 IBM](http://www.research.ibm.com/people/l/lloydt/color/color.HTM).
 
-The matplotlib project also has a number of relevant resources,
+The Matplotlib project also has a number of relevant resources,
 including an excellent
 [2015 SciPy talk](https://www.youtube.com/watch?v=xAoljeRJ3lU), the
 [viscm tool for creating maps like the four in mpl](https://github.com/matplotlib/viscm), the
@@ -84,16 +84,14 @@ and the [discussion of how the mpl maps were created](https://bids.github.io/col
 
 ## Samples
 
-All the colorcet colormaps that have short, memorable names (which are probably
+All the Colorcet colormaps that have short, memorable names (which are probably
 the most useful ones) are visible here:
 
 <img src="./examples/assets/images/named.png" width="800">
 
-But the complete set of 50+ is shown in the [User Guide](http://colorcet.pyviz.org/user_guide).
+But the complete set of 50+ is shown in the [User Guide](http://colorcet.holoviz.org/user_guide).
 
+## Colorcet, HoloViz, and PyViz
 
-## About PyViz
-
-Colorcet is part of the PyViz initiative for making Python-based visualization tools work well together.
-See [pyviz.org](http://pyviz.org) for related packages that you can use with Colorcet and
-[status.pyviz.org](http://status.pyviz.org) for the current status of each PyViz project.
+Colorcet is part of the [HoloViz](https://holoviz.org) family of tools. The [holoviz.org](https://holoviz.org) website shows how to use Colorcet together with other libraries to solve complex problems, with detailed tutorials and examples. Example projects using Colorcet are at
+[examples.pyviz.org](https://examples.pyviz.org), and you can compare Colorcet to other available tools at [pyviz.org](https://pyviz.org).

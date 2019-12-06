@@ -56,7 +56,7 @@ jobs:
           skip_cleanup: true
           github_token: $GITHUB_TOKEN
           local_dir: ./builtdocs
-          fqdn: colorcet.pyviz.org
+          fqdn: colorcet.holoviz.org
           on:
             tags: true
             all_branches: true

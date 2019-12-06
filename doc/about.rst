@@ -1,8 +1,5 @@
-About Us
-========
+About
+=====
 
-Colorcet is part of the PyViz initiative for making Python-based visualization tools work well together.
-See `pyviz.org <http://pyviz.org>`_ for related packages that you can use with Colorcet and
-`status.pyviz.org <http://status.pyviz.org>`_ for the current status of each PyViz project.
-
-Colorcet is supported and mantained by `Anaconda <https://anaconda.com>`_.
+Colorcet is part of the `HoloViz <https://holoviz.org>`_ family of tools. The `holoviz.org <https://holoviz.org>`_ website shows how to use Colorcet together with other libraries to solve complex problems, with detailed tutorials and examples. Example projects using Colorcet are at
+`examples.pyviz.org <https://examples.pyviz.org>`_, and you can compare Colorcet to other available tools at `pyviz.org <https://pyviz.org>`_.
