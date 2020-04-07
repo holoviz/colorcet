@@ -90,8 +90,3 @@ the most useful ones) are visible here:
 <img src="./examples/assets/images/named.png" width="800">
 
 But the complete set of 50+ is shown in the [User Guide](http://colorcet.holoviz.org/user_guide).
-
-## Colorcet, HoloViz, and PyViz
-
-Colorcet is part of the [HoloViz](https://holoviz.org) family of tools. The [holoviz.org](https://holoviz.org) website shows how to use Colorcet together with other libraries to solve complex problems, with detailed tutorials and examples. Example projects using Colorcet are at
-[examples.pyviz.org](https://examples.pyviz.org), and you can compare Colorcet to other available tools at [pyviz.org](https://pyviz.org).
