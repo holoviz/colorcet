@@ -19,6 +19,8 @@ def swatch(name, cmap=None, bounds=None, array=array, **kwargs):
     if bounds is None:
         bounds = (0, 0, 256, 1)
 
+    cmap = list(cmap) if cmap is not None else None
+
     plot = hv.Image(array, bounds=bounds, group=title)
     backends = hv.Store.loaded_backends()
     if 'bokeh' in backends:
