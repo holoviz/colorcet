@@ -43,6 +43,7 @@ html_context.update({
     'AUTHOR': authors,
     'WEBSITE_SERVER': 'http://{}.holoviz.org'.format(project),
     'VERSION': version,
+    'GOOGLE_ANALYTICS_UA': 'UA-154795830-1',
     'NAV': _NAV ,
     # by default, footer links are same as those in header
     'LINKS': _NAV,
