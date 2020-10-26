@@ -14,7 +14,11 @@ from .sineramp import sineramp
 array = np.meshgrid(np.linspace(0, 1, 256), np.linspace(0, 1, 10))[0]
 
 def swatch(name, cmap=None, bounds=None, array=array, **kwargs):
-    """Show swatch using matplotlib or bokeh via holoviews"""
+    """Show swatch using matplotlib or bokeh via holoviews.
+
+    Custom colormaps can be visualized by passing name='' and
+    the list of colors to `cmap`.
+    """
     title = name if cmap else get_aliases(name)
     if bounds is None:
         bounds = (0, 0, 256, 1)
