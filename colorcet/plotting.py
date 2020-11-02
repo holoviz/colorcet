@@ -14,7 +14,21 @@ from .sineramp import sineramp
 array = np.meshgrid(np.linspace(0, 1, 256), np.linspace(0, 1, 10))[0]
 
 def swatch(name, cmap=None, bounds=None, array=array, **kwargs):
-    """Show swatch using matplotlib or bokeh via holoviews"""
+    """Show a color swatch for a colormap using matplotlib or bokeh via holoviews.
+    Colormaps can be selected by `name`, including those in Colorcet
+    along with any standard Bokeh palette or named Matplotlib colormap.
+    
+    Custom colormaps can be visualized by passing an explicit
+    list of colors (for Bokeh) or the colormap object (for Matplotlib) to `cmap`.
+    
+    HoloViews options for either backend can be passed in as kwargs,
+    so that you can customize the width, height, etc. of the swatch. 
+    
+    The `bounds` and `array` arguments allow you to customize the
+    portion of the colormap to show and how many samples to take
+    from it; see the source code and hv.Image documentation for 
+    details.
+    """
     title = name if cmap else get_aliases(name)
     if bounds is None:
         bounds = (0, 0, 256, 1)
