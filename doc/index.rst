@@ -9,6 +9,7 @@
 
 .. notebook:: colorcet ../examples/index.ipynb
     :offset: 0
+    :disable_interactivity_warning:
 
 .. toctree::
     :hidden:
