@@ -75,7 +75,7 @@ setup_args = dict(
     license_file='LICENSE.txt',
     license='CC-BY License',
     classifiers=[
-        "License :: Creative Commons Attribution 4.0 International Public License",
+        "License :: OSI Approved",
         "Operating System :: OS Independent",
         "Programming Language :: Python",
         "Programming Language :: Python :: 2.7",
