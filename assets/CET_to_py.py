@@ -144,101 +144,101 @@ cm_n = AttrODict(sorted(cm_n.items()))
 
 # Here #mpl indicates a colormap name taken from Matplotlib
 aliases = dict(
-  cyclic_mygbm_30_95_c78_s25                      = 'colorwheel',
-  diverging_bkr_55_10_c35                         = 'bkr',
-  diverging_bky_60_10_c30                         = 'bky',
-  diverging_protanopic_deuteranopic_bwy_60_95_c32 = 'bwy',
-  diverging_tritanopic_cwr_75_98_c20              = 'cwr',
-  diverging_bwr_40_95_c42                         = 'coolwarm', #mpl
-  diverging_gwv_55_95_c39                         = 'gwv',
-  diverging_linear_bjy_30_90_c45                  = 'bjy',
-  isoluminant_cgo_80_c38                          = 'isolum',
-  linear_bgy_10_95_c74                            = 'bgy',
-  linear_bgyw_15_100_c68                          = 'bgyw',
-  linear_blue_5_95_c73                            = 'kbc',
-  linear_blue_95_50_c20                           = 'blues',    #mpl
-  linear_bmw_5_95_c89                             = 'bmw',
-  linear_bmy_10_95_c78                            = 'bmy',
-  linear_green_5_95_c69                           = 'kgy',
-  linear_grey_0_100_c0                            = 'gray',     #mpl
-  linear_grey_10_95_c0                            = 'dimgray',
-  linear_kryw_0_100_c71                           = 'fire',
-  linear_ternary_blue_0_44_c57                    = 'kb',
-  linear_ternary_green_0_46_c42                   = 'kg',
-  linear_ternary_red_0_50_c52                     = 'kr',
-  rainbow_bgyr_35_85_c73                          = 'rainbow',
-  glasbey_bw_minc_20                              = 'glasbey',
-  glasbey_bw_minc_20_minl_30                      = 'glasbey_light',
-  glasbey_bw_minc_20_maxl_70                      = 'glasbey_dark',
-  glasbey_bw_minc_20_hue_330_100                  = 'glasbey_warm',
-  glasbey_bw_minc_20_hue_150_280                  = 'glasbey_cool',
+    cyclic_mygbm_30_95_c78_s25                      = 'colorwheel',
+    diverging_bkr_55_10_c35                         = 'bkr',
+    diverging_bky_60_10_c30                         = 'bky',
+    diverging_protanopic_deuteranopic_bwy_60_95_c32 = 'bwy',
+    diverging_tritanopic_cwr_75_98_c20              = 'cwr',
+    diverging_bwr_40_95_c42                         = 'coolwarm', #mpl
+    diverging_gwv_55_95_c39                         = 'gwv',
+    diverging_linear_bjy_30_90_c45                  = 'bjy',
+    isoluminant_cgo_80_c38                          = 'isolum',
+    linear_bgy_10_95_c74                            = 'bgy',
+    linear_bgyw_15_100_c68                          = 'bgyw',
+    linear_blue_5_95_c73                            = 'kbc',
+    linear_blue_95_50_c20                           = 'blues',    #mpl
+    linear_bmw_5_95_c89                             = 'bmw',
+    linear_bmy_10_95_c78                            = 'bmy',
+    linear_green_5_95_c69                           = 'kgy',
+    linear_grey_0_100_c0                            = 'gray',     #mpl
+    linear_grey_10_95_c0                            = 'dimgray',
+    linear_kryw_0_100_c71                           = 'fire',
+    linear_ternary_blue_0_44_c57                    = 'kb',
+    linear_ternary_green_0_46_c42                   = 'kg',
+    linear_ternary_red_0_50_c52                     = 'kr',
+    rainbow_bgyr_35_85_c73                          = 'rainbow',
+    glasbey_bw_minc_20                              = 'glasbey',
+    glasbey_bw_minc_20_minl_30                      = 'glasbey_light',
+    glasbey_bw_minc_20_maxl_70                      = 'glasbey_dark',
+    glasbey_bw_minc_20_hue_330_100                  = 'glasbey_warm',
+    glasbey_bw_minc_20_hue_150_280                  = 'glasbey_cool',
 )
 
 mapping = {
-  'CET-L1': 'linear_grey_0-100_c0',
-  'CET-L2': 'linear_grey_10-95_c0',
-  'CET-L3': 'linear_kryw_0-100_c71',
-  'CET-L4': 'linear_kry_0-97_c73',
-  'CET-L5': 'linear_kgy_5-95_c69',
-  'CET-L6': 'linear_kbc_5-95_c73',
-  'CET-L7': 'linear_bmw_5-95_c86',
-  'CET-L8': 'linear_bmy_10-95_c71',
-  'CET-L9': 'linear_bgyw_20-98_c66',
-  'CET-L10': 'linear_gow_60-85_c27',
-  'CET-L11': 'linear_gow_65-90_c35',
-  'CET-L12': 'linear_blue_95-50_c20',
-  'CET-L13': 'linear_ternary-red_0-50_c52',
-  'CET-L14': 'linear_ternary-green_0-46_c42',
-  'CET-L15': 'linear_ternary-blue_0-44_c57',
-  'CET-L16': 'linear_kbgyw_5-98_c62',
-  'CET-L17': 'linear_worb_100-25_c53',
-  'CET-L18': 'linear_wyor_100-45_c55',
-  'CET-L19': 'linear_wcmr_100-45_c42',
-  'CET-D1': 'diverging_bwr_40-95_c42',
-  'CET-D1A': 'diverging_bwr_20-95_c54',
-  'CET-D2': 'diverging_gwv_55-95_c39',
-  'CET-D3': 'diverging_gwr_55-95_c38',
-  'CET-D4': 'diverging_bkr_55-10_c35',
-  'CET-D6': 'diverging_bky_60-10_c30',
-  'CET-D7': 'diverging-linear_bjy_30-90_c45',
-  'CET-D8': 'diverging-linear_bjr_30-55_c53',
-  'CET-D9': 'diverging_bwr_55-98_c37',
-  'CET-D10': 'diverging_cwm_80-100_c22',
-  'CET-D13': 'diverging_bwg_20-95_c41',
-  'CET-R3': 'diverging-rainbow_bgymr_45-85_c67',
-  'CET-R1': 'rainbow_bgyrm_35-85_c69',
-  'CET-R2': 'rainbow_bgyr_35-85_c72',
-  'CET-C1': 'cyclic_mrybm_35-75_c68',
-  'CET-C1s': 'cyclic_mrybm_35-75_c68_s25',
-  'CET-C2': 'cyclic_mygbm_30-95_c78',
-  'CET-C2s': 'cyclic_mygbm_30-95_c78_s25',
-  'CET-C4': 'cyclic_wrwbw_40-90_c42',
-  'CET-C4s': 'cyclic_wrwbw_40-90_c42_s25',
-  'CET-C5': 'cyclic_grey_15-85_c0',
-  'CET-C5s': 'cyclic_grey_15-85_c0_s25',
-  'CET-I1': 'isoluminant_cgo_70_c39',
-  'CET-I2': 'isoluminant_cgo_80_c38',
-  'CET-I3': 'isoluminant_cm_70_c39',
-  'CET-D11': 'diverging-isoluminant_cjo_70_c25',
-  'CET-D12': 'diverging-isoluminant_cjm_75_c23',
-  'CET-CBL1': 'linear-protanopic-deuteranopic_kbjyw_5-95_c25',
-  'CET-CBL2': 'linear-protanopic-deuteranopic_kbw_5-98_c40',
-  'CET-CBD1': 'diverging-protanopic-deuteranopic_bwy_60-95_c32',
-  'CET-CBC1': 'cyclic-protanopic-deuteranopic_bwyk_16-96_c31',
-  'CET-CBC2': 'cyclic-protanopic-deuteranopic_wywb_55-96_c33',
-  'CET-CBTL1': 'linear-tritanopic_krjcw_5-98_c46',
-  'CET-CBTL2': 'linear-tritanopic_krjcw_5-95_c24',
-  'CET-CBTD1': 'diverging-tritanopic_cwr_75-98_c20',
-  'CET-CBTC1': 'cyclic-tritanopic_cwrk_40-100_c20',
-  'CET-CBTC2': 'cyclic-tritanopic_wrwc_70-100_c20',
+    'CET-L1': 'linear_grey_0-100_c0',
+    'CET-L2': 'linear_grey_10-95_c0',
+    'CET-L3': 'linear_kryw_0-100_c71',
+    'CET-L4': 'linear_kry_0-97_c73',
+    'CET-L5': 'linear_kgy_5-95_c69',
+    'CET-L6': 'linear_kbc_5-95_c73',
+    'CET-L7': 'linear_bmw_5-95_c86',
+    'CET-L8': 'linear_bmy_10-95_c71',
+    'CET-L9': 'linear_bgyw_20-98_c66',
+    'CET-L10': 'linear_gow_60-85_c27',
+    'CET-L11': 'linear_gow_65-90_c35',
+    'CET-L12': 'linear_blue_95-50_c20',
+    'CET-L13': 'linear_ternary-red_0-50_c52',
+    'CET-L14': 'linear_ternary-green_0-46_c42',
+    'CET-L15': 'linear_ternary-blue_0-44_c57',
+    'CET-L16': 'linear_kbgyw_5-98_c62',
+    'CET-L17': 'linear_worb_100-25_c53',
+    'CET-L18': 'linear_wyor_100-45_c55',
+    'CET-L19': 'linear_wcmr_100-45_c42',
+    'CET-D1': 'diverging_bwr_40-95_c42',
+    'CET-D1A': 'diverging_bwr_20-95_c54',
+    'CET-D2': 'diverging_gwv_55-95_c39',
+    'CET-D3': 'diverging_gwr_55-95_c38',
+    'CET-D4': 'diverging_bkr_55-10_c35',
+    'CET-D6': 'diverging_bky_60-10_c30',
+    'CET-D7': 'diverging-linear_bjy_30-90_c45',
+    'CET-D8': 'diverging-linear_bjr_30-55_c53',
+    'CET-D9': 'diverging_bwr_55-98_c37',
+    'CET-D10': 'diverging_cwm_80-100_c22',
+    'CET-D13': 'diverging_bwg_20-95_c41',
+    'CET-R3': 'diverging-rainbow_bgymr_45-85_c67',
+    'CET-R1': 'rainbow_bgyrm_35-85_c69',
+    'CET-R2': 'rainbow_bgyr_35-85_c72',
+    'CET-C1': 'cyclic_mrybm_35-75_c68',
+    'CET-C1s': 'cyclic_mrybm_35-75_c68_s25',
+    'CET-C2': 'cyclic_mygbm_30-95_c78',
+    'CET-C2s': 'cyclic_mygbm_30-95_c78_s25',
+    'CET-C4': 'cyclic_wrwbw_40-90_c42',
+    'CET-C4s': 'cyclic_wrwbw_40-90_c42_s25',
+    'CET-C5': 'cyclic_grey_15-85_c0',
+    'CET-C5s': 'cyclic_grey_15-85_c0_s25',
+    'CET-I1': 'isoluminant_cgo_70_c39',
+    'CET-I2': 'isoluminant_cgo_80_c38',
+    'CET-I3': 'isoluminant_cm_70_c39',
+    'CET-D11': 'diverging-isoluminant_cjo_70_c25',
+    'CET-D12': 'diverging-isoluminant_cjm_75_c23',
+    'CET-CBL1': 'linear-protanopic-deuteranopic_kbjyw_5-95_c25',
+    'CET-CBL2': 'linear-protanopic-deuteranopic_kbw_5-98_c40',
+    'CET-CBD1': 'diverging-protanopic-deuteranopic_bwy_60-95_c32',
+    'CET-CBC1': 'cyclic-protanopic-deuteranopic_bwyk_16-96_c31',
+    'CET-CBC2': 'cyclic-protanopic-deuteranopic_wywb_55-96_c33',
+    'CET-CBTL1': 'linear-tritanopic_krjcw_5-98_c46',
+    'CET-CBTL2': 'linear-tritanopic_krjcw_5-95_c24',
+    'CET-CBTD1': 'diverging-tritanopic_cwr_75-98_c20',
+    'CET-CBTC1': 'cyclic-tritanopic_cwrk_40-100_c20',
+    'CET-CBTC2': 'cyclic-tritanopic_wrwc_70-100_c20',
 }
 
 mapping_flipped = {v.replace('-', '_'): k.replace('-', '_') for
                    k, v in mapping.items()}
 
 aliases_v2 = {
-  'linear_green_5_95_c69': 'linear_kgy_5_95_c69',
-  'linear_blue_5_95_c73': 'linear_kbc_5_95_c73',
+    'linear_green_5_95_c69': 'linear_kgy_5_95_c69',
+    'linear_blue_5_95_c73': 'linear_kbc_5_95_c73',
 }
 
 def create_alias(alias, base, output, is_name=True):
@@ -264,27 +264,27 @@ with open(output_file, "w") as output:
     output.write("aliases_v2 = {}\n".format(aliases_v2))
     output.write("mapping_flipped = {}\n".format(mapping_flipped))
     for path in paths:
-      for filename in os.listdir(path):
-          if filename.endswith(".csv"):
-              base = mapping.get(filename[:-4], filename[:-4])
-              base = base.replace("-","_").replace("_n256","")
-              if base in cmaps:
-                  continue
-              output.write("\n\n"+base+" = [\\\n")
-              with open(os.path.join(path,filename),'r') as csvfile:
-                  reader = csv.reader(csvfile)
-                  for row in reader:
-                      output.write("["+', '.join(row)+"],\n")
-              output.write("]\n")
-              output.write("b_{0} = bokeh_palette('{0}',{0})\n".format(base))
-              output.write("m_{0} = mpl_cm('{0}',{0})\n".format(base))
-              output.write("m_{0}_r = mpl_cm('{0}_r',list(reversed({0})))\n".format(base))
-              if base in aliases:
-                  alias = aliases[base]
-                  create_alias(alias, base, output)
-              if base in mapping_flipped:
-                  alias = mapping_flipped[base]
-                  create_alias(alias, base, output, is_name=False)
-              output.write("\n\n")
-              cmaps.append(base)
+        for filename in os.listdir(path):
+            if filename.endswith(".csv"):
+                base = mapping.get(filename[:-4], filename[:-4])
+                base = base.replace("-","_").replace("_n256","")
+                if base in cmaps:
+                    continue
+                output.write("\n\n"+base+" = [\\\n")
+                with open(os.path.join(path,filename),'r') as csvfile:
+                    reader = csv.reader(csvfile)
+                    for row in reader:
+                        output.write("["+', '.join(row)+"],\n")
+                output.write("]\n")
+                output.write("b_{0} = bokeh_palette('{0}',{0})\n".format(base))
+                output.write("m_{0} = mpl_cm('{0}',{0})\n".format(base))
+                output.write("m_{0}_r = mpl_cm('{0}_r',list(reversed({0})))\n".format(base))
+                if base in aliases:
+                    alias = aliases[base]
+                    create_alias(alias, base, output)
+                if base in mapping_flipped:
+                    alias = mapping_flipped[base]
+                    create_alias(alias, base, output, is_name=False)
+                output.write("\n\n")
+                cmaps.append(base)
     output.write(footer)
