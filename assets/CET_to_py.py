@@ -83,7 +83,7 @@ def bokeh_palette(name,colorlist):
     return palette[name]
 
 def mpl_cm(name,colorlist):
-    cm[name]      = LinearSegmentedColormap.from_list(name, colorlist, N=len(colorlist))
+    cm[name] = LinearSegmentedColormap.from_list(name, colorlist, N=len(colorlist))
     register_cmap("cet_"+name, cmap=cm[name])
     return cm[name]
 
@@ -174,6 +174,7 @@ aliases = dict(
     glasbey_bw_minc_20_hue_150_280                  = 'glasbey_cool',
 )
 
+# Mapping maps the short "CET" names to longer descriptor names
 mapping = {
     'CET-L1': 'linear_grey_0-100_c0',
     'CET-L2': 'linear_grey_10-95_c0',
@@ -233,6 +234,7 @@ mapping = {
     'CET-CBTC2': 'cyclic-tritanopic_wrwc_70-100_c20',
 }
 
+# mapping_flipped is the inverse dict of mapping, with underscores replacing all hyphens
 mapping_flipped = {v.replace('-', '_'): k.replace('-', '_') for
                    k, v in mapping.items()}
 
@@ -268,17 +270,21 @@ with open(output_file, "w") as output:
             if filename.endswith(".csv"):
                 base = mapping.get(filename[:-4], filename[:-4])
                 base = base.replace("-","_").replace("_n256","")
+                # `base` is the descriptorname from colorcet.m with hyphens as underscores and without _n256
                 if base in cmaps:
                     continue
                 output.write("\n\n"+base+" = [\\\n")
+                # Convert the CSV to an 256x3 list of lists.
                 with open(os.path.join(path,filename),'r') as csvfile:
                     reader = csv.reader(csvfile)
                     for row in reader:
                         output.write("["+', '.join(row)+"],\n")
                 output.write("]\n")
+                # Create the bokeh pallete and matplotlib colormap & reverse colormap
                 output.write("b_{0} = bokeh_palette('{0}',{0})\n".format(base))
                 output.write("m_{0} = mpl_cm('{0}',{0})\n".format(base))
                 output.write("m_{0}_r = mpl_cm('{0}_r',list(reversed({0})))\n".format(base))
+                # Create aliases
                 if base in aliases:
                     alias = aliases[base]
                     create_alias(alias, base, output)
