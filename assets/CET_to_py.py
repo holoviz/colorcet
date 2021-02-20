@@ -95,7 +95,7 @@ def get_aliases(name):
     def check_aliases(names, d, k_position=-1, v_position=0):
         for name in [n for n in names]:
             for k, v in d.items():
-                v = [v] if not isinstance(v, tuple) else v
+                v = [v] if not isinstance(v, list) else v
                 for alias in v:
                     if name == alias and k not in names:
                         if k_position == -2:
@@ -145,34 +145,34 @@ cm_n = AttrODict(sorted(cm_n.items()))
 
 # Here #mpl indicates a colormap name taken from Matplotlib
 aliases = dict(
-    cyclic_mygbm_30_95_c78_s25                      = ('colorwheel',),
-    diverging_bkr_55_10_c35                         = ('bkr',),
-    diverging_bky_60_10_c30                         = ('bky',),
-    diverging_protanopic_deuteranopic_bwy_60_95_c32 = ('bwy',),
-    diverging_tritanopic_cwr_75_98_c20              = ('cwr',),
-    diverging_bwr_40_95_c42                         = ('coolwarm'),
-    diverging_gwv_55_95_c39                         = ('gwv',),
-    diverging_linear_bjy_30_90_c45                  = ('bjy',),
-    isoluminant_cgo_80_c38                          = ('isolum',),
-    linear_bgy_10_95_c74                            = ('bgy',),
-    linear_bgyw_15_100_c68                          = ('bgyw',),
-    linear_blue_5_95_c73                            = ('kbc', 'linear_kbc_5_95_c73'),
-    linear_blue_95_50_c20                           = ('blues',),
-    linear_bmw_5_95_c89                             = ('bmw',),
-    linear_bmy_10_95_c78                            = ('bmy',),
-    linear_green_5_95_c69                           = ('kgy', 'linear_kgy_5_95_c69'),
-    linear_grey_0_100_c0                            = ('gray', 'grey'),
-    linear_grey_10_95_c0                            = ('dimgray',),
-    linear_kryw_0_100_c71                           = ('fire', 'heat'),
-    linear_ternary_blue_0_44_c57                    = ('kb',),
-    linear_ternary_green_0_46_c42                   = ('kg',),
-    linear_ternary_red_0_50_c52                     = ('kr',),
-    rainbow_bgyr_35_85_c73                          = ('rainbow',),
-    glasbey_bw_minc_20                              = ('glasbey',),
-    glasbey_bw_minc_20_minl_30                      = ('glasbey_light',),
-    glasbey_bw_minc_20_maxl_70                      = ('glasbey_dark',),
-    glasbey_bw_minc_20_hue_330_100                  = ('glasbey_warm',),
-    glasbey_bw_minc_20_hue_150_280                  = ('glasbey_cool',),
+    cyclic_mygbm_30_95_c78_s25                      = ['colorwheel'],
+    diverging_bkr_55_10_c35                         = ['bkr'],
+    diverging_bky_60_10_c30                         = ['bky'],
+    diverging_protanopic_deuteranopic_bwy_60_95_c32 = ['bwy'],
+    diverging_tritanopic_cwr_75_98_c20              = ['cwr'],
+    diverging_bwr_40_95_c42                         = ['coolwarm'],
+    diverging_gwv_55_95_c39                         = ['gwv'],
+    diverging_linear_bjy_30_90_c45                  = ['bjy'],
+    isoluminant_cgo_80_c38                          = ['isolum'],
+    linear_bgy_10_95_c74                            = ['bgy'],
+    linear_bgyw_15_100_c68                          = ['bgyw'],
+    linear_blue_5_95_c73                            = ['kbc', 'linear_kbc_5_95_c73'],
+    linear_blue_95_50_c20                           = ['blues'],
+    linear_bmw_5_95_c89                             = ['bmw'],
+    linear_bmy_10_95_c78                            = ['bmy'],
+    linear_green_5_95_c69                           = ['kgy', 'linear_kgy_5_95_c69'],
+    linear_grey_0_100_c0                            = ['gray', 'grey'],
+    linear_grey_10_95_c0                            = ['dimgray'],
+    linear_kryw_0_100_c71                           = ['fire', 'heat'],
+    linear_ternary_blue_0_44_c57                    = ['kb'],
+    linear_ternary_green_0_46_c42                   = ['kg'],
+    linear_ternary_red_0_50_c52                     = ['kr'],
+    rainbow_bgyr_35_85_c73                          = ['rainbow'],
+    glasbey_bw_minc_20                              = ['glasbey'],
+    glasbey_bw_minc_20_minl_30                      = ['glasbey_light'],
+    glasbey_bw_minc_20_maxl_70                      = ['glasbey_dark'],
+    glasbey_bw_minc_20_hue_330_100                  = ['glasbey_warm'],
+    glasbey_bw_minc_20_hue_150_280                  = ['glasbey_cool'],
 )
 
 # Mapping maps the short "CET" names to longer descriptor names
