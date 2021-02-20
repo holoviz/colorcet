@@ -26,13 +26,14 @@ def print_dict(name, d, braces=False, tabs = 0, evenspace=False):
     else:
         fmt0 = "{0}"
     start = "{" if braces else "dict("
-    fmt = ("'{0}': {1}" if braces else "{0} = {1}").format(fmt0, '{1}')
+    fmt = ("'{0}': {1}," if braces else "{0} = {1},").format(fmt0, '{1}')
     end = "}" if braces else ")"
     s4 = ' '*4
     tabs = s4*tabs
     print(tabs + "{0} = {1}".format(name, start))
     for k in sorted(d, key=lambda k: k):
-        print(tabs + s4 + fmt.format(k, d[k]))
+        val = "'{0}'".format(d[k]) if isinstance(d[k], str) else d[k]
+        print(tabs + s4 + fmt.format(k, val))
     print(tabs + end)
 
 print("new_mapsdir = '{0}'".format(new_mapsdir))
