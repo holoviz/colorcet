@@ -31,7 +31,7 @@ In addition, there are folders of CSV files containin the various colormaps.
      This may mean some divergence from `colorcet.m`.
 5. Copy the new merged `aliases` and `mapping` variables (from terminal output) into `CET_to_py.py` to
    replace the existing variables. Also **be certain to add the new folder of CSVs, if any, to the `paths`
-   variable.**
+   variable.** (Add `# mpl` comments back to `aliases`.)
 6. Run `python CET_to_py.py` to generate a new `colorcet/__init__.py`.
 7. From the main directory, run `pytest` and adjust the colormap counts in the various test scripts to get
    the tests to pass correctly.
