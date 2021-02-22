@@ -19,6 +19,15 @@ mapping = {}
 # invert aliases dict of lists, also new_aliases
 old_aliases_inv = {als: k for k, lst in aliases.items() for als in lst}
 new_aliases_inv = {als: k for k, lst in new_aliases.items() for als in lst}
+# find any conflicts to report later.
+aliases_conflicts = []
+for alias, descrname in new_aliases_inv.items():
+    try:
+        if old_aliases_inv[alias] != descrname:
+            aliases_conflicts.append((alias, old_aliases_inv[alias], descrname))
+    except KeyError:
+        pass
+
 # merge the aliases. old aliases taking precedence over new
 # This means that Python colorcet aliases may differ slightly from colorcet.m, but will never change meaning.
 new_aliases_inv.update(old_aliases_inv)
@@ -27,7 +36,7 @@ merged_aliases = defaultdict(list)
 
 # ## Update mapping
 # First find any conflicts, as these will need to be fixed in aliases
-mapping_conflicts = []
+mapping_conflicts = []  # List[Tuple[str, str, str]] # (CET- name, old descriptorname, new descriptorname)
 for cet, descr in new_mapping.items():
     if cet in mapping and descr != mapping[cet]:
         mapping_conflicts.append(
@@ -42,7 +51,7 @@ for _, old, new in mapping_conflicts:
     try:
         merged_aliases[old] += merged_aliases[new]
         del merged_aliases[new]
-    except AttributeError:
+    except KeyError:
         pass
 
 
@@ -74,9 +83,18 @@ def CET_sortfn(k):
 print("new_mapsdir = '{0}'".format(new_mapsdir))
 print_dict("aliases", merged_aliases, evenspace=True)
 print_dict("mapping", merged_mapping, braces=True, sortfn=CET_sortfn)
+if aliases_conflicts:
+    print("#")
+    print("# ## NOTICE: Found the following aliases conflicts, with old alias assignment retained over new:")
+    print("# ## alias, old_descriptorname, new_descriptorname")
+    for als, old, new in aliases_conflicts:
+        print("# {}, {}, {}".format(als, old, new))
 if mapping_conflicts:
-    print("# ## NOTICE: Found the following mapping conflicts, with old map retained over new:")
-    print("# CET_name, old_descriptorname, new_descriptorname")
+    print("#")
+    print("# ## NOTICE: Found the following mapping conflicts, with the CET- name assigned")
+    print("# ##         to the original map over the new:")
+    print("# ## CET_name, old_descriptorname, new_descriptorname")
     for cet, old, new in mapping_conflicts:
         print("# {}, {}, {}".format(cet, old, new))
-    print("# ##")
+if aliases_conflicts or mapping_conflicts:
+    print("#")
