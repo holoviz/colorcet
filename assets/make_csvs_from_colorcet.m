@@ -126,7 +126,7 @@ fprintf(fupdates, 'new_aliases = dict(\n');
 keys = aliases.keys();
 for keyi = 1:numel(keys)
     key = keys{keyi};
-    als = aliases(key);
+    als = strrep(aliases(key), '-', '_');  % can't have hyphens in aliases
     if numel(als) == 0, continue, end
     fprintf(fupdates, '    %s = [', strrep(key, '-', '_'));
     for ali = 1:numel(als)
@@ -137,7 +137,7 @@ end
 fprintf(fupdates, ')\n');
 fprintf(fupdates, '\n');
 
-fprintf(fupdates, 'new_mappings = {\n')
+fprintf(fupdates, 'new_mapping = {\n')
 keys = mapping.keys();
 for keyi = 1:numel(keys)
     key = keys{keyi};
