@@ -96,15 +96,9 @@ def get_aliases(name):
                             names.insert(v_position, alias)
         return names
 
-    # keep looking for more aliases until no more are found
-    n_names = len(names)
-    while True:
-        names = check_aliases(names, aliases, k_position=-2, v_position=0)
-        names = check_aliases(names, mapping_flipped, k_position=-2, v_position=-1)
-        if len(names) == n_names:
-            # No new aliases found
-            break
-        n_names = len(names)
+    names = check_aliases(names, aliases, k_position=-2, v_position=0)
+    names = check_aliases(names, mapping_flipped, k_position=-2, v_position=-1)
+    names = check_aliases(names, aliases, k_position=-2, v_position=0)
     return ',  '.join(names)
 
 def all_original_names(group=None, not_group=None, only_aliased=False, only_CET=False):
