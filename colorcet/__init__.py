@@ -165,7 +165,7 @@ aliases = {
     'linear_grey_0_100_c0': ['grey', 'gray'],
     'linear_grey_10_95_c0': ['reducedgrey', 'dimgray'],
     'linear_kbgoy_20_95_c57': ['gouldian'],
-    'linear_kbgyw_10_98_c63': ['kbgyw'],
+    'linear_kbgyw_5_98_c62': ['kbgyw'],
     'linear_kry_0_97_c73': ['kry', 'yellowheat'],
     'linear_kryw_0_100_c71': ['kryw', 'heat', 'fire'],
     'linear_ternary_blue_0_44_c57': ['blueternary', 'kb'],
@@ -18331,6 +18331,15 @@ linear_kbgyw_5_98_c62 = [\
 b_linear_kbgyw_5_98_c62 = bokeh_palette('linear_kbgyw_5_98_c62',linear_kbgyw_5_98_c62)
 m_linear_kbgyw_5_98_c62 = mpl_cm('linear_kbgyw_5_98_c62',linear_kbgyw_5_98_c62)
 m_linear_kbgyw_5_98_c62_r = mpl_cm('linear_kbgyw_5_98_c62_r',list(reversed(linear_kbgyw_5_98_c62)))
+kbgyw = b_linear_kbgyw_5_98_c62
+m_kbgyw = m_linear_kbgyw_5_98_c62
+m_kbgyw_r = m_linear_kbgyw_5_98_c62_r
+palette['kbgyw'] = b_linear_kbgyw_5_98_c62
+palette_n['kbgyw'] = b_linear_kbgyw_5_98_c62
+cm['kbgyw'] = m_linear_kbgyw_5_98_c62
+cm['kbgyw_r'] = m_linear_kbgyw_5_98_c62_r
+cm_n['kbgyw'] = mpl_cm('kbgyw',linear_kbgyw_5_98_c62)
+cm_n['kbgyw_r'] = mpl_cm('kbgyw_r',list(reversed(linear_kbgyw_5_98_c62)))
 CET_L16 = b_linear_kbgyw_5_98_c62
 m_CET_L16 = m_linear_kbgyw_5_98_c62
 m_CET_L16_r = m_linear_kbgyw_5_98_c62_r

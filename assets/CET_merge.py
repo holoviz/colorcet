@@ -25,9 +25,25 @@ new_aliases_inv.update(old_aliases_inv)
 merged_aliases = defaultdict(list)
 [merged_aliases[v].append(k) for k, v in new_aliases_inv.items()]
 
-# Also update mapping, again with old taking precedence over new.
+# ## Update mapping
+# First find any conflicts, as these will need to be fixed in aliases
+mapping_conflicts = []
+for cet, descr in new_mapping.items():
+    if cet in mapping and descr != mapping[cet]:
+        mapping_conflicts.append(
+            (cet, mapping[cet].replace("-", "_"), new_mapping[cet].replace("-", "_"))
+        )
+# Merge mapping, with old taking precedence over new
 merged_mapping = new_mapping.copy()
 merged_mapping.update(mapping)
+
+# for eack mapping conflict, merge aliases under the old name
+for _, old, new in mapping_conflicts:
+    try:
+        merged_aliases[old] += merged_aliases[new]
+        del merged_aliases[new]
+    except AttributeError:
+        pass
 
 
 def print_dict(name, d, braces=False, tabs=0, evenspace=False, sortfn=lambda k: k):
@@ -58,3 +74,9 @@ def CET_sortfn(k):
 print("new_mapsdir = '{0}'".format(new_mapsdir))
 print_dict("aliases", merged_aliases, evenspace=True)
 print_dict("mapping", merged_mapping, braces=True, sortfn=CET_sortfn)
+if mapping_conflicts:
+    print("# ## NOTICE: Found the following mapping conflicts, with old map retained over new:")
+    print("# CET_name, old_descriptorname, new_descriptorname")
+    for cet, old, new in mapping_conflicts:
+        print("# {}, {}, {}".format(cet, old, new))
+    print("# ##")
