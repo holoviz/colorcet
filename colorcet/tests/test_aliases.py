@@ -12,7 +12,7 @@ def test_all_original_names():
     assert len(cc.all_original_names()) == 98
 
 def test_all_original_names_only_aliased():
-    assert len(cc.all_original_names(only_aliased=True)) == 47
+    assert len(cc.all_original_names(only_aliased=True)) == 48
 
 def test_all_original_names_nopic():
     assert len(cc.all_original_names(group='nopic')) == 15
