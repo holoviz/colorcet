@@ -17,11 +17,12 @@ In addition, there are folders of CSV files containin the various colormaps.
 1. If and when Peter Kovesi generates an updated `colorcet.m` using [his MATLAB
    scripts](https://www.peterkovesi.com/matlabfns/index.html#colour), download the most recent `colorcet.m`
    to this directory.
-2. Edit the `new_mapsdir` variable in `make_csvs_from_colorcet.m` with a folder name for any new colormaps
-   introduced in the latest `colorcet.m`.
+2. Prepare `make_csvs_from_colorcet.m`.
+   1. Set `new_mapsdir` variable to a folder name for any new colormaps.
+   2. Copy the `mapnames` variable from `colorcet.m` into `make_csvs_from_colorcet.m`.
 3. Use Octave or MATLAB to run `make_csvs_from_colorcet.m`. This will:
-   1. Generate any new colormap CSV files in `new_mapsdir`.
-   2. Generate `CET_updates.py` with aliases and the CET name mapping based on `colorcet.m`.
+   - Generate any new colormap CSV files in `new_mapsdir`.
+   - Generate `CET_updates.py` with aliases and the CET name mapping based on `colorcet.m`.
 4. Copy the current existing `aliases` and `mapping` variables from `CET_to_py.py` to the marked place in
    `CET_merge.py` and run `python CET_merge.py` to generate merged `aliases` and `mapping` variables.
    - `CET_merge.py` ensures that no aliases point to more than one colormap descriptorname (_terminology from
@@ -29,9 +30,10 @@ In addition, there are folders of CSV files containin the various colormaps.
    - `CET_merge.py` ensures that existing alias assingments take precedence over any new alias assignments
      from `colorcet.m` to make sure that the aliases from this library consistently point to the same maps.
      This may mean some divergence from `colorcet.m`.
-5. Copy the new merged `aliases` and `mapping` variables (from terminal output) into `CET_to_py.py` to
-   replace the existing variables. Also **be certain to add the new folder of CSVs, if any, to the `paths`
-   variable.** (Add `# mpl` comments back to `aliases`.)
+5. Update `CET_to_py.py`.
+   1. Copy the new merged `aliases` and `mapping` variables (from terminal output) into `CET_to_py.py` to
+      replace the existing variables. \[Restore `# mpl` comments back to `aliases`\]
+   2. If new colormap CSVs have been generated in \<`new_mapsdir`\>, add that folder to the `paths` variable.
 6. Run `python CET_to_py.py` to generate a new `colorcet/__init__.py`.
 7. From the main directory, run `pytest` and adjust the colormap counts in the various test scripts to get
    the tests to pass correctly.
