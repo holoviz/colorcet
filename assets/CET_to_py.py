@@ -10,7 +10,7 @@ import csv
 import re
 from pathlib import Path
 
-csv_folders = ['CETperceptual_csv_0_1', 'CETperceptual_csv_0_1_v2', 'Glasbey']
+csv_folders = ['CETperceptual_csv_0_1', 'Glasbey']
 output_file = '../colorcet/__init__.py'
 header = '''\
 """
