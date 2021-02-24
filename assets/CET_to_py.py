@@ -267,7 +267,7 @@ def get_csvs_in_order(output_file, csv_folders):
     init_cmap_order = []
     with open(output_file) as f:
         while line := f.readline():
-            if match := re.match(r"(\w+) = \[\\", line):
+            if match := re.match(r"(\w+) = \[  # cmap_def", line):
                 init_cmap_order.append(match.groups()[0])
     new_order_i = len(init_cmap_order)  # index of next new map after those in int_map_order
 
@@ -309,11 +309,12 @@ def gen_init_py(output_file, csv_folders):
                 base = csv_path.stem.replace("-","_").replace("_n256","")
                 if base in cmaps:
                     continue
-                output.write("\n\n"+base+" = [\\\n")
+                output.write("\n\n")
+                output.write("{0} = [  # cmap_def\n".format(base))
                 with open(csv_path, 'r') as csvfile:
                     reader = csv.reader(csvfile)
                     for row in reader:
-                        output.write("["+', '.join(row)+"],\n")
+                        output.write("[{0}],\n".format(", ".join(row)))
                 output.write("]\n")
                 output.write("b_{0} = bokeh_palette('{0}',{0})\n".format(base))
                 output.write("m_{0} = mpl_cm('{0}',{0})\n".format(base))
