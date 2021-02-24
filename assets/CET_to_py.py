@@ -6,9 +6,9 @@ Also adds Glasbey colormaps created using: https://github.com/taketwo/glasbey
 see https://github.com/pyviz/colorcet/issues/11 for more details
 """
 
-from pathlib import Path
+import csv
 import re
-import os, os.path, csv
+from pathlib import Path
 
 csv_folders = ['CETperceptual_csv_0_1', 'CETperceptual_csv_0_1_v2', 'Glasbey']
 output_file = '../colorcet/__init__.py'
