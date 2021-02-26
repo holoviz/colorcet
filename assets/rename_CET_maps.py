@@ -27,7 +27,8 @@ for path in CET_csvs:
         name += "_n256"
     new_name = f"{name}.csv"
     newnames.append(new_name)
-    subprocess.run(f'git mv -vk "{path}" "{orig_path / new_name}"', shell=True)
+    new_path = orig_path / new_name
+    subprocess.run(f'git mv -vk "{path}" "{new_path}"', shell=True)
 
 subprocess.run(f"git rm -rf CETperceptual_csv_0_1_v2", shell=True)
 
