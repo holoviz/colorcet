@@ -127,7 +127,7 @@ aliases_v2 = {'linear_green_5_95_c69': 'linear_kgy_5_95_c69', 'linear_blue_5_95_
 mapping_flipped = {'linear_grey_0_100_c0': 'CET_L1', 'linear_grey_10_95_c0': 'CET_L2', 'linear_kryw_0_100_c71': 'CET_L3', 'linear_kry_0_97_c73': 'CET_L4', 'linear_kgy_5_95_c69': 'CET_L5', 'linear_kbc_5_95_c73': 'CET_L6', 'linear_bmw_5_95_c86': 'CET_L7', 'linear_bmy_10_95_c71': 'CET_L8', 'linear_bgyw_20_98_c66': 'CET_L9', 'linear_gow_60_85_c27': 'CET_L10', 'linear_gow_65_90_c35': 'CET_L11', 'linear_blue_95_50_c20': 'CET_L12', 'linear_ternary_red_0_50_c52': 'CET_L13', 'linear_ternary_green_0_46_c42': 'CET_L14', 'linear_ternary_blue_0_44_c57': 'CET_L15', 'linear_kbgyw_5_98_c62': 'CET_L16', 'linear_worb_100_25_c53': 'CET_L17', 'linear_wyor_100_45_c55': 'CET_L18', 'linear_wcmr_100_45_c42': 'CET_L19', 'diverging_bwr_40_95_c42': 'CET_D1', 'diverging_bwr_20_95_c54': 'CET_D1A', 'diverging_gwv_55_95_c39': 'CET_D2', 'diverging_gwr_55_95_c38': 'CET_D3', 'diverging_bkr_55_10_c35': 'CET_D4', 'diverging_bky_60_10_c30': 'CET_D6', 'diverging_linear_bjy_30_90_c45': 'CET_D7', 'diverging_linear_bjr_30_55_c53': 'CET_D8', 'diverging_bwr_55_98_c37': 'CET_D9', 'diverging_cwm_80_100_c22': 'CET_D10', 'diverging_bwg_20_95_c41': 'CET_D13', 'diverging_rainbow_bgymr_45_85_c67': 'CET_R3', 'rainbow_bgyrm_35_85_c69': 'CET_R1', 'rainbow_bgyr_35_85_c72': 'CET_R2', 'cyclic_mrybm_35_75_c68': 'CET_C1', 'cyclic_mrybm_35_75_c68_s25': 'CET_C1s', 'cyclic_mygbm_30_95_c78': 'CET_C2', 'cyclic_mygbm_30_95_c78_s25': 'CET_C2s', 'cyclic_wrwbw_40_90_c42': 'CET_C4', 'cyclic_wrwbw_40_90_c42_s25': 'CET_C4s', 'cyclic_grey_15_85_c0': 'CET_C5', 'cyclic_grey_15_85_c0_s25': 'CET_C5s', 'isoluminant_cgo_70_c39': 'CET_I1', 'isoluminant_cgo_80_c38': 'CET_I2', 'isoluminant_cm_70_c39': 'CET_I3', 'diverging_isoluminant_cjo_70_c25': 'CET_D11', 'diverging_isoluminant_cjm_75_c23': 'CET_D12', 'linear_protanopic_deuteranopic_kbjyw_5_95_c25': 'CET_CBL1', 'linear_protanopic_deuteranopic_kbw_5_98_c40': 'CET_CBL2', 'diverging_protanopic_deuteranopic_bwy_60_95_c32': 'CET_CBD1', 'cyclic_protanopic_deuteranopic_bwyk_16_96_c31': 'CET_CBC1', 'cyclic_protanopic_deuteranopic_wywb_55_96_c33': 'CET_CBC2', 'linear_tritanopic_krjcw_5_98_c46': 'CET_CBTL1', 'linear_tritanopic_krjcw_5_95_c24': 'CET_CBTL2', 'diverging_tritanopic_cwr_75_98_c20': 'CET_CBTD1', 'cyclic_tritanopic_cwrk_40_100_c20': 'CET_CBTC1', 'cyclic_tritanopic_wrwc_70_100_c20': 'CET_CBTC2'}
 
 
-diverging_isoluminant_cjm_75_c23 = [\
+diverging_isoluminant_cjm_75_c23 = [  # cmap_def
 [0, 0.78663, 1],
 [0, 0.78616, 0.99976],
 [0, 0.78569, 0.99755],
@@ -400,7 +400,7 @@ register_cmap('cet_CET_D12_r',m_diverging_isoluminant_cjm_75_c23_r)
 
 
 
-linear_grey_10_95_c0 = [\
+linear_grey_10_95_c0 = [  # cmap_def
 [0.10767, 0.1077, 0.1077],
 [0.11032, 0.11035, 0.11035],
 [0.11295, 0.11298, 0.11297],
@@ -682,7 +682,7 @@ register_cmap('cet_CET_L2_r',m_linear_grey_10_95_c0_r)
 
 
 
-isoluminant_cgo_70_c39 = [\
+isoluminant_cgo_70_c39 = [  # cmap_def
 [0.21566, 0.71777, 0.92594],
 [0.21805, 0.71808, 0.92254],
 [0.2204, 0.71839, 0.91913],
@@ -955,7 +955,7 @@ register_cmap('cet_CET_I1_r',m_isoluminant_cgo_70_c39_r)
 
 
 
-diverging_bky_60_10_c30 = [\
+diverging_bky_60_10_c30 = [  # cmap_def
 [0.056674, 0.57959, 0.98121],
 [0.066107, 0.57547, 0.97345],
 [0.074463, 0.57135, 0.9657],
@@ -1237,7 +1237,7 @@ register_cmap('cet_CET_D6_r',m_diverging_bky_60_10_c30_r)
 
 
 
-diverging_bwr_40_95_c42 = [\
+diverging_bwr_40_95_c42 = [  # cmap_def
 [0.12757, 0.31619, 0.85836],
 [0.14675, 0.32048, 0.85923],
 [0.16386, 0.32476, 0.8601],
@@ -1519,7 +1519,7 @@ register_cmap('cet_CET_D1_r',m_diverging_bwr_40_95_c42_r)
 
 
 
-cyclic_mrybm_35_75_c68 = [\
+cyclic_mrybm_35_75_c68 = [  # cmap_def
 [0.97561, 0.52012, 0.97096],
 [0.98033, 0.51722, 0.96319],
 [0.9842, 0.51357, 0.95448],
@@ -1792,7 +1792,7 @@ register_cmap('cet_CET_C1_r',m_cyclic_mrybm_35_75_c68_r)
 
 
 
-linear_blue_5_95_c73 = [\
+linear_blue_5_95_c73 = [  # cmap_def
 [0, 0.0024382, 0.30687],
 [0, 0.0044692, 0.31437],
 [0, 0.0062324, 0.32191],
@@ -2065,7 +2065,8 @@ cm_n['kbc_r'] = mpl_cm('kbc_r',list(reversed(linear_blue_5_95_c73)))
 
 
 
-diverging_gkr_60_10_c40 = [\
+
+diverging_gkr_60_10_c40 = [  # cmap_def
 [0.2109, 0.65114, 0.08795],
 [0.21113, 0.64645, 0.089674],
 [0.21134, 0.64175, 0.091371],
@@ -2330,7 +2331,7 @@ m_diverging_gkr_60_10_c40_r = mpl_cm('diverging_gkr_60_10_c40_r',list(reversed(d
 
 
 
-diverging_gwv_55_95_c39 = [\
+diverging_gwv_55_95_c39 = [  # cmap_def
 [0.22157, 0.59107, 0.055073],
 [0.22965, 0.59389, 0.068993],
 [0.2376, 0.59671, 0.081291],
@@ -2612,7 +2613,7 @@ register_cmap('cet_CET_D2_r',m_diverging_gwv_55_95_c39_r)
 
 
 
-rainbow_bgyrm_35_85_c71 = [\
+rainbow_bgyrm_35_85_c71 = [  # cmap_def
 [0, 0.20755, 0.97632],
 [0, 0.22113, 0.96201],
 [0, 0.23397, 0.94773],
@@ -2877,7 +2878,7 @@ m_rainbow_bgyrm_35_85_c71_r = mpl_cm('rainbow_bgyrm_35_85_c71_r',list(reversed(r
 
 
 
-linear_ternary_green_0_46_c42 = [\
+linear_ternary_green_0_46_c42 = [  # cmap_def
 [0, 0, 0],
 [0, 0.0035927, 0],
 [0, 0.0071431, 1.452e-17],
@@ -3159,7 +3160,7 @@ register_cmap('cet_CET_L14_r',m_linear_ternary_green_0_46_c42_r)
 
 
 
-linear_kryw_5_100_c64 = [\
+linear_kryw_5_100_c64 = [  # cmap_def
 [0.066001, 0.066024, 0.066019],
 [0.080369, 0.066784, 0.064674],
 [0.092822, 0.067552, 0.063341],
@@ -3424,7 +3425,7 @@ m_linear_kryw_5_100_c64_r = mpl_cm('linear_kryw_5_100_c64_r',list(reversed(linea
 
 
 
-diverging_bwr_55_98_c37 = [\
+diverging_bwr_55_98_c37 = [  # cmap_def
 [0.14124, 0.50092, 0.99811],
 [0.16238, 0.50425, 0.99811],
 [0.18106, 0.50758, 0.99811],
@@ -3697,7 +3698,7 @@ register_cmap('cet_CET_D9_r',m_diverging_bwr_55_98_c37_r)
 
 
 
-cyclic_mygbm_30_95_c78_s25 = [\
+cyclic_mygbm_30_95_c78_s25 = [  # cmap_def
 [0.18062, 0.13244, 0.91856],
 [0.19173, 0.12446, 0.92396],
 [0.20389, 0.11765, 0.92889],
@@ -3979,7 +3980,7 @@ register_cmap('cet_CET_C2s_r',m_cyclic_mygbm_30_95_c78_s25_r)
 
 
 
-diverging_rainbow_bgymr_45_85_c67 = [\
+diverging_rainbow_bgymr_45_85_c67 = [  # cmap_def
 [0.032081, 0.36182, 0.97348],
 [0.05836, 0.37092, 0.95845],
 [0.075961, 0.37984, 0.94345],
@@ -4252,7 +4253,7 @@ register_cmap('cet_CET_R3_r',m_diverging_rainbow_bgymr_45_85_c67_r)
 
 
 
-linear_bgyw_15_100_c68 = [\
+linear_bgyw_15_100_c68 = [  # cmap_def
 [0.10261, 0, 0.52493],
 [0.10283, 0, 0.53197],
 [0.10301, 0, 0.53902],
@@ -4526,7 +4527,7 @@ cm_n['bgyw_r'] = mpl_cm('bgyw_r',list(reversed(linear_bgyw_15_100_c68)))
 
 
 
-diverging_isoluminant_cjo_70_c25 = [\
+diverging_isoluminant_cjo_70_c25 = [  # cmap_def
 [0, 0.71527, 1],
 [0, 0.7149, 1],
 [0, 0.71453, 1],
@@ -4799,7 +4800,7 @@ register_cmap('cet_CET_D11_r',m_diverging_isoluminant_cjo_70_c25_r)
 
 
 
-cyclic_mygbm_30_95_c78 = [\
+cyclic_mygbm_30_95_c78 = [  # cmap_def
 [0.93769, 0.33352, 0.94809],
 [0.94383, 0.34283, 0.94239],
 [0.94939, 0.35275, 0.93613],
@@ -5072,7 +5073,7 @@ register_cmap('cet_CET_C2_r',m_cyclic_mygbm_30_95_c78_r)
 
 
 
-cyclic_mrybm_35_75_c68_s25 = [\
+cyclic_mrybm_35_75_c68_s25 = [  # cmap_def
 [0.24409, 0.24544, 0.94131],
 [0.25448, 0.24134, 0.94753],
 [0.26529, 0.23866, 0.95301],
@@ -5345,7 +5346,7 @@ register_cmap('cet_CET_C1s_r',m_cyclic_mrybm_35_75_c68_s25_r)
 
 
 
-linear_bmw_5_95_c86 = [\
+linear_bmw_5_95_c86 = [  # cmap_def
 [0, 0.0078689, 0.29563],
 [0, 0.01018, 0.30347],
 [0, 0.01249, 0.31136],
@@ -5618,7 +5619,7 @@ register_cmap('cet_CET_L7_r',m_linear_bmw_5_95_c86_r)
 
 
 
-linear_grey_0_100_c0 = [\
+linear_grey_0_100_c0 = [  # cmap_def
 [0, 0, 0],
 [0.0055606, 0.0055631, 0.0055625],
 [0.011212, 0.011219, 0.011217],
@@ -5900,7 +5901,7 @@ register_cmap('cet_CET_L1_r',m_linear_grey_0_100_c0_r)
 
 
 
-linear_bmy_10_95_c71 = [\
+linear_bmy_10_95_c71 = [  # cmap_def
 [0.0018068, 0.058001, 0.36399],
 [0.0024107, 0.059964, 0.37048],
 [0.0031987, 0.061692, 0.37697],
@@ -6173,7 +6174,7 @@ register_cmap('cet_CET_L8_r',m_linear_bmy_10_95_c71_r)
 
 
 
-diverging_isoluminant_cjm_75_c24 = [\
+diverging_isoluminant_cjm_75_c24 = [  # cmap_def
 [0, 0.79435, 0.99671],
 [0, 0.79384, 0.99455],
 [0, 0.79333, 0.99239],
@@ -6438,7 +6439,7 @@ m_diverging_isoluminant_cjm_75_c24_r = mpl_cm('diverging_isoluminant_cjm_75_c24_
 
 
 
-rainbow_bgyr_35_85_c73 = [\
+rainbow_bgyr_35_85_c73 = [  # cmap_def
 [0, 0.20755, 0.97632],
 [0, 0.21857, 0.96476],
 [0, 0.2291, 0.95322],
@@ -6712,7 +6713,7 @@ cm_n['rainbow_r'] = mpl_cm('rainbow_r',list(reversed(rainbow_bgyr_35_85_c73)))
 
 
 
-rainbow_bgyr_35_85_c72 = [\
+rainbow_bgyr_35_85_c72 = [  # cmap_def
 [0, 0.20387, 0.96251],
 [0, 0.21524, 0.9514],
 [0, 0.22613, 0.94031],
@@ -6985,7 +6986,7 @@ register_cmap('cet_CET_R2_r',m_rainbow_bgyr_35_85_c72_r)
 
 
 
-linear_kry_5_98_c75 = [\
+linear_kry_5_98_c75 = [  # cmap_def
 [0.066001, 0.066024, 0.066019],
 [0.080538, 0.066611, 0.064712],
 [0.093113, 0.067208, 0.063412],
@@ -7250,7 +7251,7 @@ m_linear_kry_5_98_c75_r = mpl_cm('linear_kry_5_98_c75_r',list(reversed(linear_kr
 
 
 
-linear_blue_95_50_c20 = [\
+linear_blue_95_50_c20 = [  # cmap_def
 [0.94334, 0.94353, 0.94348],
 [0.94036, 0.94166, 0.94325],
 [0.93738, 0.9398, 0.94302],
@@ -7532,7 +7533,7 @@ register_cmap('cet_CET_L12_r',m_linear_blue_95_50_c20_r)
 
 
 
-linear_ternary_red_0_50_c52 = [\
+linear_ternary_red_0_50_c52 = [  # cmap_def
 [0, 0, 0],
 [0.0080248, 0.0015152, 4.5084e-17],
 [0.016166, 0.0030536, 0],
@@ -7814,7 +7815,7 @@ register_cmap('cet_CET_L13_r',m_linear_ternary_red_0_50_c52_r)
 
 
 
-linear_bgyw_15_100_c67 = [\
+linear_bgyw_15_100_c67 = [  # cmap_def
 [0.10477, 0.0011197, 0.51875],
 [0.105, 0.0031206, 0.52587],
 [0.10521, 0.005201, 0.53301],
@@ -8079,7 +8080,7 @@ m_linear_bgyw_15_100_c67_r = mpl_cm('linear_bgyw_15_100_c67_r',list(reversed(lin
 
 
 
-linear_kry_5_95_c72 = [\
+linear_kry_5_95_c72 = [  # cmap_def
 [0.066001, 0.066024, 0.066019],
 [0.07965, 0.066744, 0.064745],
 [0.091664, 0.06747, 0.063475],
@@ -8344,7 +8345,7 @@ m_linear_kry_5_95_c72_r = mpl_cm('linear_kry_5_95_c72_r',list(reversed(linear_kr
 
 
 
-rainbow_bgyrm_35_85_c69 = [\
+rainbow_bgyrm_35_85_c69 = [  # cmap_def
 [0, 0.18656, 0.96265],
 [0, 0.20247, 0.94889],
 [0, 0.21731, 0.93516],
@@ -8617,7 +8618,7 @@ register_cmap('cet_CET_R1_r',m_rainbow_bgyrm_35_85_c69_r)
 
 
 
-linear_kryw_0_100_c71 = [\
+linear_kryw_0_100_c71 = [  # cmap_def
 [0, 0, 0],
 [0.027065, 2.143e-05, 0],
 [0.052054, 7.4728e-05, 0],
@@ -8899,7 +8900,7 @@ register_cmap('cet_CET_L3_r',m_linear_kryw_0_100_c71_r)
 
 
 
-diverging_bkr_55_10_c35 = [\
+diverging_bkr_55_10_c35 = [  # cmap_def
 [0.097481, 0.50736, 0.98205],
 [0.1033, 0.50389, 0.97428],
 [0.10863, 0.50041, 0.96653],
@@ -9181,7 +9182,7 @@ register_cmap('cet_CET_D4_r',m_diverging_bkr_55_10_c35_r)
 
 
 
-linear_green_5_95_c69 = [\
+linear_green_5_95_c69 = [  # cmap_def
 [0.0020082, 0.082527, 0.022201],
 [0.004381, 0.08615, 0.022118],
 [0.0067598, 0.089747, 0.022041],
@@ -9455,8 +9456,7 @@ cm_n['kgy_r'] = mpl_cm('kgy_r',list(reversed(linear_green_5_95_c69)))
 
 
 
-
-linear_bmw_5_95_c89 = [\
+linear_bmw_5_95_c89 = [  # cmap_def
 [0, 0.017709, 0.34641],
 [0, 0.020672, 0.3555],
 [0, 0.023402, 0.3646],
@@ -9730,7 +9730,7 @@ cm_n['bmw_r'] = mpl_cm('bmw_r',list(reversed(linear_bmw_5_95_c89)))
 
 
 
-cyclic_wrwbw_40_90_c42_s25 = [\
+cyclic_wrwbw_40_90_c42_s25 = [  # cmap_def
 [0.10246, 0.39014, 0.89689],
 [0.11205, 0.39152, 0.89693],
 [0.12596, 0.39371, 0.897],
@@ -10003,7 +10003,7 @@ register_cmap('cet_CET_C4s_r',m_cyclic_wrwbw_40_90_c42_s25_r)
 
 
 
-isoluminant_cgo_80_c38 = [\
+isoluminant_cgo_80_c38 = [  # cmap_def
 [0.43773, 0.82141, 1],
 [0.438, 0.82178, 1],
 [0.43825, 0.82216, 1],
@@ -10285,7 +10285,7 @@ register_cmap('cet_CET_I2_r',m_isoluminant_cgo_80_c38_r)
 
 
 
-cyclic_grey_15_85_c0_s25 = [\
+cyclic_grey_15_85_c0_s25 = [  # cmap_def
 [0.17676, 0.17681, 0.1768],
 [0.1775, 0.17755, 0.17754],
 [0.17871, 0.17875, 0.17874],
@@ -10558,7 +10558,7 @@ register_cmap('cet_CET_C5s_r',m_cyclic_grey_15_85_c0_s25_r)
 
 
 
-diverging_cwm_80_100_c22 = [\
+diverging_cwm_80_100_c22 = [  # cmap_def
 [0, 0.85071, 1],
 [0, 0.85194, 1],
 [0.056211, 0.85316, 1],
@@ -10831,7 +10831,7 @@ register_cmap('cet_CET_D10_r',m_diverging_cwm_80_100_c22_r)
 
 
 
-linear_gow_60_85_c27 = [\
+linear_gow_60_85_c27 = [  # cmap_def
 [0.39872, 0.60624, 0.56451],
 [0.40156, 0.60721, 0.56266],
 [0.4044, 0.60816, 0.5608],
@@ -11104,7 +11104,7 @@ register_cmap('cet_CET_L10_r',m_linear_gow_60_85_c27_r)
 
 
 
-linear_bmy_10_95_c78 = [\
+linear_bmy_10_95_c78 = [  # cmap_def
 [0, 0.047803, 0.4883],
 [0, 0.049705, 0.49553],
 [0, 0.051451, 0.50272],
@@ -11378,7 +11378,7 @@ cm_n['bmy_r'] = mpl_cm('bmy_r',list(reversed(linear_bmy_10_95_c78)))
 
 
 
-linear_gow_65_90_c35 = [\
+linear_gow_65_90_c35 = [  # cmap_def
 [0.43765, 0.67814, 0.36054],
 [0.44314, 0.67844, 0.361],
 [0.4486, 0.67874, 0.36146],
@@ -11651,7 +11651,7 @@ register_cmap('cet_CET_L11_r',m_linear_gow_65_90_c35_r)
 
 
 
-linear_ternary_blue_0_44_c57 = [\
+linear_ternary_blue_0_44_c57 = [  # cmap_def
 [0, 0, 0],
 [0.00074336, 0.0024531, 0.0074342],
 [0.0014922, 0.0049243, 0.014921],
@@ -11933,7 +11933,7 @@ register_cmap('cet_CET_L15_r',m_linear_ternary_blue_0_44_c57_r)
 
 
 
-isoluminant_cm_70_c39 = [\
+isoluminant_cm_70_c39 = [  # cmap_def
 [0.078311, 0.7275, 0.90055],
 [0.096546, 0.72692, 0.9011],
 [0.11226, 0.72635, 0.90165],
@@ -12206,7 +12206,7 @@ register_cmap('cet_CET_I3_r',m_isoluminant_cm_70_c39_r)
 
 
 
-diverging_linear_bjr_30_55_c53 = [\
+diverging_linear_bjr_30_55_c53 = [  # cmap_def
 [0, 0.1654, 0.84384],
 [0, 0.16745, 0.84024],
 [0, 0.16948, 0.83663],
@@ -12479,7 +12479,7 @@ register_cmap('cet_CET_D8_r',m_diverging_linear_bjr_30_55_c53_r)
 
 
 
-diverging_gwr_55_95_c38 = [\
+diverging_gwr_55_95_c38 = [  # cmap_def
 [0.22157, 0.59107, 0.055073],
 [0.22965, 0.59389, 0.068993],
 [0.2376, 0.59671, 0.081291],
@@ -12752,7 +12752,7 @@ register_cmap('cet_CET_D3_r',m_diverging_gwr_55_95_c38_r)
 
 
 
-linear_bgy_10_95_c74 = [\
+linear_bgy_10_95_c74 = [  # cmap_def
 [0, 0.047803, 0.4883],
 [0, 0.049756, 0.49556],
 [0, 0.051605, 0.50281],
@@ -13026,7 +13026,7 @@ cm_n['bgy_r'] = mpl_cm('bgy_r',list(reversed(linear_bgy_10_95_c74)))
 
 
 
-cyclic_grey_15_85_c0 = [\
+cyclic_grey_15_85_c0 = [  # cmap_def
 [0.46877, 0.46888, 0.46885],
 [0.47381, 0.47391, 0.47389],
 [0.47887, 0.47897, 0.47895],
@@ -13299,7 +13299,7 @@ register_cmap('cet_CET_C5_r',m_cyclic_grey_15_85_c0_r)
 
 
 
-cyclic_wrwbw_40_90_c42 = [\
+cyclic_wrwbw_40_90_c42 = [  # cmap_def
 [0.873, 0.83593, 0.84864],
 [0.8777, 0.8339, 0.84071],
 [0.88194, 0.83075, 0.832],
@@ -13572,7 +13572,7 @@ register_cmap('cet_CET_C4_r',m_cyclic_wrwbw_40_90_c42_r)
 
 
 
-linear_kryw_5_100_c67 = [\
+linear_kryw_5_100_c67 = [  # cmap_def
 [0.066001, 0.066024, 0.066019],
 [0.080835, 0.066624, 0.064683],
 [0.093644, 0.067235, 0.063358],
@@ -13837,7 +13837,7 @@ m_linear_kryw_5_100_c67_r = mpl_cm('linear_kryw_5_100_c67_r',list(reversed(linea
 
 
 
-diverging_linear_bjy_30_90_c45 = [\
+diverging_linear_bjy_30_90_c45 = [  # cmap_def
 [0.077854, 0.19343, 0.75827],
 [0.095213, 0.19629, 0.7569],
 [0.11007, 0.1991, 0.75553],
@@ -14119,7 +14119,7 @@ register_cmap('cet_CET_D7_r',m_diverging_linear_bjy_30_90_c45_r)
 
 
 
-linear_bgyw_20_98_c66 = [\
+linear_bgyw_20_98_c66 = [  # cmap_def
 [0.019721, 0, 0.67312],
 [0.021792, 0.0093198, 0.67457],
 [0.023764, 0.020375, 0.67602],
@@ -14392,7 +14392,7 @@ register_cmap('cet_CET_L9_r',m_linear_bgyw_20_98_c66_r)
 
 
 
-linear_tritanopic_krjcw_5_95_c24 = [\
+linear_tritanopic_krjcw_5_95_c24 = [  # cmap_def
 [0.066001, 0.066024, 0.066019],
 [0.076759, 0.067596, 0.06602],
 [0.086416, 0.069198, 0.066054],
@@ -14665,7 +14665,7 @@ register_cmap('cet_CET_CBTL2_r',m_linear_tritanopic_krjcw_5_95_c24_r)
 
 
 
-diverging_bwr_20_95_c54 = [\
+diverging_bwr_20_95_c54 = [  # cmap_def
 [0.091874, 0.16093, 0.4469],
 [0.09332, 0.16518, 0.45817],
 [0.094888, 0.16952, 0.4695],
@@ -14938,7 +14938,7 @@ register_cmap('cet_CET_D1A_r',m_diverging_bwr_20_95_c54_r)
 
 
 
-linear_tritanopic_krjcw_5_98_c46 = [\
+linear_tritanopic_krjcw_5_98_c46 = [  # cmap_def
 [0.066001, 0.066024, 0.066019],
 [0.078225, 0.067325, 0.065441],
 [0.089145, 0.068628, 0.064864],
@@ -15211,7 +15211,7 @@ register_cmap('cet_CET_CBTL1_r',m_linear_tritanopic_krjcw_5_98_c46_r)
 
 
 
-cyclic_protanopic_deuteranopic_wywb_55_96_c33 = [\
+cyclic_protanopic_deuteranopic_wywb_55_96_c33 = [  # cmap_def
 [0.93344, 0.92965, 0.9265],
 [0.93483, 0.9285, 0.91829],
 [0.93521, 0.92627, 0.90898],
@@ -15484,7 +15484,7 @@ register_cmap('cet_CET_CBC2_r',m_cyclic_protanopic_deuteranopic_wywb_55_96_c33_r
 
 
 
-diverging_bwg_20_95_c41 = [\
+diverging_bwg_20_95_c41 = [  # cmap_def
 [0.065559, 0.17633, 0.40763],
 [0.069881, 0.18111, 0.41595],
 [0.074129, 0.18595, 0.42428],
@@ -15757,7 +15757,7 @@ register_cmap('cet_CET_D13_r',m_diverging_bwg_20_95_c41_r)
 
 
 
-cyclic_protanopic_deuteranopic_bwyk_16_96_c31 = [\
+cyclic_protanopic_deuteranopic_bwyk_16_96_c31 = [  # cmap_def
 [0.24364, 0.52802, 0.91769],
 [0.2544, 0.53367, 0.92309],
 [0.26662, 0.53935, 0.92754],
@@ -16030,7 +16030,7 @@ register_cmap('cet_CET_CBC1_r',m_cyclic_protanopic_deuteranopic_bwyk_16_96_c31_r
 
 
 
-linear_wyor_100_45_c55 = [\
+linear_wyor_100_45_c55 = [  # cmap_def
 [0.99986, 1, 1],
 [0.99765, 0.99831, 0.98983],
 [0.99541, 0.99656, 0.97966],
@@ -16303,7 +16303,7 @@ register_cmap('cet_CET_L18_r',m_linear_wyor_100_45_c55_r)
 
 
 
-linear_wcmr_100_45_c42 = [\
+linear_wcmr_100_45_c42 = [  # cmap_def
 [0.99986, 1, 1],
 [0.99494, 0.99813, 0.99962],
 [0.99002, 0.9962, 0.99922],
@@ -16576,7 +16576,7 @@ register_cmap('cet_CET_L19_r',m_linear_wcmr_100_45_c42_r)
 
 
 
-diverging_protanopic_deuteranopic_bwy_60_95_c32 = [\
+diverging_protanopic_deuteranopic_bwy_60_95_c32 = [  # cmap_def
 [0.22906, 0.56603, 0.9967],
 [0.24157, 0.56872, 0.99641],
 [0.25345, 0.57142, 0.99612],
@@ -16858,7 +16858,7 @@ register_cmap('cet_CET_CBD1_r',m_diverging_protanopic_deuteranopic_bwy_60_95_c32
 
 
 
-diverging_tritanopic_cwr_75_98_c20 = [\
+diverging_tritanopic_cwr_75_98_c20 = [  # cmap_def
 [0.16144, 0.79052, 0.90539],
 [0.17912, 0.79202, 0.90596],
 [0.19524, 0.79352, 0.90654],
@@ -17140,7 +17140,7 @@ register_cmap('cet_CET_CBTD1_r',m_diverging_tritanopic_cwr_75_98_c20_r)
 
 
 
-linear_protanopic_deuteranopic_kbw_5_98_c40 = [\
+linear_protanopic_deuteranopic_kbw_5_98_c40 = [  # cmap_def
 [0.066001, 0.066024, 0.066019],
 [0.068392, 0.069594, 0.07418],
 [0.070639, 0.072929, 0.081677],
@@ -17413,7 +17413,7 @@ register_cmap('cet_CET_CBL2_r',m_linear_protanopic_deuteranopic_kbw_5_98_c40_r)
 
 
 
-linear_protanopic_deuteranopic_kbjyw_5_95_c25 = [\
+linear_protanopic_deuteranopic_kbjyw_5_95_c25 = [  # cmap_def
 [0.066001, 0.066024, 0.066019],
 [0.067911, 0.069463, 0.075246],
 [0.069781, 0.072628, 0.083652],
@@ -17686,7 +17686,7 @@ register_cmap('cet_CET_CBL1_r',m_linear_protanopic_deuteranopic_kbjyw_5_95_c25_r
 
 
 
-linear_worb_100_25_c53 = [\
+linear_worb_100_25_c53 = [  # cmap_def
 [0.99986, 1, 1],
 [0.99813, 0.99701, 0.98897],
 [0.99635, 0.99397, 0.97793],
@@ -17959,7 +17959,7 @@ register_cmap('cet_CET_L17_r',m_linear_worb_100_25_c53_r)
 
 
 
-linear_kbgyw_5_98_c62 = [\
+linear_kbgyw_5_98_c62 = [  # cmap_def
 [0.066001, 0.066024, 0.066019],
 [0.073531, 0.067157, 0.081516],
 [0.080354, 0.068289, 0.094843],
@@ -18232,7 +18232,7 @@ register_cmap('cet_CET_L16_r',m_linear_kbgyw_5_98_c62_r)
 
 
 
-linear_kbc_5_95_c73 = [\
+linear_kbc_5_95_c73 = [  # cmap_def
 [0, 0.0024382, 0.30687],
 [0, 0.0044692, 0.31437],
 [0, 0.0062324, 0.32191],
@@ -18505,7 +18505,7 @@ register_cmap('cet_CET_L6_r',m_linear_kbc_5_95_c73_r)
 
 
 
-cyclic_tritanopic_wrwc_70_100_c20 = [\
+cyclic_tritanopic_wrwc_70_100_c20 = [  # cmap_def
 [0.98457, 0.98115, 0.98169],
 [0.98868, 0.9791, 0.97837],
 [0.99201, 0.97625, 0.97432],
@@ -18778,7 +18778,7 @@ register_cmap('cet_CET_CBTC2_r',m_cyclic_tritanopic_wrwc_70_100_c20_r)
 
 
 
-linear_kgy_5_95_c69 = [\
+linear_kgy_5_95_c69 = [  # cmap_def
 [0.0020082, 0.082527, 0.022201],
 [0.004381, 0.08615, 0.022118],
 [0.0067598, 0.089747, 0.022041],
@@ -19051,7 +19051,7 @@ register_cmap('cet_CET_L5_r',m_linear_kgy_5_95_c69_r)
 
 
 
-cyclic_tritanopic_cwrk_40_100_c20 = [\
+cyclic_tritanopic_cwrk_40_100_c20 = [  # cmap_def
 [0.1493, 0.73523, 0.84245],
 [0.1629, 0.73969, 0.8467],
 [0.17926, 0.74403, 0.85055],
@@ -19324,7 +19324,7 @@ register_cmap('cet_CET_CBTC1_r',m_cyclic_tritanopic_cwrk_40_100_c20_r)
 
 
 
-linear_kry_0_97_c73 = [\
+linear_kry_0_97_c73 = [  # cmap_def
 [0, 0, 0],
 [0.025875, 1.8579e-05, 0],
 [0.050536, 6.891e-05, 2.2895e-17],
@@ -19597,7 +19597,7 @@ register_cmap('cet_CET_L4_r',m_linear_kry_0_97_c73_r)
 
 
 
-glasbey_category10 = [\
+glasbey_category10 = [  # cmap_def
 [0.121569, 0.466667, 0.705882],
 [1.000000, 0.498039, 0.054902],
 [0.172549, 0.627451, 0.172549],
@@ -19862,7 +19862,7 @@ m_glasbey_category10_r = mpl_cm('glasbey_category10_r',list(reversed(glasbey_cat
 
 
 
-glasbey_bw_minc_20_minl_30 = [\
+glasbey_bw_minc_20_minl_30 = [  # cmap_def
 [0.843137, 0.000000, 0.000000],
 [0.007843, 0.533333, 0.000000],
 [0.713725, 0.000000, 1.000000],
@@ -20136,7 +20136,7 @@ cm_n['glasbey_light_r'] = mpl_cm('glasbey_light_r',list(reversed(glasbey_bw_minc
 
 
 
-glasbey_bw_minc_20_hue_330_100 = [\
+glasbey_bw_minc_20_hue_330_100 = [  # cmap_def
 [0.843137, 0.000000, 0.000000],
 [1.000000, 0.384314, 0.972549],
 [0.674510, 0.615686, 0.000000],
@@ -20410,7 +20410,7 @@ cm_n['glasbey_warm_r'] = mpl_cm('glasbey_warm_r',list(reversed(glasbey_bw_minc_2
 
 
 
-glasbey_bw_minc_20 = [\
+glasbey_bw_minc_20 = [  # cmap_def
 [0.843137, 0.000000, 0.000000],
 [0.549020, 0.235294, 1.000000],
 [0.007843, 0.533333, 0.000000],
@@ -20684,7 +20684,7 @@ cm_n['glasbey_r'] = mpl_cm('glasbey_r',list(reversed(glasbey_bw_minc_20)))
 
 
 
-glasbey_bw = [\
+glasbey_bw = [  # cmap_def
 [0.843137, 0.000000, 0.000000],
 [0.549020, 0.235294, 1.000000],
 [0.007843, 0.533333, 0.000000],
@@ -20949,7 +20949,7 @@ m_glasbey_bw_r = mpl_cm('glasbey_bw_r',list(reversed(glasbey_bw)))
 
 
 
-glasbey_bw_minc_20_maxl_70 = [\
+glasbey_bw_minc_20_maxl_70 = [  # cmap_def
 [0.843137, 0.000000, 0.000000],
 [0.549020, 0.235294, 1.000000],
 [0.007843, 0.533333, 0.000000],
@@ -21223,7 +21223,7 @@ cm_n['glasbey_dark_r'] = mpl_cm('glasbey_dark_r',list(reversed(glasbey_bw_minc_2
 
 
 
-glasbey_hv = [\
+glasbey_hv = [  # cmap_def
 [0.188235, 0.635294, 0.854902],
 [0.988235, 0.309804, 0.188235],
 [0.898039, 0.682353, 0.219608],
@@ -21488,7 +21488,7 @@ m_glasbey_hv_r = mpl_cm('glasbey_hv_r',list(reversed(glasbey_hv)))
 
 
 
-glasbey_bw_minc_20_hue_150_280 = [\
+glasbey_bw_minc_20_hue_150_280 = [  # cmap_def
 [0.050980, 0.415686, 1.000000],
 [0.035294, 0.584314, 0.301961],
 [0.000000, 0.792157, 0.898039],

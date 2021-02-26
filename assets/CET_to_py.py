@@ -6,9 +6,11 @@ Also adds Glasbey colormaps created using: https://github.com/taketwo/glasbey
 see https://github.com/pyviz/colorcet/issues/11 for more details
 """
 
-import os, os.path, csv
+import csv
+import re
+from pathlib import Path
 
-paths = ['CETperceptual_csv_0_1', 'CETperceptual_csv_0_1_v2', 'Glasbey']
+csv_folders = ['CET', 'Glasbey']
 output_file = '../colorcet/__init__.py'
 header = '''\
 """
@@ -257,34 +259,75 @@ def create_alias(alias, base, output, is_name=True):
         output.write("register_cmap('cet_{0}',m_{1})\n".format(alias,base))
         output.write("register_cmap('cet_{0}_r',m_{1}_r)\n".format(alias,base))
 
-cmaps = []
-with open(output_file, "w") as output:
-    output.write(header)
-    output.write("aliases = {}\n".format(aliases))
-    output.write("aliases_v2 = {}\n".format(aliases_v2))
-    output.write("mapping_flipped = {}\n".format(mapping_flipped))
-    for path in paths:
-      for filename in os.listdir(path):
-          if filename.endswith(".csv"):
-              base = mapping.get(filename[:-4], filename[:-4])
-              base = base.replace("-","_").replace("_n256","")
-              if base in cmaps:
-                  continue
-              output.write("\n\n"+base+" = [\\\n")
-              with open(os.path.join(path,filename),'r') as csvfile:
-                  reader = csv.reader(csvfile)
-                  for row in reader:
-                      output.write("["+', '.join(row)+"],\n")
-              output.write("]\n")
-              output.write("b_{0} = bokeh_palette('{0}',{0})\n".format(base))
-              output.write("m_{0} = mpl_cm('{0}',{0})\n".format(base))
-              output.write("m_{0}_r = mpl_cm('{0}_r',list(reversed({0})))\n".format(base))
-              if base in aliases:
-                  alias = aliases[base]
-                  create_alias(alias, base, output)
-              if base in mapping_flipped:
-                  alias = mapping_flipped[base]
-                  create_alias(alias, base, output, is_name=False)
-              output.write("\n\n")
-              cmaps.append(base)
-    output.write(footer)
+
+def get_csvs_in_order(output_file, csv_folders):
+    """Get the CSV files to write to the __init__.py, keeping the order found in __init__.py"""
+
+    # get order of existing maps in __init__.py
+    init_cmap_order = []
+    with open(output_file) as f:
+        while line := f.readline():
+            if match := re.match(r"(\w+) = \[  # cmap_def", line):
+                init_cmap_order.append(match.groups()[0])
+    new_order_i = len(init_cmap_order)  # index of next new map after those in int_map_order
+
+    # get all csvs
+    csv_paths = []
+    for fld in csv_folders:
+        csv_paths += list(Path(fld).glob("*.csv"))
+    csv_order = [-1]*len(csv_paths)
+
+    # Get a new ordering of the csvs from init_cmap_order
+    for path_i, csv_path in enumerate(csv_paths):
+        base = csv_path.stem.replace("-","_").replace("_n256","")
+        try:
+            csv_order[path_i] = init_cmap_order.index(base)
+        except ValueError:
+            # new csv not in the original order, so put it at the end
+            csv_order[path_i] = new_order_i
+            new_order_i += 1
+
+    # Put the csv paths in the new order
+    csv_paths_new = [Path()]*len(csv_paths)
+    for path_i, order_i in enumerate(csv_order):
+        csv_paths_new[order_i] = csv_paths[path_i]
+
+    return csv_paths_new
+
+
+def gen_init_py(output_file, csv_folders):
+    csv_paths = get_csvs_in_order(output_file, csv_folders)
+
+    cmaps = []
+    with open(output_file, "w") as output:
+        output.write(header)
+        output.write("aliases = {}\n".format(aliases))
+        output.write("aliases_v2 = {}\n".format(aliases_v2))
+        output.write("mapping_flipped = {}\n".format(mapping_flipped))
+        for csv_path in csv_paths:
+            if csv_path.suffix == ".csv":
+                base = csv_path.stem.replace("-","_").replace("_n256","")
+                if base in cmaps:
+                    continue
+                output.write("\n\n")
+                output.write("{0} = [  # cmap_def\n".format(base))
+                with open(csv_path, 'r') as csvfile:
+                    reader = csv.reader(csvfile)
+                    for row in reader:
+                        output.write("[{0}],\n".format(", ".join(row)))
+                output.write("]\n")
+                output.write("b_{0} = bokeh_palette('{0}',{0})\n".format(base))
+                output.write("m_{0} = mpl_cm('{0}',{0})\n".format(base))
+                output.write("m_{0}_r = mpl_cm('{0}_r',list(reversed({0})))\n".format(base))
+                if base in aliases:
+                    alias = aliases[base]
+                    create_alias(alias, base, output)
+                if base in mapping_flipped:
+                    alias = mapping_flipped[base]
+                    create_alias(alias, base, output, is_name=False)
+                output.write("\n\n")
+                cmaps.append(base)
+        output.write(footer)
+
+if __name__ == "__main__":
+    gen_init_py(output_file, csv_folders)
