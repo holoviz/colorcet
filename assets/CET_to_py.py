@@ -58,6 +58,7 @@ Some of the Glasbey sets are aliased to short names as explained in the User Gui
 __version__ = '1.0.0'
 
 from collections import OrderedDict
+from itertools import chain
 
 class AttrODict(OrderedDict):
     """Ordered dictionary with attribute access (e.g. for tab completion)"""
@@ -108,7 +109,7 @@ def all_original_names(group=None, not_group=None, only_aliased=False):
     if only_aliased:
         names = filter(lambda x: x in aliases.keys(), names)
     else:
-        names = filter(lambda x: x not in aliases.values(), names)
+        names = filter(lambda x: x not in chain.from_iterable(aliases.values()), names)
     return sorted(list(names))
 
 palette = AttrODict()
