@@ -102,6 +102,9 @@ def get_aliases(name):
     for k, v in aliases.items():
         if k == name or name in v:
             names = names.union(v + [k])
+    for k, v in mapping_flipped.items():
+        if name in (k, v):
+            names = names.union([k, v])
     return ",  ".join(names)
 
 
@@ -163,6 +166,67 @@ aliases = dict(
     glasbey_bw_minc_20_hue_150_280                  = ["glasbey_cool"],
 )
 
+mapping = {
+  'CET-L1': 'linear_grey_0-100_c0',
+  'CET-L2': 'linear_grey_10-95_c0',
+  'CET-L3': 'linear_kryw_0-100_c71',
+  'CET-L4': 'linear_kry_0-97_c73',
+  'CET-L5': 'linear_kgy_5-95_c69',
+  'CET-L6': 'linear_kbc_5-95_c73',
+  'CET-L7': 'linear_bmw_5-95_c86',
+  'CET-L8': 'linear_bmy_10-95_c71',
+  'CET-L9': 'linear_bgyw_20-98_c66',
+  'CET-L10': 'linear_gow_60-85_c27',
+  'CET-L11': 'linear_gow_65-90_c35',
+  'CET-L12': 'linear_blue_95-50_c20',
+  'CET-L13': 'linear_ternary-red_0-50_c52',
+  'CET-L14': 'linear_ternary-green_0-46_c42',
+  'CET-L15': 'linear_ternary-blue_0-44_c57',
+  'CET-L16': 'linear_kbgyw_5-98_c62',
+  'CET-L17': 'linear_worb_100-25_c53',
+  'CET-L18': 'linear_wyor_100-45_c55',
+  'CET-L19': 'linear_wcmr_100-45_c42',
+  'CET-D1': 'diverging_bwr_40-95_c42',
+  'CET-D1A': 'diverging_bwr_20-95_c54',
+  'CET-D2': 'diverging_gwv_55-95_c39',
+  'CET-D3': 'diverging_gwr_55-95_c38',
+  'CET-D4': 'diverging_bkr_55-10_c35',
+  'CET-D6': 'diverging_bky_60-10_c30',
+  'CET-D7': 'diverging-linear_bjy_30-90_c45',
+  'CET-D8': 'diverging-linear_bjr_30-55_c53',
+  'CET-D9': 'diverging_bwr_55-98_c37',
+  'CET-D10': 'diverging_cwm_80-100_c22',
+  'CET-D13': 'diverging_bwg_20-95_c41',
+  'CET-R3': 'diverging-rainbow_bgymr_45-85_c67',
+  'CET-R1': 'rainbow_bgyrm_35-85_c69',
+  'CET-R2': 'rainbow_bgyr_35-85_c72',
+  'CET-C1': 'cyclic_mrybm_35-75_c68',
+  'CET-C1s': 'cyclic_mrybm_35-75_c68_s25',
+  'CET-C2': 'cyclic_mygbm_30-95_c78',
+  'CET-C2s': 'cyclic_mygbm_30-95_c78_s25',
+  'CET-C4': 'cyclic_wrwbw_40-90_c42',
+  'CET-C4s': 'cyclic_wrwbw_40-90_c42_s25',
+  'CET-C5': 'cyclic_grey_15-85_c0',
+  'CET-C5s': 'cyclic_grey_15-85_c0_s25',
+  'CET-I1': 'isoluminant_cgo_70_c39',
+  'CET-I2': 'isoluminant_cgo_80_c38',
+  'CET-I3': 'isoluminant_cm_70_c39',
+  'CET-D11': 'diverging-isoluminant_cjo_70_c25',
+  'CET-D12': 'diverging-isoluminant_cjm_75_c23',
+  'CET-CBL1': 'linear-protanopic-deuteranopic_kbjyw_5-95_c25',
+  'CET-CBL2': 'linear-protanopic-deuteranopic_kbw_5-98_c40',
+  'CET-CBD1': 'diverging-protanopic-deuteranopic_bwy_60-95_c32',
+  'CET-CBC1': 'cyclic-protanopic-deuteranopic_bwyk_16-96_c31',
+  'CET-CBC2': 'cyclic-protanopic-deuteranopic_wywb_55-96_c33',
+  'CET-CBTL1': 'linear-tritanopic_krjcw_5-98_c46',
+  'CET-CBTL2': 'linear-tritanopic_krjcw_5-95_c24',
+  'CET-CBTD1': 'diverging-tritanopic_cwr_75-98_c20',
+  'CET-CBTC1': 'cyclic-tritanopic_cwrk_40-100_c20',
+  'CET-CBTC2': 'cyclic-tritanopic_wrwc_70-100_c20',
+}
+
+mapping_flipped = {v.replace('-', '_'): k.replace('-', '_') for
+                   k, v in mapping.items()}
 
 def create_alias(alias, base, output, is_name=True):
     output.write("{0} = b_{1}\n".format(alias,base))
@@ -234,6 +298,7 @@ def gen_init_py(output_file, csv_folders):
     with open(output_file, "w") as output:
         output.write(header)
         output.write(format_dict("aliases", aliases))
+        output.write("mapping_flipped = {}\n".format(mapping_flipped))
         for csv_path in csv_paths:
             if csv_path.suffix == ".csv":
                 base = csv_path.stem.replace("-","_").replace("_n256","")
@@ -252,6 +317,9 @@ def gen_init_py(output_file, csv_folders):
                 if base in aliases:
                     for alias in aliases[base]:
                         create_alias(alias, base, output)
+                if base in mapping_flipped:
+                    alias = mapping_flipped[base]
+                    create_alias(alias, base, output, is_name=False)
                 output.write("\n\n")
                 cmaps.append(base)
         output.write(footer)

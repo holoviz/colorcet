@@ -87,6 +87,9 @@ def get_aliases(name):
     for k, v in aliases.items():
         if k == name or name in v:
             names = names.union(v + [k])
+    for k, v in mapping_flipped.items():
+        if name in (k, v):
+            names = names.union([k, v])
     return ",  ".join(names)
 
 
@@ -139,6 +142,7 @@ aliases = {
     'glasbey_bw_minc_20_hue_330_100': ['glasbey_warm'],
     'glasbey_bw_minc_20_hue_150_280': ['glasbey_cool'],
 }
+mapping_flipped = {'linear_grey_0_100_c0': 'CET_L1', 'linear_grey_10_95_c0': 'CET_L2', 'linear_kryw_0_100_c71': 'CET_L3', 'linear_kry_0_97_c73': 'CET_L4', 'linear_kgy_5_95_c69': 'CET_L5', 'linear_kbc_5_95_c73': 'CET_L6', 'linear_bmw_5_95_c86': 'CET_L7', 'linear_bmy_10_95_c71': 'CET_L8', 'linear_bgyw_20_98_c66': 'CET_L9', 'linear_gow_60_85_c27': 'CET_L10', 'linear_gow_65_90_c35': 'CET_L11', 'linear_blue_95_50_c20': 'CET_L12', 'linear_ternary_red_0_50_c52': 'CET_L13', 'linear_ternary_green_0_46_c42': 'CET_L14', 'linear_ternary_blue_0_44_c57': 'CET_L15', 'linear_kbgyw_5_98_c62': 'CET_L16', 'linear_worb_100_25_c53': 'CET_L17', 'linear_wyor_100_45_c55': 'CET_L18', 'linear_wcmr_100_45_c42': 'CET_L19', 'diverging_bwr_40_95_c42': 'CET_D1', 'diverging_bwr_20_95_c54': 'CET_D1A', 'diverging_gwv_55_95_c39': 'CET_D2', 'diverging_gwr_55_95_c38': 'CET_D3', 'diverging_bkr_55_10_c35': 'CET_D4', 'diverging_bky_60_10_c30': 'CET_D6', 'diverging_linear_bjy_30_90_c45': 'CET_D7', 'diverging_linear_bjr_30_55_c53': 'CET_D8', 'diverging_bwr_55_98_c37': 'CET_D9', 'diverging_cwm_80_100_c22': 'CET_D10', 'diverging_bwg_20_95_c41': 'CET_D13', 'diverging_rainbow_bgymr_45_85_c67': 'CET_R3', 'rainbow_bgyrm_35_85_c69': 'CET_R1', 'rainbow_bgyr_35_85_c72': 'CET_R2', 'cyclic_mrybm_35_75_c68': 'CET_C1', 'cyclic_mrybm_35_75_c68_s25': 'CET_C1s', 'cyclic_mygbm_30_95_c78': 'CET_C2', 'cyclic_mygbm_30_95_c78_s25': 'CET_C2s', 'cyclic_wrwbw_40_90_c42': 'CET_C4', 'cyclic_wrwbw_40_90_c42_s25': 'CET_C4s', 'cyclic_grey_15_85_c0': 'CET_C5', 'cyclic_grey_15_85_c0_s25': 'CET_C5s', 'isoluminant_cgo_70_c39': 'CET_I1', 'isoluminant_cgo_80_c38': 'CET_I2', 'isoluminant_cm_70_c39': 'CET_I3', 'diverging_isoluminant_cjo_70_c25': 'CET_D11', 'diverging_isoluminant_cjm_75_c23': 'CET_D12', 'linear_protanopic_deuteranopic_kbjyw_5_95_c25': 'CET_CBL1', 'linear_protanopic_deuteranopic_kbw_5_98_c40': 'CET_CBL2', 'diverging_protanopic_deuteranopic_bwy_60_95_c32': 'CET_CBD1', 'cyclic_protanopic_deuteranopic_bwyk_16_96_c31': 'CET_CBC1', 'cyclic_protanopic_deuteranopic_wywb_55_96_c33': 'CET_CBC2', 'linear_tritanopic_krjcw_5_98_c46': 'CET_CBTL1', 'linear_tritanopic_krjcw_5_95_c24': 'CET_CBTL2', 'diverging_tritanopic_cwr_75_98_c20': 'CET_CBTD1', 'cyclic_tritanopic_cwrk_40_100_c20': 'CET_CBTC1', 'cyclic_tritanopic_wrwc_70_100_c20': 'CET_CBTC2'}
 
 
 diverging_isoluminant_cjm_75_c23 = [  # cmap_def
@@ -402,6 +406,14 @@ diverging_isoluminant_cjm_75_c23 = [  # cmap_def
 b_diverging_isoluminant_cjm_75_c23 = bokeh_palette('diverging_isoluminant_cjm_75_c23',diverging_isoluminant_cjm_75_c23)
 m_diverging_isoluminant_cjm_75_c23 = mpl_cm('diverging_isoluminant_cjm_75_c23',diverging_isoluminant_cjm_75_c23)
 m_diverging_isoluminant_cjm_75_c23_r = mpl_cm('diverging_isoluminant_cjm_75_c23_r',list(reversed(diverging_isoluminant_cjm_75_c23)))
+CET_D12 = b_diverging_isoluminant_cjm_75_c23
+m_CET_D12 = m_diverging_isoluminant_cjm_75_c23
+m_CET_D12_r = m_diverging_isoluminant_cjm_75_c23_r
+palette['CET_D12'] = b_diverging_isoluminant_cjm_75_c23
+cm['CET_D12'] = m_diverging_isoluminant_cjm_75_c23
+cm['CET_D12_r'] = m_diverging_isoluminant_cjm_75_c23_r
+register_cmap('cet_CET_D12',m_diverging_isoluminant_cjm_75_c23)
+register_cmap('cet_CET_D12_r',m_diverging_isoluminant_cjm_75_c23_r)
 
 
 
@@ -676,6 +688,14 @@ cm['dimgray'] = m_linear_grey_10_95_c0
 cm['dimgray_r'] = m_linear_grey_10_95_c0_r
 cm_n['dimgray'] = mpl_cm('dimgray',linear_grey_10_95_c0)
 cm_n['dimgray_r'] = mpl_cm('dimgray_r',list(reversed(linear_grey_10_95_c0)))
+CET_L2 = b_linear_grey_10_95_c0
+m_CET_L2 = m_linear_grey_10_95_c0
+m_CET_L2_r = m_linear_grey_10_95_c0_r
+palette['CET_L2'] = b_linear_grey_10_95_c0
+cm['CET_L2'] = m_linear_grey_10_95_c0
+cm['CET_L2_r'] = m_linear_grey_10_95_c0_r
+register_cmap('cet_CET_L2',m_linear_grey_10_95_c0)
+register_cmap('cet_CET_L2_r',m_linear_grey_10_95_c0_r)
 
 
 
@@ -941,6 +961,14 @@ isoluminant_cgo_70_c39 = [  # cmap_def
 b_isoluminant_cgo_70_c39 = bokeh_palette('isoluminant_cgo_70_c39',isoluminant_cgo_70_c39)
 m_isoluminant_cgo_70_c39 = mpl_cm('isoluminant_cgo_70_c39',isoluminant_cgo_70_c39)
 m_isoluminant_cgo_70_c39_r = mpl_cm('isoluminant_cgo_70_c39_r',list(reversed(isoluminant_cgo_70_c39)))
+CET_I1 = b_isoluminant_cgo_70_c39
+m_CET_I1 = m_isoluminant_cgo_70_c39
+m_CET_I1_r = m_isoluminant_cgo_70_c39_r
+palette['CET_I1'] = b_isoluminant_cgo_70_c39
+cm['CET_I1'] = m_isoluminant_cgo_70_c39
+cm['CET_I1_r'] = m_isoluminant_cgo_70_c39_r
+register_cmap('cet_CET_I1',m_isoluminant_cgo_70_c39)
+register_cmap('cet_CET_I1_r',m_isoluminant_cgo_70_c39_r)
 
 
 
@@ -1215,6 +1243,14 @@ cm['bky'] = m_diverging_bky_60_10_c30
 cm['bky_r'] = m_diverging_bky_60_10_c30_r
 cm_n['bky'] = mpl_cm('bky',diverging_bky_60_10_c30)
 cm_n['bky_r'] = mpl_cm('bky_r',list(reversed(diverging_bky_60_10_c30)))
+CET_D6 = b_diverging_bky_60_10_c30
+m_CET_D6 = m_diverging_bky_60_10_c30
+m_CET_D6_r = m_diverging_bky_60_10_c30_r
+palette['CET_D6'] = b_diverging_bky_60_10_c30
+cm['CET_D6'] = m_diverging_bky_60_10_c30
+cm['CET_D6_r'] = m_diverging_bky_60_10_c30_r
+register_cmap('cet_CET_D6',m_diverging_bky_60_10_c30)
+register_cmap('cet_CET_D6_r',m_diverging_bky_60_10_c30_r)
 
 
 
@@ -1489,6 +1525,14 @@ cm['coolwarm'] = m_diverging_bwr_40_95_c42
 cm['coolwarm_r'] = m_diverging_bwr_40_95_c42_r
 cm_n['coolwarm'] = mpl_cm('coolwarm',diverging_bwr_40_95_c42)
 cm_n['coolwarm_r'] = mpl_cm('coolwarm_r',list(reversed(diverging_bwr_40_95_c42)))
+CET_D1 = b_diverging_bwr_40_95_c42
+m_CET_D1 = m_diverging_bwr_40_95_c42
+m_CET_D1_r = m_diverging_bwr_40_95_c42_r
+palette['CET_D1'] = b_diverging_bwr_40_95_c42
+cm['CET_D1'] = m_diverging_bwr_40_95_c42
+cm['CET_D1_r'] = m_diverging_bwr_40_95_c42_r
+register_cmap('cet_CET_D1',m_diverging_bwr_40_95_c42)
+register_cmap('cet_CET_D1_r',m_diverging_bwr_40_95_c42_r)
 
 
 
@@ -1754,6 +1798,14 @@ cyclic_mrybm_35_75_c68 = [  # cmap_def
 b_cyclic_mrybm_35_75_c68 = bokeh_palette('cyclic_mrybm_35_75_c68',cyclic_mrybm_35_75_c68)
 m_cyclic_mrybm_35_75_c68 = mpl_cm('cyclic_mrybm_35_75_c68',cyclic_mrybm_35_75_c68)
 m_cyclic_mrybm_35_75_c68_r = mpl_cm('cyclic_mrybm_35_75_c68_r',list(reversed(cyclic_mrybm_35_75_c68)))
+CET_C1 = b_cyclic_mrybm_35_75_c68
+m_CET_C1 = m_cyclic_mrybm_35_75_c68
+m_CET_C1_r = m_cyclic_mrybm_35_75_c68_r
+palette['CET_C1'] = b_cyclic_mrybm_35_75_c68
+cm['CET_C1'] = m_cyclic_mrybm_35_75_c68
+cm['CET_C1_r'] = m_cyclic_mrybm_35_75_c68_r
+register_cmap('cet_CET_C1',m_cyclic_mrybm_35_75_c68)
+register_cmap('cet_CET_C1_r',m_cyclic_mrybm_35_75_c68_r)
 
 
 
@@ -2293,6 +2345,14 @@ cm['gwv'] = m_diverging_gwv_55_95_c39
 cm['gwv_r'] = m_diverging_gwv_55_95_c39_r
 cm_n['gwv'] = mpl_cm('gwv',diverging_gwv_55_95_c39)
 cm_n['gwv_r'] = mpl_cm('gwv_r',list(reversed(diverging_gwv_55_95_c39)))
+CET_D2 = b_diverging_gwv_55_95_c39
+m_CET_D2 = m_diverging_gwv_55_95_c39
+m_CET_D2_r = m_diverging_gwv_55_95_c39_r
+palette['CET_D2'] = b_diverging_gwv_55_95_c39
+cm['CET_D2'] = m_diverging_gwv_55_95_c39
+cm['CET_D2_r'] = m_diverging_gwv_55_95_c39_r
+register_cmap('cet_CET_D2',m_diverging_gwv_55_95_c39)
+register_cmap('cet_CET_D2_r',m_diverging_gwv_55_95_c39_r)
 
 
 
@@ -2832,6 +2892,14 @@ cm['kg'] = m_linear_ternary_green_0_46_c42
 cm['kg_r'] = m_linear_ternary_green_0_46_c42_r
 cm_n['kg'] = mpl_cm('kg',linear_ternary_green_0_46_c42)
 cm_n['kg_r'] = mpl_cm('kg_r',list(reversed(linear_ternary_green_0_46_c42)))
+CET_L14 = b_linear_ternary_green_0_46_c42
+m_CET_L14 = m_linear_ternary_green_0_46_c42
+m_CET_L14_r = m_linear_ternary_green_0_46_c42_r
+palette['CET_L14'] = b_linear_ternary_green_0_46_c42
+cm['CET_L14'] = m_linear_ternary_green_0_46_c42
+cm['CET_L14_r'] = m_linear_ternary_green_0_46_c42_r
+register_cmap('cet_CET_L14',m_linear_ternary_green_0_46_c42)
+register_cmap('cet_CET_L14_r',m_linear_ternary_green_0_46_c42_r)
 
 
 
@@ -3362,6 +3430,14 @@ diverging_bwr_55_98_c37 = [  # cmap_def
 b_diverging_bwr_55_98_c37 = bokeh_palette('diverging_bwr_55_98_c37',diverging_bwr_55_98_c37)
 m_diverging_bwr_55_98_c37 = mpl_cm('diverging_bwr_55_98_c37',diverging_bwr_55_98_c37)
 m_diverging_bwr_55_98_c37_r = mpl_cm('diverging_bwr_55_98_c37_r',list(reversed(diverging_bwr_55_98_c37)))
+CET_D9 = b_diverging_bwr_55_98_c37
+m_CET_D9 = m_diverging_bwr_55_98_c37
+m_CET_D9_r = m_diverging_bwr_55_98_c37_r
+palette['CET_D9'] = b_diverging_bwr_55_98_c37
+cm['CET_D9'] = m_diverging_bwr_55_98_c37
+cm['CET_D9_r'] = m_diverging_bwr_55_98_c37_r
+register_cmap('cet_CET_D9',m_diverging_bwr_55_98_c37)
+register_cmap('cet_CET_D9_r',m_diverging_bwr_55_98_c37_r)
 
 
 
@@ -3636,6 +3712,14 @@ cm['colorwheel'] = m_cyclic_mygbm_30_95_c78_s25
 cm['colorwheel_r'] = m_cyclic_mygbm_30_95_c78_s25_r
 cm_n['colorwheel'] = mpl_cm('colorwheel',cyclic_mygbm_30_95_c78_s25)
 cm_n['colorwheel_r'] = mpl_cm('colorwheel_r',list(reversed(cyclic_mygbm_30_95_c78_s25)))
+CET_C2s = b_cyclic_mygbm_30_95_c78_s25
+m_CET_C2s = m_cyclic_mygbm_30_95_c78_s25
+m_CET_C2s_r = m_cyclic_mygbm_30_95_c78_s25_r
+palette['CET_C2s'] = b_cyclic_mygbm_30_95_c78_s25
+cm['CET_C2s'] = m_cyclic_mygbm_30_95_c78_s25
+cm['CET_C2s_r'] = m_cyclic_mygbm_30_95_c78_s25_r
+register_cmap('cet_CET_C2s',m_cyclic_mygbm_30_95_c78_s25)
+register_cmap('cet_CET_C2s_r',m_cyclic_mygbm_30_95_c78_s25_r)
 
 
 
@@ -3901,6 +3985,14 @@ diverging_rainbow_bgymr_45_85_c67 = [  # cmap_def
 b_diverging_rainbow_bgymr_45_85_c67 = bokeh_palette('diverging_rainbow_bgymr_45_85_c67',diverging_rainbow_bgymr_45_85_c67)
 m_diverging_rainbow_bgymr_45_85_c67 = mpl_cm('diverging_rainbow_bgymr_45_85_c67',diverging_rainbow_bgymr_45_85_c67)
 m_diverging_rainbow_bgymr_45_85_c67_r = mpl_cm('diverging_rainbow_bgymr_45_85_c67_r',list(reversed(diverging_rainbow_bgymr_45_85_c67)))
+CET_R3 = b_diverging_rainbow_bgymr_45_85_c67
+m_CET_R3 = m_diverging_rainbow_bgymr_45_85_c67
+m_CET_R3_r = m_diverging_rainbow_bgymr_45_85_c67_r
+palette['CET_R3'] = b_diverging_rainbow_bgymr_45_85_c67
+cm['CET_R3'] = m_diverging_rainbow_bgymr_45_85_c67
+cm['CET_R3_r'] = m_diverging_rainbow_bgymr_45_85_c67_r
+register_cmap('cet_CET_R3',m_diverging_rainbow_bgymr_45_85_c67)
+register_cmap('cet_CET_R3_r',m_diverging_rainbow_bgymr_45_85_c67_r)
 
 
 
@@ -4440,6 +4532,14 @@ diverging_isoluminant_cjo_70_c25 = [  # cmap_def
 b_diverging_isoluminant_cjo_70_c25 = bokeh_palette('diverging_isoluminant_cjo_70_c25',diverging_isoluminant_cjo_70_c25)
 m_diverging_isoluminant_cjo_70_c25 = mpl_cm('diverging_isoluminant_cjo_70_c25',diverging_isoluminant_cjo_70_c25)
 m_diverging_isoluminant_cjo_70_c25_r = mpl_cm('diverging_isoluminant_cjo_70_c25_r',list(reversed(diverging_isoluminant_cjo_70_c25)))
+CET_D11 = b_diverging_isoluminant_cjo_70_c25
+m_CET_D11 = m_diverging_isoluminant_cjo_70_c25
+m_CET_D11_r = m_diverging_isoluminant_cjo_70_c25_r
+palette['CET_D11'] = b_diverging_isoluminant_cjo_70_c25
+cm['CET_D11'] = m_diverging_isoluminant_cjo_70_c25
+cm['CET_D11_r'] = m_diverging_isoluminant_cjo_70_c25_r
+register_cmap('cet_CET_D11',m_diverging_isoluminant_cjo_70_c25)
+register_cmap('cet_CET_D11_r',m_diverging_isoluminant_cjo_70_c25_r)
 
 
 
@@ -4705,6 +4805,14 @@ cyclic_mygbm_30_95_c78 = [  # cmap_def
 b_cyclic_mygbm_30_95_c78 = bokeh_palette('cyclic_mygbm_30_95_c78',cyclic_mygbm_30_95_c78)
 m_cyclic_mygbm_30_95_c78 = mpl_cm('cyclic_mygbm_30_95_c78',cyclic_mygbm_30_95_c78)
 m_cyclic_mygbm_30_95_c78_r = mpl_cm('cyclic_mygbm_30_95_c78_r',list(reversed(cyclic_mygbm_30_95_c78)))
+CET_C2 = b_cyclic_mygbm_30_95_c78
+m_CET_C2 = m_cyclic_mygbm_30_95_c78
+m_CET_C2_r = m_cyclic_mygbm_30_95_c78_r
+palette['CET_C2'] = b_cyclic_mygbm_30_95_c78
+cm['CET_C2'] = m_cyclic_mygbm_30_95_c78
+cm['CET_C2_r'] = m_cyclic_mygbm_30_95_c78_r
+register_cmap('cet_CET_C2',m_cyclic_mygbm_30_95_c78)
+register_cmap('cet_CET_C2_r',m_cyclic_mygbm_30_95_c78_r)
 
 
 
@@ -4970,6 +5078,14 @@ cyclic_mrybm_35_75_c68_s25 = [  # cmap_def
 b_cyclic_mrybm_35_75_c68_s25 = bokeh_palette('cyclic_mrybm_35_75_c68_s25',cyclic_mrybm_35_75_c68_s25)
 m_cyclic_mrybm_35_75_c68_s25 = mpl_cm('cyclic_mrybm_35_75_c68_s25',cyclic_mrybm_35_75_c68_s25)
 m_cyclic_mrybm_35_75_c68_s25_r = mpl_cm('cyclic_mrybm_35_75_c68_s25_r',list(reversed(cyclic_mrybm_35_75_c68_s25)))
+CET_C1s = b_cyclic_mrybm_35_75_c68_s25
+m_CET_C1s = m_cyclic_mrybm_35_75_c68_s25
+m_CET_C1s_r = m_cyclic_mrybm_35_75_c68_s25_r
+palette['CET_C1s'] = b_cyclic_mrybm_35_75_c68_s25
+cm['CET_C1s'] = m_cyclic_mrybm_35_75_c68_s25
+cm['CET_C1s_r'] = m_cyclic_mrybm_35_75_c68_s25_r
+register_cmap('cet_CET_C1s',m_cyclic_mrybm_35_75_c68_s25)
+register_cmap('cet_CET_C1s_r',m_cyclic_mrybm_35_75_c68_s25_r)
 
 
 
@@ -5235,6 +5351,14 @@ linear_bmw_5_95_c86 = [  # cmap_def
 b_linear_bmw_5_95_c86 = bokeh_palette('linear_bmw_5_95_c86',linear_bmw_5_95_c86)
 m_linear_bmw_5_95_c86 = mpl_cm('linear_bmw_5_95_c86',linear_bmw_5_95_c86)
 m_linear_bmw_5_95_c86_r = mpl_cm('linear_bmw_5_95_c86_r',list(reversed(linear_bmw_5_95_c86)))
+CET_L7 = b_linear_bmw_5_95_c86
+m_CET_L7 = m_linear_bmw_5_95_c86
+m_CET_L7_r = m_linear_bmw_5_95_c86_r
+palette['CET_L7'] = b_linear_bmw_5_95_c86
+cm['CET_L7'] = m_linear_bmw_5_95_c86
+cm['CET_L7_r'] = m_linear_bmw_5_95_c86_r
+register_cmap('cet_CET_L7',m_linear_bmw_5_95_c86)
+register_cmap('cet_CET_L7_r',m_linear_bmw_5_95_c86_r)
 
 
 
@@ -5509,6 +5633,14 @@ cm['gray'] = m_linear_grey_0_100_c0
 cm['gray_r'] = m_linear_grey_0_100_c0_r
 cm_n['gray'] = mpl_cm('gray',linear_grey_0_100_c0)
 cm_n['gray_r'] = mpl_cm('gray_r',list(reversed(linear_grey_0_100_c0)))
+CET_L1 = b_linear_grey_0_100_c0
+m_CET_L1 = m_linear_grey_0_100_c0
+m_CET_L1_r = m_linear_grey_0_100_c0_r
+palette['CET_L1'] = b_linear_grey_0_100_c0
+cm['CET_L1'] = m_linear_grey_0_100_c0
+cm['CET_L1_r'] = m_linear_grey_0_100_c0_r
+register_cmap('cet_CET_L1',m_linear_grey_0_100_c0)
+register_cmap('cet_CET_L1_r',m_linear_grey_0_100_c0_r)
 
 
 
@@ -5774,6 +5906,14 @@ linear_bmy_10_95_c71 = [  # cmap_def
 b_linear_bmy_10_95_c71 = bokeh_palette('linear_bmy_10_95_c71',linear_bmy_10_95_c71)
 m_linear_bmy_10_95_c71 = mpl_cm('linear_bmy_10_95_c71',linear_bmy_10_95_c71)
 m_linear_bmy_10_95_c71_r = mpl_cm('linear_bmy_10_95_c71_r',list(reversed(linear_bmy_10_95_c71)))
+CET_L8 = b_linear_bmy_10_95_c71
+m_CET_L8 = m_linear_bmy_10_95_c71
+m_CET_L8_r = m_linear_bmy_10_95_c71_r
+palette['CET_L8'] = b_linear_bmy_10_95_c71
+cm['CET_L8'] = m_linear_bmy_10_95_c71
+cm['CET_L8_r'] = m_linear_bmy_10_95_c71_r
+register_cmap('cet_CET_L8',m_linear_bmy_10_95_c71)
+register_cmap('cet_CET_L8_r',m_linear_bmy_10_95_c71_r)
 
 
 
@@ -6578,6 +6718,14 @@ rainbow_bgyr_35_85_c72 = [  # cmap_def
 b_rainbow_bgyr_35_85_c72 = bokeh_palette('rainbow_bgyr_35_85_c72',rainbow_bgyr_35_85_c72)
 m_rainbow_bgyr_35_85_c72 = mpl_cm('rainbow_bgyr_35_85_c72',rainbow_bgyr_35_85_c72)
 m_rainbow_bgyr_35_85_c72_r = mpl_cm('rainbow_bgyr_35_85_c72_r',list(reversed(rainbow_bgyr_35_85_c72)))
+CET_R2 = b_rainbow_bgyr_35_85_c72
+m_CET_R2 = m_rainbow_bgyr_35_85_c72
+m_CET_R2_r = m_rainbow_bgyr_35_85_c72_r
+palette['CET_R2'] = b_rainbow_bgyr_35_85_c72
+cm['CET_R2'] = m_rainbow_bgyr_35_85_c72
+cm['CET_R2_r'] = m_rainbow_bgyr_35_85_c72_r
+register_cmap('cet_CET_R2',m_rainbow_bgyr_35_85_c72)
+register_cmap('cet_CET_R2_r',m_rainbow_bgyr_35_85_c72_r)
 
 
 
@@ -7117,6 +7265,14 @@ cm['blues'] = m_linear_blue_95_50_c20
 cm['blues_r'] = m_linear_blue_95_50_c20_r
 cm_n['blues'] = mpl_cm('blues',linear_blue_95_50_c20)
 cm_n['blues_r'] = mpl_cm('blues_r',list(reversed(linear_blue_95_50_c20)))
+CET_L12 = b_linear_blue_95_50_c20
+m_CET_L12 = m_linear_blue_95_50_c20
+m_CET_L12_r = m_linear_blue_95_50_c20_r
+palette['CET_L12'] = b_linear_blue_95_50_c20
+cm['CET_L12'] = m_linear_blue_95_50_c20
+cm['CET_L12_r'] = m_linear_blue_95_50_c20_r
+register_cmap('cet_CET_L12',m_linear_blue_95_50_c20)
+register_cmap('cet_CET_L12_r',m_linear_blue_95_50_c20_r)
 
 
 
@@ -7391,6 +7547,14 @@ cm['kr'] = m_linear_ternary_red_0_50_c52
 cm['kr_r'] = m_linear_ternary_red_0_50_c52_r
 cm_n['kr'] = mpl_cm('kr',linear_ternary_red_0_50_c52)
 cm_n['kr_r'] = mpl_cm('kr_r',list(reversed(linear_ternary_red_0_50_c52)))
+CET_L13 = b_linear_ternary_red_0_50_c52
+m_CET_L13 = m_linear_ternary_red_0_50_c52
+m_CET_L13_r = m_linear_ternary_red_0_50_c52_r
+palette['CET_L13'] = b_linear_ternary_red_0_50_c52
+cm['CET_L13'] = m_linear_ternary_red_0_50_c52
+cm['CET_L13_r'] = m_linear_ternary_red_0_50_c52_r
+register_cmap('cet_CET_L13',m_linear_ternary_red_0_50_c52)
+register_cmap('cet_CET_L13_r',m_linear_ternary_red_0_50_c52_r)
 
 
 
@@ -8186,6 +8350,14 @@ rainbow_bgyrm_35_85_c69 = [  # cmap_def
 b_rainbow_bgyrm_35_85_c69 = bokeh_palette('rainbow_bgyrm_35_85_c69',rainbow_bgyrm_35_85_c69)
 m_rainbow_bgyrm_35_85_c69 = mpl_cm('rainbow_bgyrm_35_85_c69',rainbow_bgyrm_35_85_c69)
 m_rainbow_bgyrm_35_85_c69_r = mpl_cm('rainbow_bgyrm_35_85_c69_r',list(reversed(rainbow_bgyrm_35_85_c69)))
+CET_R1 = b_rainbow_bgyrm_35_85_c69
+m_CET_R1 = m_rainbow_bgyrm_35_85_c69
+m_CET_R1_r = m_rainbow_bgyrm_35_85_c69_r
+palette['CET_R1'] = b_rainbow_bgyrm_35_85_c69
+cm['CET_R1'] = m_rainbow_bgyrm_35_85_c69
+cm['CET_R1_r'] = m_rainbow_bgyrm_35_85_c69_r
+register_cmap('cet_CET_R1',m_rainbow_bgyrm_35_85_c69)
+register_cmap('cet_CET_R1_r',m_rainbow_bgyrm_35_85_c69_r)
 
 
 
@@ -8460,6 +8632,14 @@ cm['fire'] = m_linear_kryw_0_100_c71
 cm['fire_r'] = m_linear_kryw_0_100_c71_r
 cm_n['fire'] = mpl_cm('fire',linear_kryw_0_100_c71)
 cm_n['fire_r'] = mpl_cm('fire_r',list(reversed(linear_kryw_0_100_c71)))
+CET_L3 = b_linear_kryw_0_100_c71
+m_CET_L3 = m_linear_kryw_0_100_c71
+m_CET_L3_r = m_linear_kryw_0_100_c71_r
+palette['CET_L3'] = b_linear_kryw_0_100_c71
+cm['CET_L3'] = m_linear_kryw_0_100_c71
+cm['CET_L3_r'] = m_linear_kryw_0_100_c71_r
+register_cmap('cet_CET_L3',m_linear_kryw_0_100_c71)
+register_cmap('cet_CET_L3_r',m_linear_kryw_0_100_c71_r)
 
 
 
@@ -8734,6 +8914,14 @@ cm['bkr'] = m_diverging_bkr_55_10_c35
 cm['bkr_r'] = m_diverging_bkr_55_10_c35_r
 cm_n['bkr'] = mpl_cm('bkr',diverging_bkr_55_10_c35)
 cm_n['bkr_r'] = mpl_cm('bkr_r',list(reversed(diverging_bkr_55_10_c35)))
+CET_D4 = b_diverging_bkr_55_10_c35
+m_CET_D4 = m_diverging_bkr_55_10_c35
+m_CET_D4_r = m_diverging_bkr_55_10_c35_r
+palette['CET_D4'] = b_diverging_bkr_55_10_c35
+cm['CET_D4'] = m_diverging_bkr_55_10_c35
+cm['CET_D4_r'] = m_diverging_bkr_55_10_c35_r
+register_cmap('cet_CET_D4',m_diverging_bkr_55_10_c35)
+register_cmap('cet_CET_D4_r',m_diverging_bkr_55_10_c35_r)
 
 
 
@@ -9273,6 +9461,14 @@ cyclic_wrwbw_40_90_c42_s25 = [  # cmap_def
 b_cyclic_wrwbw_40_90_c42_s25 = bokeh_palette('cyclic_wrwbw_40_90_c42_s25',cyclic_wrwbw_40_90_c42_s25)
 m_cyclic_wrwbw_40_90_c42_s25 = mpl_cm('cyclic_wrwbw_40_90_c42_s25',cyclic_wrwbw_40_90_c42_s25)
 m_cyclic_wrwbw_40_90_c42_s25_r = mpl_cm('cyclic_wrwbw_40_90_c42_s25_r',list(reversed(cyclic_wrwbw_40_90_c42_s25)))
+CET_C4s = b_cyclic_wrwbw_40_90_c42_s25
+m_CET_C4s = m_cyclic_wrwbw_40_90_c42_s25
+m_CET_C4s_r = m_cyclic_wrwbw_40_90_c42_s25_r
+palette['CET_C4s'] = b_cyclic_wrwbw_40_90_c42_s25
+cm['CET_C4s'] = m_cyclic_wrwbw_40_90_c42_s25
+cm['CET_C4s_r'] = m_cyclic_wrwbw_40_90_c42_s25_r
+register_cmap('cet_CET_C4s',m_cyclic_wrwbw_40_90_c42_s25)
+register_cmap('cet_CET_C4s_r',m_cyclic_wrwbw_40_90_c42_s25_r)
 
 
 
@@ -9547,6 +9743,14 @@ cm['isolum'] = m_isoluminant_cgo_80_c38
 cm['isolum_r'] = m_isoluminant_cgo_80_c38_r
 cm_n['isolum'] = mpl_cm('isolum',isoluminant_cgo_80_c38)
 cm_n['isolum_r'] = mpl_cm('isolum_r',list(reversed(isoluminant_cgo_80_c38)))
+CET_I2 = b_isoluminant_cgo_80_c38
+m_CET_I2 = m_isoluminant_cgo_80_c38
+m_CET_I2_r = m_isoluminant_cgo_80_c38_r
+palette['CET_I2'] = b_isoluminant_cgo_80_c38
+cm['CET_I2'] = m_isoluminant_cgo_80_c38
+cm['CET_I2_r'] = m_isoluminant_cgo_80_c38_r
+register_cmap('cet_CET_I2',m_isoluminant_cgo_80_c38)
+register_cmap('cet_CET_I2_r',m_isoluminant_cgo_80_c38_r)
 
 
 
@@ -9812,6 +10016,14 @@ cyclic_grey_15_85_c0_s25 = [  # cmap_def
 b_cyclic_grey_15_85_c0_s25 = bokeh_palette('cyclic_grey_15_85_c0_s25',cyclic_grey_15_85_c0_s25)
 m_cyclic_grey_15_85_c0_s25 = mpl_cm('cyclic_grey_15_85_c0_s25',cyclic_grey_15_85_c0_s25)
 m_cyclic_grey_15_85_c0_s25_r = mpl_cm('cyclic_grey_15_85_c0_s25_r',list(reversed(cyclic_grey_15_85_c0_s25)))
+CET_C5s = b_cyclic_grey_15_85_c0_s25
+m_CET_C5s = m_cyclic_grey_15_85_c0_s25
+m_CET_C5s_r = m_cyclic_grey_15_85_c0_s25_r
+palette['CET_C5s'] = b_cyclic_grey_15_85_c0_s25
+cm['CET_C5s'] = m_cyclic_grey_15_85_c0_s25
+cm['CET_C5s_r'] = m_cyclic_grey_15_85_c0_s25_r
+register_cmap('cet_CET_C5s',m_cyclic_grey_15_85_c0_s25)
+register_cmap('cet_CET_C5s_r',m_cyclic_grey_15_85_c0_s25_r)
 
 
 
@@ -10077,6 +10289,14 @@ diverging_cwm_80_100_c22 = [  # cmap_def
 b_diverging_cwm_80_100_c22 = bokeh_palette('diverging_cwm_80_100_c22',diverging_cwm_80_100_c22)
 m_diverging_cwm_80_100_c22 = mpl_cm('diverging_cwm_80_100_c22',diverging_cwm_80_100_c22)
 m_diverging_cwm_80_100_c22_r = mpl_cm('diverging_cwm_80_100_c22_r',list(reversed(diverging_cwm_80_100_c22)))
+CET_D10 = b_diverging_cwm_80_100_c22
+m_CET_D10 = m_diverging_cwm_80_100_c22
+m_CET_D10_r = m_diverging_cwm_80_100_c22_r
+palette['CET_D10'] = b_diverging_cwm_80_100_c22
+cm['CET_D10'] = m_diverging_cwm_80_100_c22
+cm['CET_D10_r'] = m_diverging_cwm_80_100_c22_r
+register_cmap('cet_CET_D10',m_diverging_cwm_80_100_c22)
+register_cmap('cet_CET_D10_r',m_diverging_cwm_80_100_c22_r)
 
 
 
@@ -10342,6 +10562,14 @@ linear_gow_60_85_c27 = [  # cmap_def
 b_linear_gow_60_85_c27 = bokeh_palette('linear_gow_60_85_c27',linear_gow_60_85_c27)
 m_linear_gow_60_85_c27 = mpl_cm('linear_gow_60_85_c27',linear_gow_60_85_c27)
 m_linear_gow_60_85_c27_r = mpl_cm('linear_gow_60_85_c27_r',list(reversed(linear_gow_60_85_c27)))
+CET_L10 = b_linear_gow_60_85_c27
+m_CET_L10 = m_linear_gow_60_85_c27
+m_CET_L10_r = m_linear_gow_60_85_c27_r
+palette['CET_L10'] = b_linear_gow_60_85_c27
+cm['CET_L10'] = m_linear_gow_60_85_c27
+cm['CET_L10_r'] = m_linear_gow_60_85_c27_r
+register_cmap('cet_CET_L10',m_linear_gow_60_85_c27)
+register_cmap('cet_CET_L10_r',m_linear_gow_60_85_c27_r)
 
 
 
@@ -10881,6 +11109,14 @@ linear_gow_65_90_c35 = [  # cmap_def
 b_linear_gow_65_90_c35 = bokeh_palette('linear_gow_65_90_c35',linear_gow_65_90_c35)
 m_linear_gow_65_90_c35 = mpl_cm('linear_gow_65_90_c35',linear_gow_65_90_c35)
 m_linear_gow_65_90_c35_r = mpl_cm('linear_gow_65_90_c35_r',list(reversed(linear_gow_65_90_c35)))
+CET_L11 = b_linear_gow_65_90_c35
+m_CET_L11 = m_linear_gow_65_90_c35
+m_CET_L11_r = m_linear_gow_65_90_c35_r
+palette['CET_L11'] = b_linear_gow_65_90_c35
+cm['CET_L11'] = m_linear_gow_65_90_c35
+cm['CET_L11_r'] = m_linear_gow_65_90_c35_r
+register_cmap('cet_CET_L11',m_linear_gow_65_90_c35)
+register_cmap('cet_CET_L11_r',m_linear_gow_65_90_c35_r)
 
 
 
@@ -11155,6 +11391,14 @@ cm['kb'] = m_linear_ternary_blue_0_44_c57
 cm['kb_r'] = m_linear_ternary_blue_0_44_c57_r
 cm_n['kb'] = mpl_cm('kb',linear_ternary_blue_0_44_c57)
 cm_n['kb_r'] = mpl_cm('kb_r',list(reversed(linear_ternary_blue_0_44_c57)))
+CET_L15 = b_linear_ternary_blue_0_44_c57
+m_CET_L15 = m_linear_ternary_blue_0_44_c57
+m_CET_L15_r = m_linear_ternary_blue_0_44_c57_r
+palette['CET_L15'] = b_linear_ternary_blue_0_44_c57
+cm['CET_L15'] = m_linear_ternary_blue_0_44_c57
+cm['CET_L15_r'] = m_linear_ternary_blue_0_44_c57_r
+register_cmap('cet_CET_L15',m_linear_ternary_blue_0_44_c57)
+register_cmap('cet_CET_L15_r',m_linear_ternary_blue_0_44_c57_r)
 
 
 
@@ -11420,6 +11664,14 @@ isoluminant_cm_70_c39 = [  # cmap_def
 b_isoluminant_cm_70_c39 = bokeh_palette('isoluminant_cm_70_c39',isoluminant_cm_70_c39)
 m_isoluminant_cm_70_c39 = mpl_cm('isoluminant_cm_70_c39',isoluminant_cm_70_c39)
 m_isoluminant_cm_70_c39_r = mpl_cm('isoluminant_cm_70_c39_r',list(reversed(isoluminant_cm_70_c39)))
+CET_I3 = b_isoluminant_cm_70_c39
+m_CET_I3 = m_isoluminant_cm_70_c39
+m_CET_I3_r = m_isoluminant_cm_70_c39_r
+palette['CET_I3'] = b_isoluminant_cm_70_c39
+cm['CET_I3'] = m_isoluminant_cm_70_c39
+cm['CET_I3_r'] = m_isoluminant_cm_70_c39_r
+register_cmap('cet_CET_I3',m_isoluminant_cm_70_c39)
+register_cmap('cet_CET_I3_r',m_isoluminant_cm_70_c39_r)
 
 
 
@@ -11685,6 +11937,14 @@ diverging_linear_bjr_30_55_c53 = [  # cmap_def
 b_diverging_linear_bjr_30_55_c53 = bokeh_palette('diverging_linear_bjr_30_55_c53',diverging_linear_bjr_30_55_c53)
 m_diverging_linear_bjr_30_55_c53 = mpl_cm('diverging_linear_bjr_30_55_c53',diverging_linear_bjr_30_55_c53)
 m_diverging_linear_bjr_30_55_c53_r = mpl_cm('diverging_linear_bjr_30_55_c53_r',list(reversed(diverging_linear_bjr_30_55_c53)))
+CET_D8 = b_diverging_linear_bjr_30_55_c53
+m_CET_D8 = m_diverging_linear_bjr_30_55_c53
+m_CET_D8_r = m_diverging_linear_bjr_30_55_c53_r
+palette['CET_D8'] = b_diverging_linear_bjr_30_55_c53
+cm['CET_D8'] = m_diverging_linear_bjr_30_55_c53
+cm['CET_D8_r'] = m_diverging_linear_bjr_30_55_c53_r
+register_cmap('cet_CET_D8',m_diverging_linear_bjr_30_55_c53)
+register_cmap('cet_CET_D8_r',m_diverging_linear_bjr_30_55_c53_r)
 
 
 
@@ -11950,6 +12210,14 @@ diverging_gwr_55_95_c38 = [  # cmap_def
 b_diverging_gwr_55_95_c38 = bokeh_palette('diverging_gwr_55_95_c38',diverging_gwr_55_95_c38)
 m_diverging_gwr_55_95_c38 = mpl_cm('diverging_gwr_55_95_c38',diverging_gwr_55_95_c38)
 m_diverging_gwr_55_95_c38_r = mpl_cm('diverging_gwr_55_95_c38_r',list(reversed(diverging_gwr_55_95_c38)))
+CET_D3 = b_diverging_gwr_55_95_c38
+m_CET_D3 = m_diverging_gwr_55_95_c38
+m_CET_D3_r = m_diverging_gwr_55_95_c38_r
+palette['CET_D3'] = b_diverging_gwr_55_95_c38
+cm['CET_D3'] = m_diverging_gwr_55_95_c38
+cm['CET_D3_r'] = m_diverging_gwr_55_95_c38_r
+register_cmap('cet_CET_D3',m_diverging_gwr_55_95_c38)
+register_cmap('cet_CET_D3_r',m_diverging_gwr_55_95_c38_r)
 
 
 
@@ -12489,6 +12757,14 @@ cyclic_grey_15_85_c0 = [  # cmap_def
 b_cyclic_grey_15_85_c0 = bokeh_palette('cyclic_grey_15_85_c0',cyclic_grey_15_85_c0)
 m_cyclic_grey_15_85_c0 = mpl_cm('cyclic_grey_15_85_c0',cyclic_grey_15_85_c0)
 m_cyclic_grey_15_85_c0_r = mpl_cm('cyclic_grey_15_85_c0_r',list(reversed(cyclic_grey_15_85_c0)))
+CET_C5 = b_cyclic_grey_15_85_c0
+m_CET_C5 = m_cyclic_grey_15_85_c0
+m_CET_C5_r = m_cyclic_grey_15_85_c0_r
+palette['CET_C5'] = b_cyclic_grey_15_85_c0
+cm['CET_C5'] = m_cyclic_grey_15_85_c0
+cm['CET_C5_r'] = m_cyclic_grey_15_85_c0_r
+register_cmap('cet_CET_C5',m_cyclic_grey_15_85_c0)
+register_cmap('cet_CET_C5_r',m_cyclic_grey_15_85_c0_r)
 
 
 
@@ -12754,6 +13030,14 @@ cyclic_wrwbw_40_90_c42 = [  # cmap_def
 b_cyclic_wrwbw_40_90_c42 = bokeh_palette('cyclic_wrwbw_40_90_c42',cyclic_wrwbw_40_90_c42)
 m_cyclic_wrwbw_40_90_c42 = mpl_cm('cyclic_wrwbw_40_90_c42',cyclic_wrwbw_40_90_c42)
 m_cyclic_wrwbw_40_90_c42_r = mpl_cm('cyclic_wrwbw_40_90_c42_r',list(reversed(cyclic_wrwbw_40_90_c42)))
+CET_C4 = b_cyclic_wrwbw_40_90_c42
+m_CET_C4 = m_cyclic_wrwbw_40_90_c42
+m_CET_C4_r = m_cyclic_wrwbw_40_90_c42_r
+palette['CET_C4'] = b_cyclic_wrwbw_40_90_c42
+cm['CET_C4'] = m_cyclic_wrwbw_40_90_c42
+cm['CET_C4_r'] = m_cyclic_wrwbw_40_90_c42_r
+register_cmap('cet_CET_C4',m_cyclic_wrwbw_40_90_c42)
+register_cmap('cet_CET_C4_r',m_cyclic_wrwbw_40_90_c42_r)
 
 
 
@@ -13293,6 +13577,14 @@ cm['bjy'] = m_diverging_linear_bjy_30_90_c45
 cm['bjy_r'] = m_diverging_linear_bjy_30_90_c45_r
 cm_n['bjy'] = mpl_cm('bjy',diverging_linear_bjy_30_90_c45)
 cm_n['bjy_r'] = mpl_cm('bjy_r',list(reversed(diverging_linear_bjy_30_90_c45)))
+CET_D7 = b_diverging_linear_bjy_30_90_c45
+m_CET_D7 = m_diverging_linear_bjy_30_90_c45
+m_CET_D7_r = m_diverging_linear_bjy_30_90_c45_r
+palette['CET_D7'] = b_diverging_linear_bjy_30_90_c45
+cm['CET_D7'] = m_diverging_linear_bjy_30_90_c45
+cm['CET_D7_r'] = m_diverging_linear_bjy_30_90_c45_r
+register_cmap('cet_CET_D7',m_diverging_linear_bjy_30_90_c45)
+register_cmap('cet_CET_D7_r',m_diverging_linear_bjy_30_90_c45_r)
 
 
 
@@ -13558,6 +13850,14 @@ linear_bgyw_20_98_c66 = [  # cmap_def
 b_linear_bgyw_20_98_c66 = bokeh_palette('linear_bgyw_20_98_c66',linear_bgyw_20_98_c66)
 m_linear_bgyw_20_98_c66 = mpl_cm('linear_bgyw_20_98_c66',linear_bgyw_20_98_c66)
 m_linear_bgyw_20_98_c66_r = mpl_cm('linear_bgyw_20_98_c66_r',list(reversed(linear_bgyw_20_98_c66)))
+CET_L9 = b_linear_bgyw_20_98_c66
+m_CET_L9 = m_linear_bgyw_20_98_c66
+m_CET_L9_r = m_linear_bgyw_20_98_c66_r
+palette['CET_L9'] = b_linear_bgyw_20_98_c66
+cm['CET_L9'] = m_linear_bgyw_20_98_c66
+cm['CET_L9_r'] = m_linear_bgyw_20_98_c66_r
+register_cmap('cet_CET_L9',m_linear_bgyw_20_98_c66)
+register_cmap('cet_CET_L9_r',m_linear_bgyw_20_98_c66_r)
 
 
 
@@ -13823,6 +14123,14 @@ linear_tritanopic_krjcw_5_95_c24 = [  # cmap_def
 b_linear_tritanopic_krjcw_5_95_c24 = bokeh_palette('linear_tritanopic_krjcw_5_95_c24',linear_tritanopic_krjcw_5_95_c24)
 m_linear_tritanopic_krjcw_5_95_c24 = mpl_cm('linear_tritanopic_krjcw_5_95_c24',linear_tritanopic_krjcw_5_95_c24)
 m_linear_tritanopic_krjcw_5_95_c24_r = mpl_cm('linear_tritanopic_krjcw_5_95_c24_r',list(reversed(linear_tritanopic_krjcw_5_95_c24)))
+CET_CBTL2 = b_linear_tritanopic_krjcw_5_95_c24
+m_CET_CBTL2 = m_linear_tritanopic_krjcw_5_95_c24
+m_CET_CBTL2_r = m_linear_tritanopic_krjcw_5_95_c24_r
+palette['CET_CBTL2'] = b_linear_tritanopic_krjcw_5_95_c24
+cm['CET_CBTL2'] = m_linear_tritanopic_krjcw_5_95_c24
+cm['CET_CBTL2_r'] = m_linear_tritanopic_krjcw_5_95_c24_r
+register_cmap('cet_CET_CBTL2',m_linear_tritanopic_krjcw_5_95_c24)
+register_cmap('cet_CET_CBTL2_r',m_linear_tritanopic_krjcw_5_95_c24_r)
 
 
 
@@ -14088,6 +14396,14 @@ diverging_bwr_20_95_c54 = [  # cmap_def
 b_diverging_bwr_20_95_c54 = bokeh_palette('diverging_bwr_20_95_c54',diverging_bwr_20_95_c54)
 m_diverging_bwr_20_95_c54 = mpl_cm('diverging_bwr_20_95_c54',diverging_bwr_20_95_c54)
 m_diverging_bwr_20_95_c54_r = mpl_cm('diverging_bwr_20_95_c54_r',list(reversed(diverging_bwr_20_95_c54)))
+CET_D1A = b_diverging_bwr_20_95_c54
+m_CET_D1A = m_diverging_bwr_20_95_c54
+m_CET_D1A_r = m_diverging_bwr_20_95_c54_r
+palette['CET_D1A'] = b_diverging_bwr_20_95_c54
+cm['CET_D1A'] = m_diverging_bwr_20_95_c54
+cm['CET_D1A_r'] = m_diverging_bwr_20_95_c54_r
+register_cmap('cet_CET_D1A',m_diverging_bwr_20_95_c54)
+register_cmap('cet_CET_D1A_r',m_diverging_bwr_20_95_c54_r)
 
 
 
@@ -14353,6 +14669,14 @@ linear_tritanopic_krjcw_5_98_c46 = [  # cmap_def
 b_linear_tritanopic_krjcw_5_98_c46 = bokeh_palette('linear_tritanopic_krjcw_5_98_c46',linear_tritanopic_krjcw_5_98_c46)
 m_linear_tritanopic_krjcw_5_98_c46 = mpl_cm('linear_tritanopic_krjcw_5_98_c46',linear_tritanopic_krjcw_5_98_c46)
 m_linear_tritanopic_krjcw_5_98_c46_r = mpl_cm('linear_tritanopic_krjcw_5_98_c46_r',list(reversed(linear_tritanopic_krjcw_5_98_c46)))
+CET_CBTL1 = b_linear_tritanopic_krjcw_5_98_c46
+m_CET_CBTL1 = m_linear_tritanopic_krjcw_5_98_c46
+m_CET_CBTL1_r = m_linear_tritanopic_krjcw_5_98_c46_r
+palette['CET_CBTL1'] = b_linear_tritanopic_krjcw_5_98_c46
+cm['CET_CBTL1'] = m_linear_tritanopic_krjcw_5_98_c46
+cm['CET_CBTL1_r'] = m_linear_tritanopic_krjcw_5_98_c46_r
+register_cmap('cet_CET_CBTL1',m_linear_tritanopic_krjcw_5_98_c46)
+register_cmap('cet_CET_CBTL1_r',m_linear_tritanopic_krjcw_5_98_c46_r)
 
 
 
@@ -14618,6 +14942,14 @@ cyclic_protanopic_deuteranopic_wywb_55_96_c33 = [  # cmap_def
 b_cyclic_protanopic_deuteranopic_wywb_55_96_c33 = bokeh_palette('cyclic_protanopic_deuteranopic_wywb_55_96_c33',cyclic_protanopic_deuteranopic_wywb_55_96_c33)
 m_cyclic_protanopic_deuteranopic_wywb_55_96_c33 = mpl_cm('cyclic_protanopic_deuteranopic_wywb_55_96_c33',cyclic_protanopic_deuteranopic_wywb_55_96_c33)
 m_cyclic_protanopic_deuteranopic_wywb_55_96_c33_r = mpl_cm('cyclic_protanopic_deuteranopic_wywb_55_96_c33_r',list(reversed(cyclic_protanopic_deuteranopic_wywb_55_96_c33)))
+CET_CBC2 = b_cyclic_protanopic_deuteranopic_wywb_55_96_c33
+m_CET_CBC2 = m_cyclic_protanopic_deuteranopic_wywb_55_96_c33
+m_CET_CBC2_r = m_cyclic_protanopic_deuteranopic_wywb_55_96_c33_r
+palette['CET_CBC2'] = b_cyclic_protanopic_deuteranopic_wywb_55_96_c33
+cm['CET_CBC2'] = m_cyclic_protanopic_deuteranopic_wywb_55_96_c33
+cm['CET_CBC2_r'] = m_cyclic_protanopic_deuteranopic_wywb_55_96_c33_r
+register_cmap('cet_CET_CBC2',m_cyclic_protanopic_deuteranopic_wywb_55_96_c33)
+register_cmap('cet_CET_CBC2_r',m_cyclic_protanopic_deuteranopic_wywb_55_96_c33_r)
 
 
 
@@ -14883,6 +15215,14 @@ diverging_bwg_20_95_c41 = [  # cmap_def
 b_diverging_bwg_20_95_c41 = bokeh_palette('diverging_bwg_20_95_c41',diverging_bwg_20_95_c41)
 m_diverging_bwg_20_95_c41 = mpl_cm('diverging_bwg_20_95_c41',diverging_bwg_20_95_c41)
 m_diverging_bwg_20_95_c41_r = mpl_cm('diverging_bwg_20_95_c41_r',list(reversed(diverging_bwg_20_95_c41)))
+CET_D13 = b_diverging_bwg_20_95_c41
+m_CET_D13 = m_diverging_bwg_20_95_c41
+m_CET_D13_r = m_diverging_bwg_20_95_c41_r
+palette['CET_D13'] = b_diverging_bwg_20_95_c41
+cm['CET_D13'] = m_diverging_bwg_20_95_c41
+cm['CET_D13_r'] = m_diverging_bwg_20_95_c41_r
+register_cmap('cet_CET_D13',m_diverging_bwg_20_95_c41)
+register_cmap('cet_CET_D13_r',m_diverging_bwg_20_95_c41_r)
 
 
 
@@ -15148,6 +15488,14 @@ cyclic_protanopic_deuteranopic_bwyk_16_96_c31 = [  # cmap_def
 b_cyclic_protanopic_deuteranopic_bwyk_16_96_c31 = bokeh_palette('cyclic_protanopic_deuteranopic_bwyk_16_96_c31',cyclic_protanopic_deuteranopic_bwyk_16_96_c31)
 m_cyclic_protanopic_deuteranopic_bwyk_16_96_c31 = mpl_cm('cyclic_protanopic_deuteranopic_bwyk_16_96_c31',cyclic_protanopic_deuteranopic_bwyk_16_96_c31)
 m_cyclic_protanopic_deuteranopic_bwyk_16_96_c31_r = mpl_cm('cyclic_protanopic_deuteranopic_bwyk_16_96_c31_r',list(reversed(cyclic_protanopic_deuteranopic_bwyk_16_96_c31)))
+CET_CBC1 = b_cyclic_protanopic_deuteranopic_bwyk_16_96_c31
+m_CET_CBC1 = m_cyclic_protanopic_deuteranopic_bwyk_16_96_c31
+m_CET_CBC1_r = m_cyclic_protanopic_deuteranopic_bwyk_16_96_c31_r
+palette['CET_CBC1'] = b_cyclic_protanopic_deuteranopic_bwyk_16_96_c31
+cm['CET_CBC1'] = m_cyclic_protanopic_deuteranopic_bwyk_16_96_c31
+cm['CET_CBC1_r'] = m_cyclic_protanopic_deuteranopic_bwyk_16_96_c31_r
+register_cmap('cet_CET_CBC1',m_cyclic_protanopic_deuteranopic_bwyk_16_96_c31)
+register_cmap('cet_CET_CBC1_r',m_cyclic_protanopic_deuteranopic_bwyk_16_96_c31_r)
 
 
 
@@ -15413,6 +15761,14 @@ linear_wyor_100_45_c55 = [  # cmap_def
 b_linear_wyor_100_45_c55 = bokeh_palette('linear_wyor_100_45_c55',linear_wyor_100_45_c55)
 m_linear_wyor_100_45_c55 = mpl_cm('linear_wyor_100_45_c55',linear_wyor_100_45_c55)
 m_linear_wyor_100_45_c55_r = mpl_cm('linear_wyor_100_45_c55_r',list(reversed(linear_wyor_100_45_c55)))
+CET_L18 = b_linear_wyor_100_45_c55
+m_CET_L18 = m_linear_wyor_100_45_c55
+m_CET_L18_r = m_linear_wyor_100_45_c55_r
+palette['CET_L18'] = b_linear_wyor_100_45_c55
+cm['CET_L18'] = m_linear_wyor_100_45_c55
+cm['CET_L18_r'] = m_linear_wyor_100_45_c55_r
+register_cmap('cet_CET_L18',m_linear_wyor_100_45_c55)
+register_cmap('cet_CET_L18_r',m_linear_wyor_100_45_c55_r)
 
 
 
@@ -15678,6 +16034,14 @@ linear_wcmr_100_45_c42 = [  # cmap_def
 b_linear_wcmr_100_45_c42 = bokeh_palette('linear_wcmr_100_45_c42',linear_wcmr_100_45_c42)
 m_linear_wcmr_100_45_c42 = mpl_cm('linear_wcmr_100_45_c42',linear_wcmr_100_45_c42)
 m_linear_wcmr_100_45_c42_r = mpl_cm('linear_wcmr_100_45_c42_r',list(reversed(linear_wcmr_100_45_c42)))
+CET_L19 = b_linear_wcmr_100_45_c42
+m_CET_L19 = m_linear_wcmr_100_45_c42
+m_CET_L19_r = m_linear_wcmr_100_45_c42_r
+palette['CET_L19'] = b_linear_wcmr_100_45_c42
+cm['CET_L19'] = m_linear_wcmr_100_45_c42
+cm['CET_L19_r'] = m_linear_wcmr_100_45_c42_r
+register_cmap('cet_CET_L19',m_linear_wcmr_100_45_c42)
+register_cmap('cet_CET_L19_r',m_linear_wcmr_100_45_c42_r)
 
 
 
@@ -15952,6 +16316,14 @@ cm['bwy'] = m_diverging_protanopic_deuteranopic_bwy_60_95_c32
 cm['bwy_r'] = m_diverging_protanopic_deuteranopic_bwy_60_95_c32_r
 cm_n['bwy'] = mpl_cm('bwy',diverging_protanopic_deuteranopic_bwy_60_95_c32)
 cm_n['bwy_r'] = mpl_cm('bwy_r',list(reversed(diverging_protanopic_deuteranopic_bwy_60_95_c32)))
+CET_CBD1 = b_diverging_protanopic_deuteranopic_bwy_60_95_c32
+m_CET_CBD1 = m_diverging_protanopic_deuteranopic_bwy_60_95_c32
+m_CET_CBD1_r = m_diverging_protanopic_deuteranopic_bwy_60_95_c32_r
+palette['CET_CBD1'] = b_diverging_protanopic_deuteranopic_bwy_60_95_c32
+cm['CET_CBD1'] = m_diverging_protanopic_deuteranopic_bwy_60_95_c32
+cm['CET_CBD1_r'] = m_diverging_protanopic_deuteranopic_bwy_60_95_c32_r
+register_cmap('cet_CET_CBD1',m_diverging_protanopic_deuteranopic_bwy_60_95_c32)
+register_cmap('cet_CET_CBD1_r',m_diverging_protanopic_deuteranopic_bwy_60_95_c32_r)
 
 
 
@@ -16226,6 +16598,14 @@ cm['cwr'] = m_diverging_tritanopic_cwr_75_98_c20
 cm['cwr_r'] = m_diverging_tritanopic_cwr_75_98_c20_r
 cm_n['cwr'] = mpl_cm('cwr',diverging_tritanopic_cwr_75_98_c20)
 cm_n['cwr_r'] = mpl_cm('cwr_r',list(reversed(diverging_tritanopic_cwr_75_98_c20)))
+CET_CBTD1 = b_diverging_tritanopic_cwr_75_98_c20
+m_CET_CBTD1 = m_diverging_tritanopic_cwr_75_98_c20
+m_CET_CBTD1_r = m_diverging_tritanopic_cwr_75_98_c20_r
+palette['CET_CBTD1'] = b_diverging_tritanopic_cwr_75_98_c20
+cm['CET_CBTD1'] = m_diverging_tritanopic_cwr_75_98_c20
+cm['CET_CBTD1_r'] = m_diverging_tritanopic_cwr_75_98_c20_r
+register_cmap('cet_CET_CBTD1',m_diverging_tritanopic_cwr_75_98_c20)
+register_cmap('cet_CET_CBTD1_r',m_diverging_tritanopic_cwr_75_98_c20_r)
 
 
 
@@ -16491,6 +16871,14 @@ linear_protanopic_deuteranopic_kbw_5_98_c40 = [  # cmap_def
 b_linear_protanopic_deuteranopic_kbw_5_98_c40 = bokeh_palette('linear_protanopic_deuteranopic_kbw_5_98_c40',linear_protanopic_deuteranopic_kbw_5_98_c40)
 m_linear_protanopic_deuteranopic_kbw_5_98_c40 = mpl_cm('linear_protanopic_deuteranopic_kbw_5_98_c40',linear_protanopic_deuteranopic_kbw_5_98_c40)
 m_linear_protanopic_deuteranopic_kbw_5_98_c40_r = mpl_cm('linear_protanopic_deuteranopic_kbw_5_98_c40_r',list(reversed(linear_protanopic_deuteranopic_kbw_5_98_c40)))
+CET_CBL2 = b_linear_protanopic_deuteranopic_kbw_5_98_c40
+m_CET_CBL2 = m_linear_protanopic_deuteranopic_kbw_5_98_c40
+m_CET_CBL2_r = m_linear_protanopic_deuteranopic_kbw_5_98_c40_r
+palette['CET_CBL2'] = b_linear_protanopic_deuteranopic_kbw_5_98_c40
+cm['CET_CBL2'] = m_linear_protanopic_deuteranopic_kbw_5_98_c40
+cm['CET_CBL2_r'] = m_linear_protanopic_deuteranopic_kbw_5_98_c40_r
+register_cmap('cet_CET_CBL2',m_linear_protanopic_deuteranopic_kbw_5_98_c40)
+register_cmap('cet_CET_CBL2_r',m_linear_protanopic_deuteranopic_kbw_5_98_c40_r)
 
 
 
@@ -16756,6 +17144,14 @@ linear_protanopic_deuteranopic_kbjyw_5_95_c25 = [  # cmap_def
 b_linear_protanopic_deuteranopic_kbjyw_5_95_c25 = bokeh_palette('linear_protanopic_deuteranopic_kbjyw_5_95_c25',linear_protanopic_deuteranopic_kbjyw_5_95_c25)
 m_linear_protanopic_deuteranopic_kbjyw_5_95_c25 = mpl_cm('linear_protanopic_deuteranopic_kbjyw_5_95_c25',linear_protanopic_deuteranopic_kbjyw_5_95_c25)
 m_linear_protanopic_deuteranopic_kbjyw_5_95_c25_r = mpl_cm('linear_protanopic_deuteranopic_kbjyw_5_95_c25_r',list(reversed(linear_protanopic_deuteranopic_kbjyw_5_95_c25)))
+CET_CBL1 = b_linear_protanopic_deuteranopic_kbjyw_5_95_c25
+m_CET_CBL1 = m_linear_protanopic_deuteranopic_kbjyw_5_95_c25
+m_CET_CBL1_r = m_linear_protanopic_deuteranopic_kbjyw_5_95_c25_r
+palette['CET_CBL1'] = b_linear_protanopic_deuteranopic_kbjyw_5_95_c25
+cm['CET_CBL1'] = m_linear_protanopic_deuteranopic_kbjyw_5_95_c25
+cm['CET_CBL1_r'] = m_linear_protanopic_deuteranopic_kbjyw_5_95_c25_r
+register_cmap('cet_CET_CBL1',m_linear_protanopic_deuteranopic_kbjyw_5_95_c25)
+register_cmap('cet_CET_CBL1_r',m_linear_protanopic_deuteranopic_kbjyw_5_95_c25_r)
 
 
 
@@ -17021,6 +17417,14 @@ linear_worb_100_25_c53 = [  # cmap_def
 b_linear_worb_100_25_c53 = bokeh_palette('linear_worb_100_25_c53',linear_worb_100_25_c53)
 m_linear_worb_100_25_c53 = mpl_cm('linear_worb_100_25_c53',linear_worb_100_25_c53)
 m_linear_worb_100_25_c53_r = mpl_cm('linear_worb_100_25_c53_r',list(reversed(linear_worb_100_25_c53)))
+CET_L17 = b_linear_worb_100_25_c53
+m_CET_L17 = m_linear_worb_100_25_c53
+m_CET_L17_r = m_linear_worb_100_25_c53_r
+palette['CET_L17'] = b_linear_worb_100_25_c53
+cm['CET_L17'] = m_linear_worb_100_25_c53
+cm['CET_L17_r'] = m_linear_worb_100_25_c53_r
+register_cmap('cet_CET_L17',m_linear_worb_100_25_c53)
+register_cmap('cet_CET_L17_r',m_linear_worb_100_25_c53_r)
 
 
 
@@ -17286,6 +17690,14 @@ linear_kbgyw_5_98_c62 = [  # cmap_def
 b_linear_kbgyw_5_98_c62 = bokeh_palette('linear_kbgyw_5_98_c62',linear_kbgyw_5_98_c62)
 m_linear_kbgyw_5_98_c62 = mpl_cm('linear_kbgyw_5_98_c62',linear_kbgyw_5_98_c62)
 m_linear_kbgyw_5_98_c62_r = mpl_cm('linear_kbgyw_5_98_c62_r',list(reversed(linear_kbgyw_5_98_c62)))
+CET_L16 = b_linear_kbgyw_5_98_c62
+m_CET_L16 = m_linear_kbgyw_5_98_c62
+m_CET_L16_r = m_linear_kbgyw_5_98_c62_r
+palette['CET_L16'] = b_linear_kbgyw_5_98_c62
+cm['CET_L16'] = m_linear_kbgyw_5_98_c62
+cm['CET_L16_r'] = m_linear_kbgyw_5_98_c62_r
+register_cmap('cet_CET_L16',m_linear_kbgyw_5_98_c62)
+register_cmap('cet_CET_L16_r',m_linear_kbgyw_5_98_c62_r)
 
 
 
@@ -17569,6 +17981,14 @@ cm['linear_blue_5_95_c73'] = m_linear_kbc_5_95_c73
 cm['linear_blue_5_95_c73_r'] = m_linear_kbc_5_95_c73_r
 cm_n['linear_blue_5_95_c73'] = mpl_cm('linear_blue_5_95_c73',linear_kbc_5_95_c73)
 cm_n['linear_blue_5_95_c73_r'] = mpl_cm('linear_blue_5_95_c73_r',list(reversed(linear_kbc_5_95_c73)))
+CET_L6 = b_linear_kbc_5_95_c73
+m_CET_L6 = m_linear_kbc_5_95_c73
+m_CET_L6_r = m_linear_kbc_5_95_c73_r
+palette['CET_L6'] = b_linear_kbc_5_95_c73
+cm['CET_L6'] = m_linear_kbc_5_95_c73
+cm['CET_L6_r'] = m_linear_kbc_5_95_c73_r
+register_cmap('cet_CET_L6',m_linear_kbc_5_95_c73)
+register_cmap('cet_CET_L6_r',m_linear_kbc_5_95_c73_r)
 
 
 
@@ -17834,6 +18254,14 @@ cyclic_tritanopic_wrwc_70_100_c20 = [  # cmap_def
 b_cyclic_tritanopic_wrwc_70_100_c20 = bokeh_palette('cyclic_tritanopic_wrwc_70_100_c20',cyclic_tritanopic_wrwc_70_100_c20)
 m_cyclic_tritanopic_wrwc_70_100_c20 = mpl_cm('cyclic_tritanopic_wrwc_70_100_c20',cyclic_tritanopic_wrwc_70_100_c20)
 m_cyclic_tritanopic_wrwc_70_100_c20_r = mpl_cm('cyclic_tritanopic_wrwc_70_100_c20_r',list(reversed(cyclic_tritanopic_wrwc_70_100_c20)))
+CET_CBTC2 = b_cyclic_tritanopic_wrwc_70_100_c20
+m_CET_CBTC2 = m_cyclic_tritanopic_wrwc_70_100_c20
+m_CET_CBTC2_r = m_cyclic_tritanopic_wrwc_70_100_c20_r
+palette['CET_CBTC2'] = b_cyclic_tritanopic_wrwc_70_100_c20
+cm['CET_CBTC2'] = m_cyclic_tritanopic_wrwc_70_100_c20
+cm['CET_CBTC2_r'] = m_cyclic_tritanopic_wrwc_70_100_c20_r
+register_cmap('cet_CET_CBTC2',m_cyclic_tritanopic_wrwc_70_100_c20)
+register_cmap('cet_CET_CBTC2_r',m_cyclic_tritanopic_wrwc_70_100_c20_r)
 
 
 
@@ -18117,6 +18545,14 @@ cm['linear_green_5_95_c69'] = m_linear_kgy_5_95_c69
 cm['linear_green_5_95_c69_r'] = m_linear_kgy_5_95_c69_r
 cm_n['linear_green_5_95_c69'] = mpl_cm('linear_green_5_95_c69',linear_kgy_5_95_c69)
 cm_n['linear_green_5_95_c69_r'] = mpl_cm('linear_green_5_95_c69_r',list(reversed(linear_kgy_5_95_c69)))
+CET_L5 = b_linear_kgy_5_95_c69
+m_CET_L5 = m_linear_kgy_5_95_c69
+m_CET_L5_r = m_linear_kgy_5_95_c69_r
+palette['CET_L5'] = b_linear_kgy_5_95_c69
+cm['CET_L5'] = m_linear_kgy_5_95_c69
+cm['CET_L5_r'] = m_linear_kgy_5_95_c69_r
+register_cmap('cet_CET_L5',m_linear_kgy_5_95_c69)
+register_cmap('cet_CET_L5_r',m_linear_kgy_5_95_c69_r)
 
 
 
@@ -18382,6 +18818,14 @@ cyclic_tritanopic_cwrk_40_100_c20 = [  # cmap_def
 b_cyclic_tritanopic_cwrk_40_100_c20 = bokeh_palette('cyclic_tritanopic_cwrk_40_100_c20',cyclic_tritanopic_cwrk_40_100_c20)
 m_cyclic_tritanopic_cwrk_40_100_c20 = mpl_cm('cyclic_tritanopic_cwrk_40_100_c20',cyclic_tritanopic_cwrk_40_100_c20)
 m_cyclic_tritanopic_cwrk_40_100_c20_r = mpl_cm('cyclic_tritanopic_cwrk_40_100_c20_r',list(reversed(cyclic_tritanopic_cwrk_40_100_c20)))
+CET_CBTC1 = b_cyclic_tritanopic_cwrk_40_100_c20
+m_CET_CBTC1 = m_cyclic_tritanopic_cwrk_40_100_c20
+m_CET_CBTC1_r = m_cyclic_tritanopic_cwrk_40_100_c20_r
+palette['CET_CBTC1'] = b_cyclic_tritanopic_cwrk_40_100_c20
+cm['CET_CBTC1'] = m_cyclic_tritanopic_cwrk_40_100_c20
+cm['CET_CBTC1_r'] = m_cyclic_tritanopic_cwrk_40_100_c20_r
+register_cmap('cet_CET_CBTC1',m_cyclic_tritanopic_cwrk_40_100_c20)
+register_cmap('cet_CET_CBTC1_r',m_cyclic_tritanopic_cwrk_40_100_c20_r)
 
 
 
@@ -18647,6 +19091,14 @@ linear_kry_0_97_c73 = [  # cmap_def
 b_linear_kry_0_97_c73 = bokeh_palette('linear_kry_0_97_c73',linear_kry_0_97_c73)
 m_linear_kry_0_97_c73 = mpl_cm('linear_kry_0_97_c73',linear_kry_0_97_c73)
 m_linear_kry_0_97_c73_r = mpl_cm('linear_kry_0_97_c73_r',list(reversed(linear_kry_0_97_c73)))
+CET_L4 = b_linear_kry_0_97_c73
+m_CET_L4 = m_linear_kry_0_97_c73
+m_CET_L4_r = m_linear_kry_0_97_c73_r
+palette['CET_L4'] = b_linear_kry_0_97_c73
+cm['CET_L4'] = m_linear_kry_0_97_c73
+cm['CET_L4_r'] = m_linear_kry_0_97_c73_r
+register_cmap('cet_CET_L4',m_linear_kry_0_97_c73)
+register_cmap('cet_CET_L4_r',m_linear_kry_0_97_c73_r)
 
 
 
