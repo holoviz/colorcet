@@ -98,15 +98,33 @@ def mpl_cm(name,colorlist):
 
 def get_aliases(name):
     """Get the aliases for a given colormap name"""
-    names = set([name])
-    for k, v in aliases.items():
-        if k == name or name in v:
-            names = names.union(v + [k])
-    for k, v in mapping_flipped.items():
-        if name in (k, v):
-            names = names.union([k, v])
-    return ",  ".join(names)
+    names = [name]
 
+    def check_aliases(names, d,  k_position=-1, v_position=0):
+        for name in [n for n in names]:
+            for k, v in d.items():
+                v = [v] if not isinstance(v, list) else v
+                for vname in v:
+                    if name == vname and k not in names:
+                        if k_position == -2:
+                            names.append(k)
+                        else:
+                            names.insert(k_position, k)
+                    if name == k and vname not in names:
+                        if v_position == -2:
+                            names.append(vname)
+                        else:
+                            names.insert(v_position, vname)
+        return names
+
+    n_names = len(names)
+    while True:
+        names = check_aliases(names, aliases, k_position=-2, v_position=0)
+        names = check_aliases(names, cetnames_flipped, k_position=-2, v_position=-1)
+        if len(names) == n_names:
+            break
+        n_names = len(names)
+    return ',  '.join(names)
 
 def all_original_names(group=None, not_group=None, only_aliased=False, only_CET=False):
     """Get all original names - optionally in a particular group - or only those with aliases"""
@@ -120,9 +138,9 @@ def all_original_names(group=None, not_group=None, only_aliased=False, only_CET=
     else:
         names = filter(lambda x: x not in chain.from_iterable(aliases.values()), names)
     if only_CET:
-        names = filter(lambda x: x in mapping_flipped.values(), names)
+        names = filter(lambda x: x in cetnames_flipped.values(), names)
     else:
-        names = filter(lambda x: x not in mapping_flipped.values(), names)
+        names = filter(lambda x: x not in cetnames_flipped.values(), names)
     return sorted(list(names))
 
 
@@ -170,7 +188,7 @@ aliases = dict(
     glasbey_bw_minc_20_hue_150_280                  = ["glasbey_cool"],
 )
 
-mapping = {
+cetnames = {
   'CET-L1': 'linear_grey_0-100_c0',
   'CET-L2': 'linear_grey_10-95_c0',
   'CET-L3': 'linear_kryw_0-100_c71',
@@ -229,8 +247,8 @@ mapping = {
   'CET-CBTC2': 'cyclic-tritanopic_wrwc_70-100_c20',
 }
 
-mapping_flipped = {v.replace('-', '_'): k.replace('-', '_') for
-                   k, v in mapping.items()}
+cetnames_flipped = {v.replace('-', '_'): k.replace('-', '_') for
+                     k, v in cetnames.items()}
 
 def create_alias(alias, base, output, is_name=True):
     output.write("{0} = b_{1}\n".format(alias,base))
@@ -302,7 +320,7 @@ def gen_init_py(output_file, csv_folders):
     with open(output_file, "w") as output:
         output.write(header)
         output.write(format_dict("aliases", aliases))
-        output.write("mapping_flipped = {}\n".format(mapping_flipped))
+        output.write(format_dict("cetnames_flipped", cetnames_flipped))
         for csv_path in csv_paths:
             if csv_path.suffix == ".csv":
                 base = csv_path.stem.replace("-","_").replace("_n256","")
@@ -321,8 +339,8 @@ def gen_init_py(output_file, csv_folders):
                 if base in aliases:
                     for alias in aliases[base]:
                         create_alias(alias, base, output)
-                if base in mapping_flipped:
-                    alias = mapping_flipped[base]
+                if base in cetnames_flipped:
+                    alias = cetnames_flipped[base]
                     create_alias(alias, base, output, is_name=False)
                 output.write("\n\n")
                 cmaps.append(base)

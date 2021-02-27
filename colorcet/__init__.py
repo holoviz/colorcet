@@ -83,15 +83,33 @@ def mpl_cm(name,colorlist):
 
 def get_aliases(name):
     """Get the aliases for a given colormap name"""
-    names = set([name])
-    for k, v in aliases.items():
-        if k == name or name in v:
-            names = names.union(v + [k])
-    for k, v in mapping_flipped.items():
-        if name in (k, v):
-            names = names.union([k, v])
-    return ",  ".join(names)
+    names = [name]
 
+    def check_aliases(names, d,  k_position=-1, v_position=0):
+        for name in [n for n in names]:
+            for k, v in d.items():
+                v = [v] if not isinstance(v, list) else v
+                for vname in v:
+                    if name == vname and k not in names:
+                        if k_position == -2:
+                            names.append(k)
+                        else:
+                            names.insert(k_position, k)
+                    if name == k and vname not in names:
+                        if v_position == -2:
+                            names.append(vname)
+                        else:
+                            names.insert(v_position, vname)
+        return names
+
+    n_names = len(names)
+    while True:
+        names = check_aliases(names, aliases, k_position=-2, v_position=0)
+        names = check_aliases(names, cetnames_flipped, k_position=-2, v_position=-1)
+        if len(names) == n_names:
+            break
+        n_names = len(names)
+    return ',  '.join(names)
 
 def all_original_names(group=None, not_group=None, only_aliased=False, only_CET=False):
     """Get all original names - optionally in a particular group - or only those with aliases"""
@@ -105,9 +123,9 @@ def all_original_names(group=None, not_group=None, only_aliased=False, only_CET=
     else:
         names = filter(lambda x: x not in chain.from_iterable(aliases.values()), names)
     if only_CET:
-        names = filter(lambda x: x in mapping_flipped.values(), names)
+        names = filter(lambda x: x in cetnames_flipped.values(), names)
     else:
-        names = filter(lambda x: x not in mapping_flipped.values(), names)
+        names = filter(lambda x: x not in cetnames_flipped.values(), names)
     return sorted(list(names))
 
 
@@ -146,7 +164,64 @@ aliases = {
     'glasbey_bw_minc_20_hue_330_100': ['glasbey_warm'],
     'glasbey_bw_minc_20_hue_150_280': ['glasbey_cool'],
 }
-mapping_flipped = {'linear_grey_0_100_c0': 'CET_L1', 'linear_grey_10_95_c0': 'CET_L2', 'linear_kryw_0_100_c71': 'CET_L3', 'linear_kry_0_97_c73': 'CET_L4', 'linear_kgy_5_95_c69': 'CET_L5', 'linear_kbc_5_95_c73': 'CET_L6', 'linear_bmw_5_95_c86': 'CET_L7', 'linear_bmy_10_95_c71': 'CET_L8', 'linear_bgyw_20_98_c66': 'CET_L9', 'linear_gow_60_85_c27': 'CET_L10', 'linear_gow_65_90_c35': 'CET_L11', 'linear_blue_95_50_c20': 'CET_L12', 'linear_ternary_red_0_50_c52': 'CET_L13', 'linear_ternary_green_0_46_c42': 'CET_L14', 'linear_ternary_blue_0_44_c57': 'CET_L15', 'linear_kbgyw_5_98_c62': 'CET_L16', 'linear_worb_100_25_c53': 'CET_L17', 'linear_wyor_100_45_c55': 'CET_L18', 'linear_wcmr_100_45_c42': 'CET_L19', 'diverging_bwr_40_95_c42': 'CET_D1', 'diverging_bwr_20_95_c54': 'CET_D1A', 'diverging_gwv_55_95_c39': 'CET_D2', 'diverging_gwr_55_95_c38': 'CET_D3', 'diverging_bkr_55_10_c35': 'CET_D4', 'diverging_bky_60_10_c30': 'CET_D6', 'diverging_linear_bjy_30_90_c45': 'CET_D7', 'diverging_linear_bjr_30_55_c53': 'CET_D8', 'diverging_bwr_55_98_c37': 'CET_D9', 'diverging_cwm_80_100_c22': 'CET_D10', 'diverging_bwg_20_95_c41': 'CET_D13', 'diverging_rainbow_bgymr_45_85_c67': 'CET_R3', 'rainbow_bgyrm_35_85_c69': 'CET_R1', 'rainbow_bgyr_35_85_c72': 'CET_R2', 'cyclic_mrybm_35_75_c68': 'CET_C1', 'cyclic_mrybm_35_75_c68_s25': 'CET_C1s', 'cyclic_mygbm_30_95_c78': 'CET_C2', 'cyclic_mygbm_30_95_c78_s25': 'CET_C2s', 'cyclic_wrwbw_40_90_c42': 'CET_C4', 'cyclic_wrwbw_40_90_c42_s25': 'CET_C4s', 'cyclic_grey_15_85_c0': 'CET_C5', 'cyclic_grey_15_85_c0_s25': 'CET_C5s', 'isoluminant_cgo_70_c39': 'CET_I1', 'isoluminant_cgo_80_c38': 'CET_I2', 'isoluminant_cm_70_c39': 'CET_I3', 'diverging_isoluminant_cjo_70_c25': 'CET_D11', 'diverging_isoluminant_cjm_75_c23': 'CET_D12', 'linear_protanopic_deuteranopic_kbjyw_5_95_c25': 'CET_CBL1', 'linear_protanopic_deuteranopic_kbw_5_98_c40': 'CET_CBL2', 'diverging_protanopic_deuteranopic_bwy_60_95_c32': 'CET_CBD1', 'cyclic_protanopic_deuteranopic_bwyk_16_96_c31': 'CET_CBC1', 'cyclic_protanopic_deuteranopic_wywb_55_96_c33': 'CET_CBC2', 'linear_tritanopic_krjcw_5_98_c46': 'CET_CBTL1', 'linear_tritanopic_krjcw_5_95_c24': 'CET_CBTL2', 'diverging_tritanopic_cwr_75_98_c20': 'CET_CBTD1', 'cyclic_tritanopic_cwrk_40_100_c20': 'CET_CBTC1', 'cyclic_tritanopic_wrwc_70_100_c20': 'CET_CBTC2'}
+cetnames_flipped = {
+    'linear_grey_0_100_c0': 'CET_L1',
+    'linear_grey_10_95_c0': 'CET_L2',
+    'linear_kryw_0_100_c71': 'CET_L3',
+    'linear_kry_0_97_c73': 'CET_L4',
+    'linear_kgy_5_95_c69': 'CET_L5',
+    'linear_kbc_5_95_c73': 'CET_L6',
+    'linear_bmw_5_95_c86': 'CET_L7',
+    'linear_bmy_10_95_c71': 'CET_L8',
+    'linear_bgyw_20_98_c66': 'CET_L9',
+    'linear_gow_60_85_c27': 'CET_L10',
+    'linear_gow_65_90_c35': 'CET_L11',
+    'linear_blue_95_50_c20': 'CET_L12',
+    'linear_ternary_red_0_50_c52': 'CET_L13',
+    'linear_ternary_green_0_46_c42': 'CET_L14',
+    'linear_ternary_blue_0_44_c57': 'CET_L15',
+    'linear_kbgyw_5_98_c62': 'CET_L16',
+    'linear_worb_100_25_c53': 'CET_L17',
+    'linear_wyor_100_45_c55': 'CET_L18',
+    'linear_wcmr_100_45_c42': 'CET_L19',
+    'diverging_bwr_40_95_c42': 'CET_D1',
+    'diverging_bwr_20_95_c54': 'CET_D1A',
+    'diverging_gwv_55_95_c39': 'CET_D2',
+    'diverging_gwr_55_95_c38': 'CET_D3',
+    'diverging_bkr_55_10_c35': 'CET_D4',
+    'diverging_bky_60_10_c30': 'CET_D6',
+    'diverging_linear_bjy_30_90_c45': 'CET_D7',
+    'diverging_linear_bjr_30_55_c53': 'CET_D8',
+    'diverging_bwr_55_98_c37': 'CET_D9',
+    'diverging_cwm_80_100_c22': 'CET_D10',
+    'diverging_bwg_20_95_c41': 'CET_D13',
+    'diverging_rainbow_bgymr_45_85_c67': 'CET_R3',
+    'rainbow_bgyrm_35_85_c69': 'CET_R1',
+    'rainbow_bgyr_35_85_c72': 'CET_R2',
+    'cyclic_mrybm_35_75_c68': 'CET_C1',
+    'cyclic_mrybm_35_75_c68_s25': 'CET_C1s',
+    'cyclic_mygbm_30_95_c78': 'CET_C2',
+    'cyclic_mygbm_30_95_c78_s25': 'CET_C2s',
+    'cyclic_wrwbw_40_90_c42': 'CET_C4',
+    'cyclic_wrwbw_40_90_c42_s25': 'CET_C4s',
+    'cyclic_grey_15_85_c0': 'CET_C5',
+    'cyclic_grey_15_85_c0_s25': 'CET_C5s',
+    'isoluminant_cgo_70_c39': 'CET_I1',
+    'isoluminant_cgo_80_c38': 'CET_I2',
+    'isoluminant_cm_70_c39': 'CET_I3',
+    'diverging_isoluminant_cjo_70_c25': 'CET_D11',
+    'diverging_isoluminant_cjm_75_c23': 'CET_D12',
+    'linear_protanopic_deuteranopic_kbjyw_5_95_c25': 'CET_CBL1',
+    'linear_protanopic_deuteranopic_kbw_5_98_c40': 'CET_CBL2',
+    'diverging_protanopic_deuteranopic_bwy_60_95_c32': 'CET_CBD1',
+    'cyclic_protanopic_deuteranopic_bwyk_16_96_c31': 'CET_CBC1',
+    'cyclic_protanopic_deuteranopic_wywb_55_96_c33': 'CET_CBC2',
+    'linear_tritanopic_krjcw_5_98_c46': 'CET_CBTL1',
+    'linear_tritanopic_krjcw_5_95_c24': 'CET_CBTL2',
+    'diverging_tritanopic_cwr_75_98_c20': 'CET_CBTD1',
+    'cyclic_tritanopic_cwrk_40_100_c20': 'CET_CBTC1',
+    'cyclic_tritanopic_wrwc_70_100_c20': 'CET_CBTC2',
+}
 
 
 diverging_isoluminant_cjm_75_c23 = [  # cmap_def
