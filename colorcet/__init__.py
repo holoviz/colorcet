@@ -8729,7 +8729,6 @@ cm_n['bkr_r'] = mpl_cm('bkr_r',list(reversed(diverging_bkr_55_10_c35)))
 
 
 
-
 linear_bmw_5_95_c89 = [  # cmap_def
 [0, 0.017709, 0.34641],
 [0, 0.020672, 0.3555],
