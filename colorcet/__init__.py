@@ -45,6 +45,7 @@ __version__ = '1.0.0'
 from collections import OrderedDict
 from itertools import chain
 
+
 class AttrODict(OrderedDict):
     """Ordered dictionary with attribute access (e.g. for tab completion)"""
     def __dir__(self): return self.keys()
@@ -55,6 +56,7 @@ class AttrODict(OrderedDict):
         if (name.startswith('_')): return super(AttrODict, self).__setattr__(name, value)
         self[name] = value
 
+
 try:
     from matplotlib.colors import LinearSegmentedColormap
     from matplotlib.cm import register_cmap
@@ -63,17 +65,21 @@ except:
     def register_cmap(name,cmap): pass
     LinearSegmentedColormap.from_list=lambda n,c,N: None
 
+
 def rgb_to_hex(r,g,b):
     return '#%02x%02x%02x' % (r,g,b)
+
 
 def bokeh_palette(name,colorlist):
     palette[name] = [rgb_to_hex(int(r*255),int(g*255),int(b*255)) for r,g,b in colorlist]
     return palette[name]
 
+
 def mpl_cm(name,colorlist):
     cm[name]      = LinearSegmentedColormap.from_list(name, colorlist, N=len(colorlist))
     register_cmap("cet_"+name, cmap=cm[name])
     return cm[name]
+
 
 def get_aliases(name):
     """Get the aliases for a given colormap name"""
@@ -96,6 +102,7 @@ def all_original_names(group=None, not_group=None, only_aliased=False):
     else:
         names = filter(lambda x: x not in chain.from_iterable(aliases.values()), names)
     return sorted(list(names))
+
 
 palette = AttrODict()
 cm = AttrODict()
