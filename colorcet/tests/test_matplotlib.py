@@ -5,7 +5,7 @@ pytest.importorskip('matplotlib')
 
 def test_matplotlib_colormaps_available():
     assert len(cc.cm.items()) == 214
-    assert len(cc.cm_n.items()) == 56
+    assert len(cc.cm_n.items()) == 60
 
 
 @pytest.mark.mpl_image_compare

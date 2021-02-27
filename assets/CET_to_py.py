@@ -91,32 +91,12 @@ def mpl_cm(name,colorlist):
 
 def get_aliases(name):
     """Get the aliases for a given colormap name"""
-    names = [name]
+    names = set([name])
+    for k, v in aliases.items():
+        if k == name or name in v:
+            names = names.union(v + [k])
+    return ",  ".join(names)
 
-    def check_aliases(names, d,  k_position=-1, v_position=0):
-        for name in [n for n in names]:
-            for k, v in d.items():
-                if name == v and k not in names:
-                    if k_position == -2:
-                        names.append(k)
-                    else:
-                        names.insert(k_position, k)
-                if name == k and v not in names:
-                    if v_position == -2:
-                        names.append(v)
-                    else:
-                        names.insert(v_position, v)
-        return names
-
-    # Find aliases until there are no more
-    n_names = len(names)
-    while True:
-        names = check_aliases(names, aliases, k_position=-2, v_position=0)
-        names = check_aliases(names, aliases_v2, k_position=-2, v_position=0)
-        if len(names) == n_names:
-            break
-        n_names = len(names)
-    return ',  '.join(names)
 
 def all_original_names(group=None, not_group=None, only_aliased=False):
     """Get all original names - optionally in a particular group - or only those with aliases"""
@@ -145,40 +125,36 @@ cm_n = AttrODict(sorted(cm_n.items()))
 
 # Here #mpl indicates a colormap name taken from Matplotlib
 aliases = dict(
-  cyclic_mygbm_30_95_c78_s25                      = 'colorwheel',
-  diverging_bkr_55_10_c35                         = 'bkr',
-  diverging_bky_60_10_c30                         = 'bky',
-  diverging_protanopic_deuteranopic_bwy_60_95_c32 = 'bwy',
-  diverging_tritanopic_cwr_75_98_c20              = 'cwr',
-  diverging_bwr_40_95_c42                         = 'coolwarm', #mpl
-  diverging_gwv_55_95_c39                         = 'gwv',
-  diverging_linear_bjy_30_90_c45                  = 'bjy',
-  isoluminant_cgo_80_c38                          = 'isolum',
-  linear_bgy_10_95_c74                            = 'bgy',
-  linear_bgyw_15_100_c68                          = 'bgyw',
-  linear_blue_5_95_c73                            = 'kbc',
-  linear_blue_95_50_c20                           = 'blues',    #mpl
-  linear_bmw_5_95_c89                             = 'bmw',
-  linear_bmy_10_95_c78                            = 'bmy',
-  linear_green_5_95_c69                           = 'kgy',
-  linear_grey_0_100_c0                            = 'gray',     #mpl
-  linear_grey_10_95_c0                            = 'dimgray',
-  linear_kryw_0_100_c71                           = 'fire',
-  linear_ternary_blue_0_44_c57                    = 'kb',
-  linear_ternary_green_0_46_c42                   = 'kg',
-  linear_ternary_red_0_50_c52                     = 'kr',
-  rainbow_bgyr_35_85_c73                          = 'rainbow',
-  glasbey_bw_minc_20                              = 'glasbey',
-  glasbey_bw_minc_20_minl_30                      = 'glasbey_light',
-  glasbey_bw_minc_20_maxl_70                      = 'glasbey_dark',
-  glasbey_bw_minc_20_hue_330_100                  = 'glasbey_warm',
-  glasbey_bw_minc_20_hue_150_280                  = 'glasbey_cool',
+    cyclic_mygbm_30_95_c78_s25                      = ["colorwheel"],
+    diverging_bkr_55_10_c35                         = ["bkr"],
+    diverging_bky_60_10_c30                         = ["bky"],
+    diverging_protanopic_deuteranopic_bwy_60_95_c32 = ["bwy"],
+    diverging_tritanopic_cwr_75_98_c20              = ["cwr"],
+    diverging_bwr_40_95_c42                         = ["coolwarm"],  #mpl
+    diverging_gwv_55_95_c39                         = ["gwv"],
+    diverging_linear_bjy_30_90_c45                  = ["bjy"],
+    isoluminant_cgo_80_c38                          = ["isolum"],
+    linear_bgy_10_95_c74                            = ["bgy"],
+    linear_bgyw_15_100_c68                          = ["bgyw"],
+    linear_kbc_5_95_c73                             = ["kbc", "linear_blue_5_95_c73"],
+    linear_blue_95_50_c20                           = ["blues"],  #mpl
+    linear_bmw_5_95_c89                             = ["bmw"],
+    linear_bmy_10_95_c78                            = ["bmy"],
+    linear_kgy_5_95_c69                             = ["kgy", "linear_green_5_95_c69"],
+    linear_grey_0_100_c0                            = ["gray"],  #mpl
+    linear_grey_10_95_c0                            = ["dimgray"],
+    linear_kryw_0_100_c71                           = ["fire"],
+    linear_ternary_blue_0_44_c57                    = ["kb"],
+    linear_ternary_green_0_46_c42                   = ["kg"],
+    linear_ternary_red_0_50_c52                     = ["kr"],
+    rainbow_bgyr_35_85_c73                          = ["rainbow"],
+    glasbey_bw_minc_20                              = ["glasbey"],
+    glasbey_bw_minc_20_minl_30                      = ["glasbey_light"],
+    glasbey_bw_minc_20_maxl_70                      = ["glasbey_dark"],
+    glasbey_bw_minc_20_hue_330_100                  = ["glasbey_warm"],
+    glasbey_bw_minc_20_hue_150_280                  = ["glasbey_cool"],
 )
 
-aliases_v2 = {
-  'linear_green_5_95_c69': 'linear_kgy_5_95_c69',
-  'linear_blue_5_95_c73': 'linear_kbc_5_95_c73',
-}
 
 def create_alias(alias, base, output, is_name=True):
     output.write("{0} = b_{1}\n".format(alias,base))
@@ -232,14 +208,24 @@ def get_csvs_in_order(output_file, csv_folders):
     return csv_paths_new
 
 
+def format_dict(name, d, tabs=0):
+    t4 = " "*4
+    tabs = t4*tabs
+    s = tabs + "{} = {{\n".format(name)
+    for k, v in d.items():
+        v = "'{}'".format(v) if isinstance(v, str) else v
+        s += tabs + t4 + "'{}': {},\n".format(k, v)
+    s += tabs + "}\n"
+    return s
+
+
 def gen_init_py(output_file, csv_folders):
     csv_paths = get_csvs_in_order(output_file, csv_folders)
 
     cmaps = []
     with open(output_file, "w") as output:
         output.write(header)
-        output.write("aliases = {}\n".format(aliases))
-        output.write("aliases_v2 = {}\n".format(aliases_v2))
+        output.write(format_dict("aliases", aliases))
         for csv_path in csv_paths:
             if csv_path.suffix == ".csv":
                 base = csv_path.stem.replace("-","_").replace("_n256","")
@@ -256,8 +242,8 @@ def gen_init_py(output_file, csv_folders):
                 output.write("m_{0} = mpl_cm('{0}',{0})\n".format(base))
                 output.write("m_{0}_r = mpl_cm('{0}_r',list(reversed({0})))\n".format(base))
                 if base in aliases:
-                    alias = aliases[base]
-                    create_alias(alias, base, output)
+                    for alias in aliases[base]:
+                        create_alias(alias, base, output)
                 output.write("\n\n")
                 cmaps.append(base)
         output.write(footer)

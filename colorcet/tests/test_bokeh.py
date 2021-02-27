@@ -3,7 +3,7 @@ import colorcet as cc
 
 def test_bokeh_palettes_available():
     assert len(cc.palette.items()) == 107
-    assert len(cc.palette_n.items()) == 28
+    assert len(cc.palette_n.items()) == 30
 
 def test_bokeh_palette_is_a_list():
     assert isinstance(cc.blues, list)
