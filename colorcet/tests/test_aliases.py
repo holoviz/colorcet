@@ -2,12 +2,10 @@ import pytest  # noqa
 import colorcet as cc
 
 def test_get_aliases():
-    expected = ['kbc,  linear_blue_5_95_c73,  CET_L6,  linear_kbc_5_95_c73',
-                'kbc,  CET_L6,  linear_blue_5_95_c73,  linear_kbc_5_95_c73']
-    assert cc.get_aliases('kbc') in expected
-    assert cc.get_aliases('linear_blue_5_95_c73') in expected
-    assert cc.get_aliases('CET_L6') in expected
-    assert cc.get_aliases('linear_kbc_5_95_c73') in expected
+    expected = {'kbc', 'linear_blue_5_95_c73', 'linear_kbc_5_95_c73'}
+    assert set(cc.get_aliases('kbc').split(",  ")) == expected
+    assert set(cc.get_aliases('linear_blue_5_95_c73').split(",  ")) == expected
+    assert set(cc.get_aliases('linear_kbc_5_95_c73').split(",  ")) == expected
 
 def test_all_original_names():
     assert len(cc.all_original_names()) == 79
