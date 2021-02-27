@@ -108,7 +108,7 @@ def get_aliases(name):
     return ",  ".join(names)
 
 
-def all_original_names(group=None, not_group=None, only_aliased=False):
+def all_original_names(group=None, not_group=None, only_aliased=False, only_CET=False):
     """Get all original names - optionally in a particular group - or only those with aliases"""
     names = palette.keys()
     if group:
@@ -119,6 +119,10 @@ def all_original_names(group=None, not_group=None, only_aliased=False):
         names = filter(lambda x: x in aliases.keys(), names)
     else:
         names = filter(lambda x: x not in chain.from_iterable(aliases.values()), names)
+    if only_CET:
+        names = filter(lambda x: x in mapping_flipped.values(), names)
+    else:
+        names = filter(lambda x: x not in mapping_flipped.values(), names)
     return sorted(list(names))
 
 
