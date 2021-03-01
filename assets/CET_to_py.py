@@ -124,7 +124,14 @@ def get_aliases(name):
         if len(names) == n_names:
             break
         n_names = len(names)
-    return ',  '.join(names)
+    # sort names as 1or0_underscores, CET, multiple_under_scores (alias, cetname, algorithmicname)
+    def name_sortfn(name):
+        if name.count("_") > 1:
+            return 2
+        if "CET" in name:
+            return 1
+        return 0
+    return ',  '.join(sorted(names, key=name_sortfn))
 
 def all_original_names(group=None, not_group=None, only_aliased=False, only_CET=False):
     """Get all original names - optionally in a particular group - or only those with aliases"""
