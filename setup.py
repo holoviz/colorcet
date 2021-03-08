@@ -52,7 +52,7 @@ extras_require = {
         'sphinx_holoviz_theme',
     ],
     'tests_extra': tests + [
-        'pytest-mpl'  # only available on pip and conda-forge
+        'pytest-mpl',  # only available on pip and conda-forge
     ],
     # until pyproject.toml/equivalent is widely supported (setup_requires
     # doesn't work well with pip)
