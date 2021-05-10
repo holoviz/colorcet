@@ -1,3 +1,19 @@
+"""CET_merge.py - Merge new aliases and "cetnames" in CET_updates.py with existing from CET_to_py.py
+
+Instructions
+------------
+
+1. Follow instructions at the top of `make_csvs_from_colorcet.m` and then run with MATLAB or GNU Octave to
+   generate new colormap CSVS and `CET_updates.py`.
+2. Copy `aliases` and `cetnames` from `CET_to_py.py` where noted below.
+3. Run `python CET_merge.py` from within its own directory.
+4. Copy the resulting terminal output syntax for `aliases` and `cetnames` back into `CET_to_py.py`.
+5. Use `git diff` as desired to manually copy-over `#mpl` comments in `aliases`.
+
+Do not commit the copied-in aliases and cetnames dictionaries in this file.
+
+"""
+
 import re
 import sys
 
@@ -9,6 +25,7 @@ from CET_updates import new_aliases, new_cetnames
 # ## Copy aliases and cetnames from CET_to_py.py here:
 aliases = {}
 cetnames = {}
+
 
 def find_dict_merge_conflicts(d_to_update, d_updating):
     conflicts = []
@@ -74,6 +91,8 @@ def print_dict(name, d, braces=False, tabs=0, evenspace=False, sortfn=None):
 
 
 cetname_sort_re = re.compile(r"CET-(\D+)(\d+)(\D?)")
+
+
 def cetname_sortfn(cetname):
     prefix, num, suffix = cetname_sort_re.match(cetname).groups()
     return prefix, int(num), suffix
