@@ -117,6 +117,7 @@ def get_aliases(name):
                             names.insert(v_position, vname)
         return names
 
+    # Repeatedly look for new aliases until no new aliases are found
     n_names = len(names)
     while True:
         names = check_aliases(names, aliases, k_position=-2, v_position=0)
@@ -124,14 +125,17 @@ def get_aliases(name):
         if len(names) == n_names:
             break
         n_names = len(names)
-    # sort names as 1or0_underscores, CET, multiple_under_scores (alias, cetname, algorithmicname)
+
+    # Sort names as 1or0_underscores, CET, multiple_under_scores (alias, cetname, algorithmicname)
     def name_sortfn(name):
         if name.count("_") > 1:
             return 2
         if "CET" in name:
             return 1
         return 0
+
     return ',  '.join(sorted(names, key=name_sortfn))
+
 
 def all_original_names(group=None, not_group=None, only_aliased=False, only_CET=False):
     """Get all original names - optionally in a particular group - or only those with aliases"""
