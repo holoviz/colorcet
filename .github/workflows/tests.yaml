@@ -103,7 +103,7 @@ jobs:
           fetch-depth: "100"
       - uses: actions/setup-python@v2
         with:
-          python-version: 2.7
+          python-version: ${{ matrix.python-version }}
       - uses: conda-incubator/setup-miniconda@v2
         with:
           miniconda-version: "latest"
@@ -113,7 +113,7 @@ jobs:
           conda --version
           conda install -c pyviz "pyctdev>=0.5"
           doit ecosystem_setup
-          doit env_create --name=${{ env.ENV_NAME }} --python=2.7
+          doit env_create --name=${{ env.ENV_NAME }} --python=${{ matrix.python-version }}
       - name: doit develop_install
         run: |
           eval "$(conda shell.bash hook)"
