@@ -27,6 +27,7 @@ jobs:
       CHANS_DEV: "-c pyviz/label/dev -c bokeh"
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       ENV_NAME: "colorcet"
+      MPLBACKEND: "Agg"
       DISPLAY: ":99.0"
     steps:
       - uses: actions/checkout@v2
