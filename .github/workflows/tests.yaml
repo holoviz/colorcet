@@ -96,6 +96,7 @@ jobs:
       CHANS_DEV: "-c pyviz/label/dev -c bokeh"
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       ENV_NAME: "colorcet"
+      MPLBACKEND: "Agg"
       DISPLAY: ":99.0"
     steps:
       - uses: actions/checkout@v2
@@ -107,6 +108,7 @@ jobs:
       - uses: conda-incubator/setup-miniconda@v2
         with:
           miniconda-version: "latest"
+          python-version: ${{ matrix.python-version }}
       - name: conda setup
         run: |
           conda config --set always_yes True
@@ -119,6 +121,9 @@ jobs:
           eval "$(conda shell.bash hook)"
           conda activate ${{ env.ENV_NAME }}
           doit develop_install ${{ env.CHANS_DEV}} -o ${{ env.HV_REQUIREMENTS }}
+      - name: Handling backports on 'ubuntu-latest'
+        if: matrix.os == 'ubuntu-latest'
+        run: conda install ${{ env.CHANS_DEV}} backports.functools_lru_cache 
       - name: doit env_capture
         run: |
           eval "$(conda shell.bash hook)"
