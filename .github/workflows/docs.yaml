@@ -57,6 +57,13 @@ jobs:
           conda install ${{ env.CHANS_DEV }} "pip<21.2.1" 
           conda list
           doit develop_install ${{ env.CHANS_DEV}} -o doc -o examples
+          # Temporarily pin these two
+          conda install 'nbconvert<6' 'jupyter_client<7'
+      - name: doit env_capture
+        run: |
+          eval "$(conda shell.bash hook)"
+          conda activate test-environment
+          doit env_capture
       - name: build docs
         run: |
           eval "$(conda shell.bash hook)"
