@@ -1,0 +1,146 @@
+name: tests
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+    - '*'
+
+jobs:
+  test_suite:
+    name: Pytest on ${{ matrix.python-version }}, ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: ['ubuntu-latest', 'macos-latest', 'windows-latest']
+        python-version: [3.6, 3.7, 3.8]
+    timeout-minutes: 60
+    defaults:
+      run:
+        shell: bash -l {0} 
+    env:
+      HV_REQUIREMENTS: "examples"
+      PYTHON_VERSION: ${{ matrix.python-version }}
+      CHANS_DEV: "-c pyviz/label/dev -c bokeh"
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      ENV_NAME: "colorcet"
+      MPLBACKEND: "Agg"
+      DISPLAY: ":99.0"
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: "100"
+      - uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+      - uses: conda-incubator/setup-miniconda@v2
+        with:
+          miniconda-version: "latest"
+      - name: conda setup
+        run: |
+          conda config --set always_yes True
+          conda --version
+          conda install -c pyviz "pyctdev>=0.5"
+          doit ecosystem_setup
+          doit env_create --name=${{ env.ENV_NAME }} --python=${{ matrix.python-version }}
+      - name: doit develop_install
+        run: |
+          eval "$(conda shell.bash hook)"
+          conda activate ${{ env.ENV_NAME }}
+          doit develop_install ${{ env.CHANS_DEV}} -o ${{ env.HV_REQUIREMENTS }}
+          # Version of panel failing on Python 3.6
+          conda install ${{ env.CHANS_DEV}} "panel==0.12.1"
+      - name: doit env_capture
+        run: |
+          eval "$(conda shell.bash hook)"
+          conda activate ${{ env.ENV_NAME }}
+          doit env_capture
+      - name: doit test_lint
+        run: |
+          eval "$(conda shell.bash hook)"
+          conda activate ${{ env.ENV_NAME }}
+          doit test_lint
+      - name: doit test_unit
+        run: |
+          eval "$(conda shell.bash hook)"
+          conda activate ${{ env.ENV_NAME }}
+          doit test_unit
+      - name: doit test_examples
+        run: |
+          eval "$(conda shell.bash hook)"
+          conda activate ${{ env.ENV_NAME }}
+          doit test_examples
+      - name: doit test_unit_extra
+        run: |
+          eval "$(conda shell.bash hook)"
+          conda activate ${{ env.ENV_NAME }}
+          pip install pytest-mpl
+          doit test_unit_extra
+  
+  test_suite_py27:
+    name: Pytest on Python 2.7 only
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: ['ubuntu-latest', 'macos-latest']
+        python-version: [2.7]
+    timeout-minutes: 60
+    defaults:
+      run:
+        shell: bash -l {0} 
+    env:
+      HV_REQUIREMENTS: "tests"
+      CHANS_DEV: "-c pyviz/label/dev -c bokeh"
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      ENV_NAME: "colorcet"
+      MPLBACKEND: "Agg"
+      DISPLAY: ":99.0"
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: "100"
+      - uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+      - uses: conda-incubator/setup-miniconda@v2
+        with:
+          miniconda-version: "latest"
+          python-version: ${{ matrix.python-version }}
+      - name: conda setup
+        run: |
+          conda config --set always_yes True
+          conda --version
+          conda install -c pyviz "pyctdev>=0.5"
+          doit ecosystem_setup
+          doit env_create --name=${{ env.ENV_NAME }} --python=${{ matrix.python-version }}
+      - name: doit develop_install
+        run: |
+          eval "$(conda shell.bash hook)"
+          conda activate ${{ env.ENV_NAME }}
+          doit develop_install ${{ env.CHANS_DEV}} -o ${{ env.HV_REQUIREMENTS }}
+      - name: doit env_capture
+        run: |
+          eval "$(conda shell.bash hook)"
+          conda activate ${{ env.ENV_NAME }}
+          doit env_capture
+      - name: Handling backports on 'ubuntu-latest'
+        if: matrix.os == 'ubuntu-latest'
+        run: |
+          eval "$(conda shell.bash hook)"
+          conda activate ${{ env.ENV_NAME }}
+          conda install ${{ env.CHANS_DEV}} backports.functools_lru_cache
+      - name: doit env_capture again
+        run: |
+          eval "$(conda shell.bash hook)"
+          conda activate ${{ env.ENV_NAME }}
+          doit env_capture
+      - name: doit test_unit
+        run: |
+          eval "$(conda shell.bash hook)"
+          conda activate ${{ env.ENV_NAME }}
+          doit test_unit
+

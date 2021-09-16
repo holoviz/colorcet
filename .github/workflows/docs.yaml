@@ -1,0 +1,88 @@
+
+name: docs
+
+on:
+  push:
+    tags:
+      - 'v[0-9]+.[0-9]+.[0-9]+'
+      - 'v[0-9]+.[0-9]+.[0-9]+a[0-9]+'
+      - 'v[0-9]+.[0-9]+.[0-9]+b[0-9]+'
+      - 'v[0-9]+.[0-9]+.[0-9]+rc[0-9]+'
+  workflow_dispatch:
+
+jobs:
+  build_docs:
+    name: Documentation
+    runs-on: 'ubuntu-latest'
+    timeout-minutes: 120
+    defaults:
+      run:
+        shell: bash -l {0}
+    env:
+      DESC: "Documentation build"
+      CHANS_DEV: "-c pyviz/label/dev -c bokeh"
+      MPLBACKEND: "Agg"
+      DISPLAY: ":99.0"
+      PYTHON_DOCS_VERSION: "3.7"
+    steps:
+      - name: remove nodejs
+        run: |
+          sudo rm /usr/local/bin/node
+          sudo rm /usr/local/bin/npm
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: "100"
+      - uses: conda-incubator/setup-miniconda@v2
+        with:
+          miniconda-version: "latest"
+      - name: Set output
+        id: vars
+        run: echo ::set-output name=tag::${GITHUB_REF#refs/*/}
+      - name: conda setup
+        run: |
+          conda config --set always_yes True
+          conda install -c pyviz "pyctdev>=0.5"
+          doit ecosystem_setup
+          doit env_create ${{ env.CHANS_DEV}} --python=${{ env.PYTHON_DOCS_VERSION}}
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '15'
+      - name: doit develop_install
+        run: |
+          eval "$(conda shell.bash hook)"
+          conda activate test-environment
+          conda install ${{ env.CHANS_DEV }} "pip<21.2.1" 
+          conda list
+          doit develop_install ${{ env.CHANS_DEV}} -o doc -o examples
+          # Temporarily pin these two
+          conda install ${{ env.CHANS_DEV}} 'nbconvert==5.6.1' 'jupyter_client==6.1.12'
+      - name: doit env_capture
+        run: |
+          eval "$(conda shell.bash hook)"
+          conda activate test-environment
+          doit env_capture
+      - name: build docs
+        run: |
+          eval "$(conda shell.bash hook)"
+          conda activate test-environment
+          doit build_website
+      - name: git status
+        run: |
+          git status
+          git diff
+      - name: Deploy dev
+        uses: peaceiris/actions-gh-pages@v3
+        if: (contains(steps.vars.outputs.tag, 'a') || contains(steps.vars.outputs.tag, 'b') || contains(steps.vars.outputs.tag, 'rc'))
+        with:
+          personal_token: ${{ secrets.ACCESS_TOKEN }}
+          external_repository: pyviz-dev/colorcet
+          publish_dir: ./builtdocs
+          force_orphan: true
+      - name: Deploy main
+        if: (!(contains(steps.vars.outputs.tag, 'a') || contains(steps.vars.outputs.tag, 'b') || contains(steps.vars.outputs.tag, 'rc')))
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./builtdocs
+          cname: colorcet.holoviz.org
+          force_orphan: true
