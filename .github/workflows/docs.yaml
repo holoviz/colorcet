@@ -58,7 +58,7 @@ jobs:
           conda list
           doit develop_install ${{ env.CHANS_DEV}} -o doc -o examples
           # Temporarily pin these two
-          conda install 'nbconvert==5.6.1' 'jupyter_client==6.1.12'
+          conda install ${{ env.CHANS_DEV}} 'nbconvert==5.6.1' 'jupyter_client==6.1.12'
       - name: doit env_capture
         run: |
           eval "$(conda shell.bash hook)"
