@@ -51,7 +51,7 @@ jobs:
           conda activate ${{ env.ENV_NAME }}
           doit develop_install ${{ env.CHANS_DEV}} -o ${{ env.HV_REQUIREMENTS }}
           # Version of panel failing on Python 3.6
-          conda install ${{ env.CHANS_DEV}} "panel<=0.12"
+          conda install ${{ env.CHANS_DEV}} "panel==0.12.1"
       - name: doit env_capture
         run: |
           eval "$(conda shell.bash hook)"
