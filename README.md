@@ -26,7 +26,7 @@ by Peter Kovesi at the Center for Exploration Targeting.
 
 ## Installation
 
-Colorcet supports Python 2.7, 3.5, 3.6 and 3.7 on Linux, Windows, or Mac
+Colorcet supports Python 2.7, 3.5, 3.6, 3.7, 3.8 and 3.9 on Linux, Windows, or Mac
 and can be installed with conda:
 
 ```
