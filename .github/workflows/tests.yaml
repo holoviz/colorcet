@@ -132,12 +132,12 @@ jobs:
           eval "$(conda shell.bash hook)"
           conda activate ${{ env.ENV_NAME }}
           doit env_capture
-      - name: Handling backports on 'ubuntu-latest'
+      - name: Handling backports on 'ubuntu-latest' and the decorator package
         if: matrix.os == 'ubuntu-latest'
         run: |
           eval "$(conda shell.bash hook)"
           conda activate ${{ env.ENV_NAME }}
-          conda install ${{ env.CHANS_DEV}} backports.functools_lru_cache
+          conda install ${{ env.CHANS_DEV}} backports.functools_lru_cache 'decorator=4.4.2'
       - name: doit env_capture again
         run: |
           eval "$(conda shell.bash hook)"
