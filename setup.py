@@ -42,6 +42,7 @@ tests = [
     'flake8',
     'nbsmoke >=0.2.6',
     'pytest >=2.8.5',
+    'pytest-cov',
 ]
 
 extras_require = {

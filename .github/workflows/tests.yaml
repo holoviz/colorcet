@@ -148,4 +148,4 @@ jobs:
           eval "$(conda shell.bash hook)"
           conda activate ${{ env.ENV_NAME }}
           doit test_unit
-
+      - uses: codecov/codecov-action@v2
