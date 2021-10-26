@@ -13,6 +13,7 @@
 !/doc/Reference_Manual/index.rst
 .ipynb_checkpoints
 .coverage
+coverage.xml
 __pycache__
 .doit*
 *.egg-info
