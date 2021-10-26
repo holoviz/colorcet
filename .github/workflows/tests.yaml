@@ -24,7 +24,7 @@ jobs:
     env:
       HV_REQUIREMENTS: "examples"
       PYTHON_VERSION: ${{ matrix.python-version }}
-      CHANS_DEV: "-c pyviz/label/dev -c bokeh"
+      CHANS: "-c pyviz -c bokeh"
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       ENV_NAME: "colorcet"
       MPLBACKEND: "Agg"
@@ -50,14 +50,7 @@ jobs:
         run: |
           eval "$(conda shell.bash hook)"
           conda activate ${{ env.ENV_NAME }}
-          doit develop_install ${{ env.CHANS_DEV}} -o ${{ env.HV_REQUIREMENTS }}
-      - name: panel on py3.6
-      # The latest dev version 0.13.x is failing on py3.6
-        if: matrix.python-version == '3.6'
-        run: |
-          eval "$(conda shell.bash hook)"
-          conda activate ${{ env.ENV_NAME }}
-          conda install ${{ env.CHANS_DEV}} "panel==0.12.1"
+          doit develop_install ${{ env.CHANS}} -o ${{ env.HV_REQUIREMENTS }}
       - name: doit env_capture
         run: |
           eval "$(conda shell.bash hook)"
@@ -100,7 +93,7 @@ jobs:
         shell: bash -l {0} 
     env:
       HV_REQUIREMENTS: "tests"
-      CHANS_DEV: "-c pyviz/label/dev -c bokeh"
+      CHANS: "-c pyviz -c bokeh"
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       ENV_NAME: "colorcet"
       MPLBACKEND: "Agg"
@@ -127,7 +120,7 @@ jobs:
         run: |
           eval "$(conda shell.bash hook)"
           conda activate ${{ env.ENV_NAME }}
-          doit develop_install ${{ env.CHANS_DEV}} -o ${{ env.HV_REQUIREMENTS }}
+          doit develop_install ${{ env.CHANS}} -o ${{ env.HV_REQUIREMENTS }}
       - name: doit env_capture
         run: |
           eval "$(conda shell.bash hook)"
@@ -138,14 +131,21 @@ jobs:
         run: |
           eval "$(conda shell.bash hook)"
           conda activate ${{ env.ENV_NAME }}
-          conda install ${{ env.CHANS_DEV}} backports.functools_lru_cache 'decorator=4.4.2'
+          conda install ${{ env.CHANS}} backports.functools_lru_cache 'decorator=4.4.2'
       - name: doit env_capture again
         run: |
           eval "$(conda shell.bash hook)"
           conda activate ${{ env.ENV_NAME }}
           doit env_capture
       - name: doit test_unit
+        if: matrix.os == 'ubuntu-latest'
         run: |
           eval "$(conda shell.bash hook)"
           conda activate ${{ env.ENV_NAME }}
           doit test_unit
+      - name: doit test_unit
+        if: matrix.os == 'macos-latest'
+        run: |
+          eval "$(conda shell.bash hook)"
+          conda activate ${{ env.ENV_NAME }}
+          pytest colorcet
