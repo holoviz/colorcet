@@ -55,7 +55,8 @@ jobs:
       # The latest dev version 0.13.x is failing on py3.6
         if: matrix.python-version == '3.6'
         run: |
-          # Version of panel failing on Python 3.6
+          eval "$(conda shell.bash hook)"
+          conda activate ${{ env.ENV_NAME }}
           conda install ${{ env.CHANS_DEV}} "panel==0.12.1"
       - name: doit env_capture
         run: |
