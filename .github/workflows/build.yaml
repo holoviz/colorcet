@@ -91,6 +91,10 @@ jobs:
           conda activate test-environment
           doit develop_install $CHANS_DEV -o unit_tests
           doit pip_on_conda
+      - name: doit env_capture
+        run: |
+          conda activate test-environment
+          doit env_capture
       - name: pip build
         run: |
           eval "$(conda shell.bash hook)"
