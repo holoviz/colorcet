@@ -28,7 +28,7 @@ def get_setup_version(reponame):
 
 install_requires = [
     'param >=1.7.0',
-    'pyct >=0.4.4',
+    'pyct[cmd] >=0.4.4',
 ]
 
 examples = [
@@ -62,7 +62,7 @@ extras_require = {
     # doesn't work well with pip)
     'build': [
         'param >=1.7.0',
-        'pyct >=0.4.4',
+        'pyct[build,cmd] >=0.4.4',
         'setuptools >=30.3.0',
         'wheel',
     ]
