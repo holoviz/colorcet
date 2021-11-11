@@ -12,6 +12,7 @@
 /doc/Reference_Manual/*
 !/doc/Reference_Manual/index.rst
 .ipynb_checkpoints
+.tox/
 .coverage
 coverage.xml
 __pycache__
@@ -20,6 +21,7 @@ __pycache__
 */.version
 pip-wheel-metadata
 **.ipynb_checkpoints
+/build
 
 # nbsite
 # these files normally shouldn't be checked in as they should be

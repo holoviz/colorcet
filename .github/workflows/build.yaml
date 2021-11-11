@@ -16,10 +16,9 @@ jobs:
       run:
         shell: bash -l {0}
     env:
-      CHANS_DEV: "-c pyviz/label/dev -c bokeh"
+      CHANS: "-c pyviz -c bokeh"
       PKG_TEST_PYTHON: "--test-python=py37"
       PYTHON_VERSION: "3.7"
-      CHANS: "-c pyviz"
       MPLBACKEND: "Agg"
       CONDA_UPLOAD_TOKEN: ${{ secrets.CONDA_UPLOAD_TOKEN }}
     steps:
@@ -33,8 +32,8 @@ jobs:
         with:
           miniconda-version: "latest"
           python-version: ${{ env.PYTHON_VERSION }}
-      - name: Fetch unshallow
-        run: git fetch --prune --tags --unshallow -f
+      - name: Fetch
+        run: git fetch --prune --tags -f
       - name: Set output
         id: vars
         run: echo ::set-output name=tag::${GITHUB_REF#refs/*/}
@@ -44,7 +43,7 @@ jobs:
           conda install -c pyviz "pyctdev>=0.5"
           doit ecosystem_setup
       - name: conda build
-        run: doit package_build $CHANS_DEV $PKG_TEST_PYTHON --test-group=unit
+        run: doit package_build $CHANS $PKG_TEST_PYTHON --test-group=unit
       - name: conda dev upload
         if: (contains(steps.vars.outputs.tag, 'a') || contains(steps.vars.outputs.tag, 'b') || contains(steps.vars.outputs.tag, 'rc'))
         run: doit package_upload --token=$CONDA_UPLOAD_TOKEN --label=dev
@@ -58,10 +57,9 @@ jobs:
       run:
         shell: bash -l {0}
     env:
-      CHANS_DEV: "-c pyviz/label/dev -c bokeh"
+      CHANS: "-c pyviz -c bokeh"
       PKG_TEST_PYTHON: "--test-python=py37"
       PYTHON_VERSION: "3.7"
-      CHANS: "-c pyviz"
       MPLBACKEND: "Agg"
       PPU: ${{ secrets.PPU }}
       PPP: ${{ secrets.PPP }}
@@ -77,21 +75,24 @@ jobs:
         with:
           miniconda-version: "latest"
           python-version: ${{ env.PYTHON_VERSION }}
-      - name: Fetch unshallow
-        run: git fetch --prune --tags --unshallow -f
+      - name: Fetch
+        run: git fetch --prune --tags -f
       - name: conda setup
         run: |
           conda config --set always_yes True
           conda install -c pyviz "pyctdev>=0.5"
           doit ecosystem_setup
-          doit env_create $CHANS_DEV --python=$PYTHON_VERSION
+          doit env_create $CHANS --python=$PYTHON_VERSION
       - name: env setup
         run: |
           eval "$(conda shell.bash hook)"
           conda activate test-environment
           doit develop_install $CHANS_DEV -o unit_tests
-          pip uninstall -y holoviews
           doit pip_on_conda
+      - name: doit env_capture
+        run: |
+          conda activate test-environment
+          doit env_capture
       - name: pip build
         run: |
           eval "$(conda shell.bash hook)"
