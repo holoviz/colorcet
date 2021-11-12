@@ -4,7 +4,7 @@ Instructions
 ------------
 
 1. Follow instructions at the top of `make_csvs_from_colorcet.m` and then run with MATLAB or GNU Octave to
-   generate new colormap CSVS and `CET_updates.py`.
+   generate new colormap CSVs and `CET_updates.py`.
 2. Copy `aliases` and `cetnames` from `CET_to_py.py` where noted below.
 3. Run `python CET_merge.py` from within its own directory.
 4. Copy the resulting terminal output syntax for `aliases` and `cetnames` back into `CET_to_py.py`.
