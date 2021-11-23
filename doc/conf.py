@@ -4,7 +4,7 @@ from nbsite.shared_conf import *
 
 project = 'colorcet'
 authors = u'Anaconda'
-copyright = u'2017-2019 ' + authors
+copyright = u'2017-2021 ' + authors
 description = 'Collection of perceptually uniform colormaps'
 
 import colorcet
@@ -32,7 +32,7 @@ _NAV = (
 )
 
 _SOCIAL = (
-    ('Github', 'https://github.com/pyviz/' + project),
+    ('Github', 'https://github.com/holoviz/' + project),
     ('Gitter', 'https://gitter.im/pyviz/pyviz'),
     ('HoloViz', 'http://holoviz.org')
 )
