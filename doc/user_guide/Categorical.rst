@@ -8,7 +8,6 @@ Categorical
 ***********
 
 .. notebook:: colorcet ../../examples/user_guide/Categorical.ipynb
-    :offset: 0
     :disable_interactivity_warning:
 
 -------
