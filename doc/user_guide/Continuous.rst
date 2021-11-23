@@ -8,6 +8,7 @@ Continuous
 **********
 
 .. notebook:: colorcet ../../examples/user_guide/Continuous.ipynb
+    :offset: 1
     :disable_interactivity_warning:
 
 
