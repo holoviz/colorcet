@@ -10,6 +10,7 @@ User Guide
 
 .. notebook:: colorcet ../../examples/user_guide/index.ipynb
     :offset: 0
+    :disable_interactivity_warning:
 
 .. toctree::
     :titlesonly:
@@ -21,4 +22,4 @@ User Guide
 
 -------
 
-`Right click to download this notebook from GitHub. <https://raw.githubusercontent.com/pyviz/colorcet/master/examples/user_guide/index.ipynb>`_
+`Right click to download this notebook from GitHub. <https://raw.githubusercontent.com/holoviz/colorcet/master/examples/user_guide/index.ipynb>`_

@@ -40,7 +40,8 @@ same methods described above and are named:
 Some of the Glasbey sets are aliased to short names as explained in the User Guide.
 """
 
-__version__ = '1.0.0'
+import param
+__version__ = str(param.version.Version(fpath=__file__, archive_commit="$Format:%h$",reponame="datashader"))
 
 from collections import OrderedDict
 from itertools import chain
@@ -119,12 +120,23 @@ def get_aliases(name):
     return ',  '.join(sorted(names, key=name_sortfn))
 
 def all_original_names(group=None, not_group=None, only_aliased=False, only_CET=False):
-    """Get all original names - optionally in a particular group - or only those with aliases"""
+    """
+    Returns a list (optionally filtered) of the names of the available colormaps
+    Filters available:
+    - group: only include maps whose name include the given string(s)
+      (e.g. "'linear'" or "['linear','diverging']"). 
+    - not_group: filter out any maps whose names include the given string(s)
+    - only_aliased: only include maps with shorter/simpler aliases
+    - only_CET: only include maps from CET
+    """
     names = palette.keys()
     if group:
-        names = filter(lambda x: group in x, names)
+        groups = group if isinstance(group, list) else [group]
+        names = [n for ns in [list(filter(lambda x: g in x, names)) for g in groups] for n in ns]
     if not_group:
-        names = filter(lambda x: not_group not in x, names)
+        not_groups = not_group if isinstance(not_group, list) else [not_group]
+        for g in not_groups:
+            names = list(filter(lambda x: g not in x, names))
     if only_aliased:
         names = filter(lambda x: x in aliases.keys(), names)
     else:
