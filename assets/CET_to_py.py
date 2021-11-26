@@ -55,7 +55,8 @@ same methods described above and are named:
 Some of the Glasbey sets are aliased to short names as explained in the User Guide.
 """
 
-__version__ = '1.0.0'
+import param
+__version__ = str(param.version.Version(fpath=__file__, archive_commit="$Format:%h$",reponame="datashader"))
 
 from collections import OrderedDict
 from itertools import chain
