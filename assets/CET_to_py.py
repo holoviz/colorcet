@@ -74,10 +74,11 @@ class AttrODict(OrderedDict):
 
 
 try:
-    from matplotlib.colors import LinearSegmentedColormap
+    from matplotlib.colors import LinearSegmentedColormap, ListedColormap
     from matplotlib.cm import register_cmap
 except:
     def LinearSegmentedColormap(colorlist,name): pass
+    def ListedColormap(colorlist,name): pass
     def register_cmap(name,cmap): pass
     LinearSegmentedColormap.from_list=lambda n,c,N: None
 
@@ -93,6 +94,12 @@ def bokeh_palette(name,colorlist):
 
 def mpl_cm(name,colorlist):
     cm[name]      = LinearSegmentedColormap.from_list(name, colorlist, N=len(colorlist))
+    register_cmap("cet_"+name, cmap=cm[name])
+    return cm[name]
+
+
+def mpl_cl(name,colorlist):
+    cm[name]      = ListedColormap(colorlist, name)
     register_cmap("cet_"+name, cmap=cm[name])
     return cm[name]
 
@@ -298,7 +305,7 @@ cetnames = {
 cetnames_flipped = {v.replace('-', '_'): k.replace('-', '_') for
                      k, v in cetnames.items()}
 
-def create_alias(alias, base, output, is_name=True):
+def create_alias(alias, base, output, cmtype='mpl_cm', is_name=True):
     output.write("{0} = b_{1}\n".format(alias,base))
     output.write("m_{0} = m_{1}\n".format(alias,base))
     output.write("m_{0}_r = m_{1}_r\n".format(alias,base))
@@ -308,8 +315,8 @@ def create_alias(alias, base, output, is_name=True):
     output.write("cm['{0}'] = m_{1}\n".format(alias,base))
     output.write("cm['{0}_r'] = m_{1}_r\n".format(alias,base))
     if is_name:
-        output.write("cm_n['{0}'] = mpl_cm('{0}',{1})\n".format(alias,base))
-        output.write("cm_n['{0}_r'] = mpl_cm('{0}_r',list(reversed({1})))\n".format(alias,base))
+        output.write("cm_n['{0}'] = {2}('{0}',{1})\n".format(alias,base,cmtype))
+        output.write("cm_n['{0}_r'] = {2}('{0}_r',list(reversed({1})))\n".format(alias,base,cmtype))
     else:
         output.write("register_cmap('cet_{0}',m_{1})\n".format(alias,base))
         output.write("register_cmap('cet_{0}_r',m_{1}_r)\n".format(alias,base))
@@ -370,6 +377,8 @@ def gen_init_py(output_file, csv_folders):
         output.write(format_dict("aliases", aliases))
         output.write(format_dict("cetnames_flipped", cetnames_flipped))
         for csv_path in csv_paths:
+            categorical = ('Glasbey' in [str(p) for p in csv_path.parents])
+            cmtype = "mpl_cl" if categorical else 'mpl_cm'
             if csv_path.suffix == ".csv":
                 base = csv_path.stem.replace("-","_").replace("_n256","")
                 if base in cmaps:
@@ -382,14 +391,14 @@ def gen_init_py(output_file, csv_folders):
                         output.write("[{0}],\n".format(", ".join(row)))
                 output.write("]\n")
                 output.write("b_{0} = bokeh_palette('{0}',{0})\n".format(base))
-                output.write("m_{0} = mpl_cm('{0}',{0})\n".format(base))
-                output.write("m_{0}_r = mpl_cm('{0}_r',list(reversed({0})))\n".format(base))
+                output.write("m_{0} = {1}('{0}',{0})\n".format(base, cmtype))
+                output.write("m_{0}_r = {1}('{0}_r',list(reversed({0})))\n".format(base, cmtype))
                 if base in aliases:
                     for alias in aliases[base]:
-                        create_alias(alias, base, output)
+                        create_alias(alias, base, output, cmtype, is_name=True)
                 if base in cetnames_flipped:
                     alias = cetnames_flipped[base]
-                    create_alias(alias, base, output, is_name=False)
+                    create_alias(alias, base, output, cmtype, is_name=False)
                 output.write("\n\n")
                 cmaps.append(base)
         output.write(footer)
