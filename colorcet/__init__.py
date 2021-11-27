@@ -59,10 +59,11 @@ class AttrODict(OrderedDict):
 
 
 try:
-    from matplotlib.colors import LinearSegmentedColormap
+    from matplotlib.colors import LinearSegmentedColormap, ListedColormap
     from matplotlib.cm import register_cmap
 except:
     def LinearSegmentedColormap(colorlist,name): pass
+    def ListedColormap(colorlist,name): pass
     def register_cmap(name,cmap): pass
     LinearSegmentedColormap.from_list=lambda n,c,N: None
 
@@ -78,6 +79,12 @@ def bokeh_palette(name,colorlist):
 
 def mpl_cm(name,colorlist):
     cm[name]      = LinearSegmentedColormap.from_list(name, colorlist, N=len(colorlist))
+    register_cmap("cet_"+name, cmap=cm[name])
+    return cm[name]
+
+
+def mpl_cl(name,colorlist):
+    cm[name]      = ListedColormap(colorlist, name)
     register_cmap("cet_"+name, cmap=cm[name])
     return cm[name]
 
@@ -103,6 +110,7 @@ def get_aliases(name):
                             names.insert(v_position, vname)
         return names
 
+    # Repeatedly look for new aliases until no new aliases are found
     n_names = len(names)
     while True:
         names = check_aliases(names, aliases, k_position=-2, v_position=0)
@@ -110,14 +118,17 @@ def get_aliases(name):
         if len(names) == n_names:
             break
         n_names = len(names)
-    # sort names as 1or0_underscores, CET, multiple_under_scores (alias, cetname, algorithmicname)
+
+    # Sort names as 1or0_underscores, CET, multiple_under_scores (alias, cetname, algorithmicname)
     def name_sortfn(name):
         if name.count("_") > 1:
             return 2
         if "CET" in name:
             return 1
         return 0
+
     return ',  '.join(sorted(names, key=name_sortfn))
+
 
 def all_original_names(group=None, not_group=None, only_aliased=False, only_CET=False):
     """
@@ -19485,8 +19496,8 @@ glasbey_category10 = [  # cmap_def
 [0.345098, 0.745098, 0.556863],
 ]
 b_glasbey_category10 = bokeh_palette('glasbey_category10',glasbey_category10)
-m_glasbey_category10 = mpl_cm('glasbey_category10',glasbey_category10)
-m_glasbey_category10_r = mpl_cm('glasbey_category10_r',list(reversed(glasbey_category10)))
+m_glasbey_category10 = mpl_cl('glasbey_category10',glasbey_category10)
+m_glasbey_category10_r = mpl_cl('glasbey_category10_r',list(reversed(glasbey_category10)))
 
 
 
@@ -19750,8 +19761,8 @@ glasbey_bw_minc_20_minl_30 = [  # cmap_def
 [0.866667, 0.827451, 0.647059],
 ]
 b_glasbey_bw_minc_20_minl_30 = bokeh_palette('glasbey_bw_minc_20_minl_30',glasbey_bw_minc_20_minl_30)
-m_glasbey_bw_minc_20_minl_30 = mpl_cm('glasbey_bw_minc_20_minl_30',glasbey_bw_minc_20_minl_30)
-m_glasbey_bw_minc_20_minl_30_r = mpl_cm('glasbey_bw_minc_20_minl_30_r',list(reversed(glasbey_bw_minc_20_minl_30)))
+m_glasbey_bw_minc_20_minl_30 = mpl_cl('glasbey_bw_minc_20_minl_30',glasbey_bw_minc_20_minl_30)
+m_glasbey_bw_minc_20_minl_30_r = mpl_cl('glasbey_bw_minc_20_minl_30_r',list(reversed(glasbey_bw_minc_20_minl_30)))
 glasbey_light = b_glasbey_bw_minc_20_minl_30
 m_glasbey_light = m_glasbey_bw_minc_20_minl_30
 m_glasbey_light_r = m_glasbey_bw_minc_20_minl_30_r
@@ -19759,8 +19770,8 @@ palette['glasbey_light'] = b_glasbey_bw_minc_20_minl_30
 palette_n['glasbey_light'] = b_glasbey_bw_minc_20_minl_30
 cm['glasbey_light'] = m_glasbey_bw_minc_20_minl_30
 cm['glasbey_light_r'] = m_glasbey_bw_minc_20_minl_30_r
-cm_n['glasbey_light'] = mpl_cm('glasbey_light',glasbey_bw_minc_20_minl_30)
-cm_n['glasbey_light_r'] = mpl_cm('glasbey_light_r',list(reversed(glasbey_bw_minc_20_minl_30)))
+cm_n['glasbey_light'] = mpl_cl('glasbey_light',glasbey_bw_minc_20_minl_30)
+cm_n['glasbey_light_r'] = mpl_cl('glasbey_light_r',list(reversed(glasbey_bw_minc_20_minl_30)))
 
 
 
@@ -20024,8 +20035,8 @@ glasbey_bw_minc_20_hue_330_100 = [  # cmap_def
 [0.803922, 0.349020, 0.423529],
 ]
 b_glasbey_bw_minc_20_hue_330_100 = bokeh_palette('glasbey_bw_minc_20_hue_330_100',glasbey_bw_minc_20_hue_330_100)
-m_glasbey_bw_minc_20_hue_330_100 = mpl_cm('glasbey_bw_minc_20_hue_330_100',glasbey_bw_minc_20_hue_330_100)
-m_glasbey_bw_minc_20_hue_330_100_r = mpl_cm('glasbey_bw_minc_20_hue_330_100_r',list(reversed(glasbey_bw_minc_20_hue_330_100)))
+m_glasbey_bw_minc_20_hue_330_100 = mpl_cl('glasbey_bw_minc_20_hue_330_100',glasbey_bw_minc_20_hue_330_100)
+m_glasbey_bw_minc_20_hue_330_100_r = mpl_cl('glasbey_bw_minc_20_hue_330_100_r',list(reversed(glasbey_bw_minc_20_hue_330_100)))
 glasbey_warm = b_glasbey_bw_minc_20_hue_330_100
 m_glasbey_warm = m_glasbey_bw_minc_20_hue_330_100
 m_glasbey_warm_r = m_glasbey_bw_minc_20_hue_330_100_r
@@ -20033,8 +20044,8 @@ palette['glasbey_warm'] = b_glasbey_bw_minc_20_hue_330_100
 palette_n['glasbey_warm'] = b_glasbey_bw_minc_20_hue_330_100
 cm['glasbey_warm'] = m_glasbey_bw_minc_20_hue_330_100
 cm['glasbey_warm_r'] = m_glasbey_bw_minc_20_hue_330_100_r
-cm_n['glasbey_warm'] = mpl_cm('glasbey_warm',glasbey_bw_minc_20_hue_330_100)
-cm_n['glasbey_warm_r'] = mpl_cm('glasbey_warm_r',list(reversed(glasbey_bw_minc_20_hue_330_100)))
+cm_n['glasbey_warm'] = mpl_cl('glasbey_warm',glasbey_bw_minc_20_hue_330_100)
+cm_n['glasbey_warm_r'] = mpl_cl('glasbey_warm_r',list(reversed(glasbey_bw_minc_20_hue_330_100)))
 
 
 
@@ -20298,8 +20309,8 @@ glasbey_bw_minc_20 = [  # cmap_def
 [0.184314, 0.243137, 0.658824],
 ]
 b_glasbey_bw_minc_20 = bokeh_palette('glasbey_bw_minc_20',glasbey_bw_minc_20)
-m_glasbey_bw_minc_20 = mpl_cm('glasbey_bw_minc_20',glasbey_bw_minc_20)
-m_glasbey_bw_minc_20_r = mpl_cm('glasbey_bw_minc_20_r',list(reversed(glasbey_bw_minc_20)))
+m_glasbey_bw_minc_20 = mpl_cl('glasbey_bw_minc_20',glasbey_bw_minc_20)
+m_glasbey_bw_minc_20_r = mpl_cl('glasbey_bw_minc_20_r',list(reversed(glasbey_bw_minc_20)))
 glasbey = b_glasbey_bw_minc_20
 m_glasbey = m_glasbey_bw_minc_20
 m_glasbey_r = m_glasbey_bw_minc_20_r
@@ -20307,8 +20318,8 @@ palette['glasbey'] = b_glasbey_bw_minc_20
 palette_n['glasbey'] = b_glasbey_bw_minc_20
 cm['glasbey'] = m_glasbey_bw_minc_20
 cm['glasbey_r'] = m_glasbey_bw_minc_20_r
-cm_n['glasbey'] = mpl_cm('glasbey',glasbey_bw_minc_20)
-cm_n['glasbey_r'] = mpl_cm('glasbey_r',list(reversed(glasbey_bw_minc_20)))
+cm_n['glasbey'] = mpl_cl('glasbey',glasbey_bw_minc_20)
+cm_n['glasbey_r'] = mpl_cl('glasbey_r',list(reversed(glasbey_bw_minc_20)))
 
 
 
@@ -20572,8 +20583,8 @@ glasbey_bw = [  # cmap_def
 [0.764706, 0.760784, 0.364706],
 ]
 b_glasbey_bw = bokeh_palette('glasbey_bw',glasbey_bw)
-m_glasbey_bw = mpl_cm('glasbey_bw',glasbey_bw)
-m_glasbey_bw_r = mpl_cm('glasbey_bw_r',list(reversed(glasbey_bw)))
+m_glasbey_bw = mpl_cl('glasbey_bw',glasbey_bw)
+m_glasbey_bw_r = mpl_cl('glasbey_bw_r',list(reversed(glasbey_bw)))
 
 
 
@@ -20837,8 +20848,8 @@ glasbey_bw_minc_20_maxl_70 = [  # cmap_def
 [0.862745, 0.690196, 0.784314],
 ]
 b_glasbey_bw_minc_20_maxl_70 = bokeh_palette('glasbey_bw_minc_20_maxl_70',glasbey_bw_minc_20_maxl_70)
-m_glasbey_bw_minc_20_maxl_70 = mpl_cm('glasbey_bw_minc_20_maxl_70',glasbey_bw_minc_20_maxl_70)
-m_glasbey_bw_minc_20_maxl_70_r = mpl_cm('glasbey_bw_minc_20_maxl_70_r',list(reversed(glasbey_bw_minc_20_maxl_70)))
+m_glasbey_bw_minc_20_maxl_70 = mpl_cl('glasbey_bw_minc_20_maxl_70',glasbey_bw_minc_20_maxl_70)
+m_glasbey_bw_minc_20_maxl_70_r = mpl_cl('glasbey_bw_minc_20_maxl_70_r',list(reversed(glasbey_bw_minc_20_maxl_70)))
 glasbey_dark = b_glasbey_bw_minc_20_maxl_70
 m_glasbey_dark = m_glasbey_bw_minc_20_maxl_70
 m_glasbey_dark_r = m_glasbey_bw_minc_20_maxl_70_r
@@ -20846,8 +20857,8 @@ palette['glasbey_dark'] = b_glasbey_bw_minc_20_maxl_70
 palette_n['glasbey_dark'] = b_glasbey_bw_minc_20_maxl_70
 cm['glasbey_dark'] = m_glasbey_bw_minc_20_maxl_70
 cm['glasbey_dark_r'] = m_glasbey_bw_minc_20_maxl_70_r
-cm_n['glasbey_dark'] = mpl_cm('glasbey_dark',glasbey_bw_minc_20_maxl_70)
-cm_n['glasbey_dark_r'] = mpl_cm('glasbey_dark_r',list(reversed(glasbey_bw_minc_20_maxl_70)))
+cm_n['glasbey_dark'] = mpl_cl('glasbey_dark',glasbey_bw_minc_20_maxl_70)
+cm_n['glasbey_dark_r'] = mpl_cl('glasbey_dark_r',list(reversed(glasbey_bw_minc_20_maxl_70)))
 
 
 
@@ -21111,8 +21122,8 @@ glasbey_hv = [  # cmap_def
 [0.662745, 0.541176, 0.211765],
 ]
 b_glasbey_hv = bokeh_palette('glasbey_hv',glasbey_hv)
-m_glasbey_hv = mpl_cm('glasbey_hv',glasbey_hv)
-m_glasbey_hv_r = mpl_cm('glasbey_hv_r',list(reversed(glasbey_hv)))
+m_glasbey_hv = mpl_cl('glasbey_hv',glasbey_hv)
+m_glasbey_hv_r = mpl_cl('glasbey_hv_r',list(reversed(glasbey_hv)))
 
 
 
@@ -21376,8 +21387,8 @@ glasbey_bw_minc_20_hue_150_280 = [  # cmap_def
 [0.250980, 0.529412, 0.588235],
 ]
 b_glasbey_bw_minc_20_hue_150_280 = bokeh_palette('glasbey_bw_minc_20_hue_150_280',glasbey_bw_minc_20_hue_150_280)
-m_glasbey_bw_minc_20_hue_150_280 = mpl_cm('glasbey_bw_minc_20_hue_150_280',glasbey_bw_minc_20_hue_150_280)
-m_glasbey_bw_minc_20_hue_150_280_r = mpl_cm('glasbey_bw_minc_20_hue_150_280_r',list(reversed(glasbey_bw_minc_20_hue_150_280)))
+m_glasbey_bw_minc_20_hue_150_280 = mpl_cl('glasbey_bw_minc_20_hue_150_280',glasbey_bw_minc_20_hue_150_280)
+m_glasbey_bw_minc_20_hue_150_280_r = mpl_cl('glasbey_bw_minc_20_hue_150_280_r',list(reversed(glasbey_bw_minc_20_hue_150_280)))
 glasbey_cool = b_glasbey_bw_minc_20_hue_150_280
 m_glasbey_cool = m_glasbey_bw_minc_20_hue_150_280
 m_glasbey_cool_r = m_glasbey_bw_minc_20_hue_150_280_r
@@ -21385,8 +21396,8 @@ palette['glasbey_cool'] = b_glasbey_bw_minc_20_hue_150_280
 palette_n['glasbey_cool'] = b_glasbey_bw_minc_20_hue_150_280
 cm['glasbey_cool'] = m_glasbey_bw_minc_20_hue_150_280
 cm['glasbey_cool_r'] = m_glasbey_bw_minc_20_hue_150_280_r
-cm_n['glasbey_cool'] = mpl_cm('glasbey_cool',glasbey_bw_minc_20_hue_150_280)
-cm_n['glasbey_cool_r'] = mpl_cm('glasbey_cool_r',list(reversed(glasbey_bw_minc_20_hue_150_280)))
+cm_n['glasbey_cool'] = mpl_cl('glasbey_cool',glasbey_bw_minc_20_hue_150_280)
+cm_n['glasbey_cool_r'] = mpl_cl('glasbey_cool_r',list(reversed(glasbey_bw_minc_20_hue_150_280)))
 
 
 
