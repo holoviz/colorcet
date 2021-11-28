@@ -63,7 +63,7 @@ Once you have installed JupyterLab and the extension launch it with:
 jupyter-lab
 ```
 
-If you want to try out the latest features between releases, you can get the latest dev release by specifying -c pyviz/label/dev in place of -c pyviz.
+If you want to try out the latest features between releases, you can get the latest dev release by installing `conda install -c pyviz/label/dev colorcet`.
 
 For more information take a look at [Getting Started](http://colorcet.holoviz.org/getting_started).
 
@@ -85,9 +85,9 @@ and the [discussion of how the mpl maps were created](https://bids.github.io/col
 
 ## Samples
 
-All the Colorcet colormaps that have short, memorable names (which are probably
+Some of the Colorcet colormaps that have short, memorable names (which are probably
 the most useful ones) are visible here:
 
 <img src="./examples/assets/images/named.png" width="800">
 
-But the complete set of 50+ is shown in the [User Guide](http://colorcet.holoviz.org/user_guide).
+But the complete set of 100+ is shown in the [User Guide](http://colorcet.holoviz.org/user_guide).
