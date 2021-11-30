@@ -20,7 +20,8 @@ jobs:
         shell: bash -l {0}
     env:
       DESC: "Documentation build"
-      CHANS_DEV: "-c pyviz/label/dev -c bokeh"
+      # conda-forge is required to install pydata-sphinx-theme and sphinx-copybutton.
+      CHANS_DEV: "-c pyviz/label/dev -c bokeh -c conda-forge"
       MPLBACKEND: "Agg"
       DISPLAY: ":99.0"
       PYTHON_DOCS_VERSION: "3.7"
