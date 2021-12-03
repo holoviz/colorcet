@@ -8,7 +8,7 @@ copyright = u'2017-2021 ' + authors
 description = 'Collection of perceptually uniform colormaps'
 
 import colorcet
-version = release = colorcet.__version__
+version = release = base_version(colorcet.__version__)
 
 nbbuild_cell_timeout = 10000
 
@@ -17,7 +17,7 @@ html_theme = 'pydata_sphinx_theme'
 
 templates_path = ['_templates']
 
-html_logo = "_static/logo.png"
+html_logo = "_static/logo_horizontal.png"
 html_favicon = "_static/favicon.ico"
 html_css_files = [
     'nbsite.css',
@@ -51,3 +51,6 @@ html_context.update({
     "github_repo": "colorcet",
     "google_analytics_id": "UA-154795830-4",
 })
+
+html_title = f"{project} v{version}"
+html_show_sphinx = False
