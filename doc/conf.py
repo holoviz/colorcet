@@ -50,7 +50,6 @@ extensions += [
 ]
 
 html_context.update({
-    "last_release": f"v{'.'.join(colorcet.__version__.split('.')[:3])}",
     "github_user": "holoviz",
     "github_repo": "colorcet",
     "google_analytics_id": "UA-154795830-4",
