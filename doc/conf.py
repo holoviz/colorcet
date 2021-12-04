@@ -38,7 +38,11 @@ html_theme_options = {
             "url": "https://discourse.holoviz.org/",
             "icon": "fab fa-discourse",
         }
-    ]
+    ],
+    "footer_items": [
+        "copyright",
+        "last-updated",
+    ],
 }
 
 extensions += [
@@ -52,5 +56,7 @@ html_context.update({
     "google_analytics_id": "UA-154795830-4",
 })
 
+# Override the Sphinx default title that appends `documentation`
 html_title = f"{project} v{version}"
-html_show_sphinx = False
+# Format of the last updated section in the footer
+html_last_updated_fmt = "%Y-%m-%d"
