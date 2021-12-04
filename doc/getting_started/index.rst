@@ -5,7 +5,7 @@ Getting started
 Installation
 ------------
 
-Colorcet supports Python 2.7, 3.5, 3.6 and 3.7 on Linux, Windows, or Mac
+Colorcet supports Python 2.7, 3.6, 3.7, 3.8 and 3.9 on Linux, Windows, or Mac
 and can be installed with conda::
 
     conda install colorcet
@@ -57,7 +57,7 @@ or discuss on Gitter.
 Developer Instructions
 ----------------------
 
-1. Install Python 3 `miniconda <https://docs.conda.io/en/latest/miniconda.html>`_ or `anaconda <https://www.anaconda.com/distribution/>`_, if you don't already have it on your system.
+1. Install Python 3 `miniconda <https://docs.conda.io/en/latest/miniconda.html>`_ or `anaconda <https://www.anaconda.com/products/individual/>`_, if you don't already have it on your system.
 
 2. Clone the colorcet git repository if you do not already have it::
 

@@ -31,6 +31,8 @@ doc/**/*.ipynb
 doc/**/*.json
 # this dir contains the whole website and should not be checked in on master
 builtdocs/
+# myst-nb output dir
+jupyter_execute/
 
 # CET_updates.py is an intermediate file and should not be versioned.
 assets/CET_updates.py

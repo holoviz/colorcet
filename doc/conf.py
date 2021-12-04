@@ -8,44 +8,54 @@ copyright = u'2017-2021 ' + authors
 description = 'Collection of perceptually uniform colormaps'
 
 import colorcet
-version = release = colorcet.__version__
+version = release = base_version(colorcet.__version__)
 
 nbbuild_cell_timeout = 10000
 
 html_static_path += ['_static']
-html_theme = 'sphinx_holoviz_theme'
-# logo file etc should be in html_static_path, e.g. _static
+html_theme = 'pydata_sphinx_theme'
 
 templates_path = ['_templates']
 
+html_logo = "_static/logo_horizontal.png"
+html_favicon = "_static/favicon.ico"
+html_css_files = [
+    'nbsite.css',
+    'custom.css'
+]
+
 html_theme_options = {
-    'logo':'logo.png',
-    'favicon':'favicon.ico',
-    'custom_css':'site.css'
+    "github_url": "https://github.com/holoviz/colorcet",
+    "icon_links": [
+        {
+            # Pointing to Holoviz since colorcet has no dedicated twitter account
+            "name": "Twitter",
+            "url": "https://twitter.com/HoloViz_org",
+            "icon": "fab fa-twitter-square",
+        },
+        {
+            "name": "Discourse",
+            "url": "https://discourse.holoviz.org/",
+            "icon": "fab fa-discourse",
+        }
+    ],
+    "footer_items": [
+        "copyright",
+        "last-updated",
+    ],
 }
 
-_NAV = (
-    ('Introduction', 'index'),
-    ('Getting Started', 'getting_started/index'),
-    ('User Guide', 'user_guide/index'),
-    ('About', 'about'),
-)
-
-_SOCIAL = (
-    ('Github', 'https://github.com/holoviz/' + project),
-    ('Gitter', 'https://gitter.im/pyviz/pyviz'),
-    ('HoloViz', 'http://holoviz.org')
-)
+extensions += [
+    'sphinx_copybutton',
+]
 
 html_context.update({
-    'PROJECT': project,
-    'DESCRIPTION': description,
-    'AUTHOR': authors,
-    'WEBSITE_SERVER': 'http://{}.holoviz.org'.format(project),
-    'VERSION': version,
-    'GOOGLE_ANALYTICS_UA': 'UA-154795830-4',
-    'NAV': _NAV ,
-    # by default, footer links are same as those in header
-    'LINKS': _NAV,
-    'SOCIAL': _SOCIAL
+    "github_user": "holoviz",
+    "github_repo": "colorcet",
+    "google_analytics_id": "UA-154795830-4",
 })
+
+# Override the Sphinx default title that appends `documentation`
+html_title = f"{project} v{version}"
+# Format of the last updated section in the footer
+html_last_updated_fmt = "%Y-%m-%d"

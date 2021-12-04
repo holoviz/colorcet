@@ -52,8 +52,9 @@ extras_require = {
     'tests': tests,
     'examples': examples,
     'doc': examples + [
-        'nbsite >=0.6.1',
-        'sphinx_holoviz_theme',
+        'nbsite >=0.7.1',
+        'pydata-sphinx-theme',
+        'sphinx-copybutton',
     ],
     'tests_extra': tests + [
         'pytest-mpl'  # only available on pip and conda-forge
