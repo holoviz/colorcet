@@ -40,7 +40,7 @@ jobs:
           auto-update-conda: true
           miniconda-version: "latest"
           channel-priority: strict
-          channels: pyviz,defaults
+          channels: pyviz,conda-forge,nodefaults
       - name: Fetch
         run: git fetch --prune --tags -f
       - name: conda setup
