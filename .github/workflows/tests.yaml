@@ -23,6 +23,7 @@ jobs:
         shell: bash -l {0} 
     env:
       HV_REQUIREMENTS: "-o tests -o examples"
+      PYCTDEV_SELF_CHANNEL: "pyviz/label/dev"
       PYTHON_VERSION: ${{ matrix.python-version }}
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       ENV_NAME: "colorcet"
