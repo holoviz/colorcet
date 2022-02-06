@@ -39,7 +39,7 @@ jobs:
         with:
           auto-update-conda: true
           miniconda-version: "latest"
-          # channel-priority: strict
+          channel-priority: strict
           channels: pyviz,conda-forge
           python-version: ${{ matrix.python-version }}
       - name: Fetch
