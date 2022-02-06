@@ -16,13 +16,13 @@ jobs:
       fail-fast: false
       matrix:
         os: ['ubuntu-latest', 'macos-latest', 'windows-latest']
-        python-version: ['3.6', '3.7', '3.8', '3.9', '3.10']
+        python-version: ['3.6']
+        # python-version: ['3.6', '3.7', '3.8', '3.9', '3.10']
     timeout-minutes: 60
     defaults:
       run:
         shell: bash -l {0} 
     env:
-      HV_REQUIREMENTS: "-o tests -o examples"
       PYCTDEV_SELF_CHANNEL: "pyviz"
       PYTHON_VERSION: ${{ matrix.python-version }}
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -46,10 +46,17 @@ jobs:
           conda install "pyctdev>=0.5"
           doit env_create --name=${{ env.ENV_NAME }} --python=${{ matrix.python-version }}
       - name: doit develop_install
+        if: ${{ matrix.python-version }} == '3.6'
         run: |
           eval "$(conda shell.bash hook)"
           conda activate ${{ env.ENV_NAME }}
-          doit develop_install ${{ env.HV_REQUIREMENTS }}
+          doit develop_install -o tests
+      - name: doit develop_install
+        if: ${{ matrix.python-version }} != '3.6'
+        run: |
+          eval "$(conda shell.bash hook)"
+          conda activate ${{ env.ENV_NAME }}
+          doit develop_install -o tests -o examples
       - name: doit env_capture
         run: |
           eval "$(conda shell.bash hook)"
@@ -66,12 +73,13 @@ jobs:
           conda activate ${{ env.ENV_NAME }}
           doit test_unit
       - name: doit test_examples
-        # if: ${{ matrix.python-version }} != '3.6'
+        if: ${{ matrix.python-version }} != '3.6'
         run: |
           eval "$(conda shell.bash hook)"
           conda activate ${{ env.ENV_NAME }}
           doit test_examples
       - name: doit test_unit_extra
+        if: ${{ matrix.python-version }} != '3.6'
         run: |
           eval "$(conda shell.bash hook)"
           conda activate ${{ env.ENV_NAME }}
