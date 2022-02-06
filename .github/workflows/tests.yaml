@@ -23,7 +23,7 @@ jobs:
         shell: bash -l {0} 
     env:
       HV_REQUIREMENTS: "-o tests -o examples"
-      PYCTDEV_SELF_CHANNEL: "pyviz/label/dev"
+      PYCTDEV_SELF_CHANNEL: "pyviz"
       PYTHON_VERSION: ${{ matrix.python-version }}
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       ENV_NAME: "colorcet"
@@ -41,7 +41,7 @@ jobs:
           auto-update-conda: true
           miniconda-version: "latest"
           channel-priority: strict
-          channels: pyviz,defaults
+          channels: pyviz,conda-forge,nodefaults
       - name: Fetch
         run: git fetch --prune --tags -f
       - name: conda setup
