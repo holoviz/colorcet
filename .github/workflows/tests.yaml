@@ -44,7 +44,8 @@ jobs:
           miniconda-version: "latest"
           channel-priority: strict
           channels: pyviz,conda-forge,nodefaults
-          mamba-version: "*"
+          python-version: ${{ matrix.python-version }}
+          # mamba-version: "*"
       - name: Fetch
         run: git fetch --prune --tags -f
       - name: conda setup
@@ -52,8 +53,8 @@ jobs:
           conda --version
           conda install "pyctdev>=0.5"
           doit env_capture
-          # doit env_create --name=${{ env.ENV_NAME }} --python=${{ matrix.python-version }}
-          mamba create -y --name colorcet python=3.10
+          doit env_create --name=${{ env.ENV_NAME }} --python=${{ matrix.python-version }}
+          # mamba create -y --name colorcet python=3.10
       - name: doit develop_install
         run: |
           eval "$(conda shell.bash hook)"
