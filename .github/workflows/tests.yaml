@@ -15,8 +15,10 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: ['ubuntu-latest', 'macos-latest', 'windows-latest']
-        python-version: ['3.6', '3.7', '3.8', '3.9', '3.10']
+        os: ['macos-latest']
+        # os: ['ubuntu-latest', 'macos-latest', 'windows-latest']
+        # python-version: ['3.6', '3.7', '3.8', '3.9', '3.10']
+        python-version: ['3.9', '3.10']
     timeout-minutes: 60
     defaults:
       run:
@@ -42,13 +44,16 @@ jobs:
           miniconda-version: "latest"
           channel-priority: strict
           channels: pyviz,conda-forge,nodefaults
+          mamba-version: "*"
       - name: Fetch
         run: git fetch --prune --tags -f
       - name: conda setup
         run: |
           conda --version
           conda install "pyctdev>=0.5"
-          doit env_create --name=${{ env.ENV_NAME }} --python=${{ matrix.python-version }}
+          doit env_capture
+          # doit env_create --name=${{ env.ENV_NAME }} --python=${{ matrix.python-version }}
+          mamba create -y --name colorcet python=3.10
       - name: doit develop_install
         run: |
           eval "$(conda shell.bash hook)"
