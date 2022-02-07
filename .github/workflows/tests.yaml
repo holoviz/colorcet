@@ -42,13 +42,13 @@ jobs:
         if: matrix.python-version == '3.6'
         run: |
           conda --version
-          conda install "pyctdev>=0.5"
+          conda install -c pyviz "pyctdev>=0.5"
           doit env_create -c pyviz --name=${{ env.ENV_NAME }} --python=${{ matrix.python-version }}
       - name: conda setup > 3.6
         if: matrix.python-version != '3.6'
         run: |
           conda --version
-          conda install "pyctdev>=0.5"
+          conda install -c pyviz "pyctdev>=0.5"
           doit env_create -c pyviz -c conda-forge -c nodefaults --name=${{ env.ENV_NAME }} --python=${{ matrix.python-version }}
       - name: doit develop_install 3.6
         run: |
