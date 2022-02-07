@@ -35,7 +35,7 @@ jobs:
           fetch-depth: "100"
       - uses: conda-incubator/setup-miniconda@v2
         with:
-          auto-update-conda: true
+          # auto-update-conda: true
           miniconda-version: "latest"
           channels: pyviz,conda-forge,nodefaults
       - name: Fetch
