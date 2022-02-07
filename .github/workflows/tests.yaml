@@ -46,13 +46,13 @@ jobs:
           conda install "pyctdev>=0.5"
           doit env_create --name=${{ env.ENV_NAME }} --python=${{ matrix.python-version }}
       - name: doit develop_install 3.6
-        if: ${{ matrix.python-version }} == '3.6'
+        if: matrix.python-version == '3.6'
         run: |
           eval "$(conda shell.bash hook)"
           conda activate ${{ env.ENV_NAME }}
           doit develop_install -o tests
       - name: doit develop_install > 3.6
-        if: ${{ matrix.python-version }} != '3.6'
+        if: matrix.python-version != '3.6'
         run: |
           eval "$(conda shell.bash hook)"
           conda activate ${{ env.ENV_NAME }}
@@ -63,7 +63,7 @@ jobs:
           conda activate ${{ env.ENV_NAME }}
           doit env_capture
       - name: doit test_lint
-        if: ${{ matrix.python-version }} != '3.6'
+        if: matrix.python-version != '3.6'
         run: |
           eval "$(conda shell.bash hook)"
           conda activate ${{ env.ENV_NAME }}
@@ -74,13 +74,13 @@ jobs:
           conda activate ${{ env.ENV_NAME }}
           doit test_unit
       - name: doit test_examples
-        if: ${{ matrix.python-version }} != '3.6'
+        if: matrix.python-version != '3.6'
         run: |
           eval "$(conda shell.bash hook)"
           conda activate ${{ env.ENV_NAME }}
           doit test_examples
       - name: doit test_unit_extra
-        if: ${{ matrix.python-version }} != '3.6'
+        if: matrix.python-version != '3.6'
         run: |
           eval "$(conda shell.bash hook)"
           conda activate ${{ env.ENV_NAME }}
