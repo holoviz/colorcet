@@ -46,6 +46,7 @@ jobs:
       - name: conda setup > 3.6
         if: matrix.python-version != '3.6'
         run: |
+          conda update conda -c defaults
           conda --version
           conda install -c pyviz "pyctdev>=0.5"
           doit env_create -c pyviz -c conda-forge -c nodefaults --name=${{ env.ENV_NAME }} --python=${{ matrix.python-version }}
