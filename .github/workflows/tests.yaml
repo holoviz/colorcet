@@ -22,6 +22,7 @@ jobs:
       run:
         shell: bash -l {0} 
     env:
+      # For the step that installs pyctdev in doit env_create
       PYCTDEV_SELF_CHANNEL: "pyviz"
       PYTHON_VERSION: ${{ matrix.python-version }}
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -46,13 +47,10 @@ jobs:
       - name: conda setup > 3.6
         if: matrix.python-version != '3.6'
         run: |
-          eval "$(conda shell.bash hook)"
-          conda update -n base -c pyviz -c conda-forge -c nodefaults conda
+          conda update -n base -c defaults conda
           conda --version
-          conda install -c pyviz -c conda-forge -c nodefaults "pyctdev>=0.5"
-          doit env_capture
+          conda install -c pyviz "pyctdev>=0.5"
           conda create -c pyviz -c conda-forge -c nodefaults -n ${{ env.ENV_NAME }} python=${{ matrix.python-version }} pyctdev
-          # doit env_create -c pyviz -c conda-forge -c nodefaults --name=${{ env.ENV_NAME }} --python=${{ matrix.python-version }}
       - name: doit develop_install 3.6
         if: matrix.python-version == '3.6'
         run: |
