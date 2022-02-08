@@ -51,7 +51,8 @@ jobs:
           conda --version
           conda install -c pyviz -c conda-forge -c nodefaults "pyctdev>=0.5"
           doit env_capture
-          doit env_create -c pyviz -c conda-forge -c nodefaults --name=${{ env.ENV_NAME }} --python=${{ matrix.python-version }}
+          conda create -c pyviz -c conda-forge -c nodefaults -n ${{ env.ENV_NAME }} python=${{ matrix.python-version }} pyctdev
+          # doit env_create -c pyviz -c conda-forge -c nodefaults --name=${{ env.ENV_NAME }} --python=${{ matrix.python-version }}
       - name: doit develop_install 3.6
         if: matrix.python-version == '3.6'
         run: |
