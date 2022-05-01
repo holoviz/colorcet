@@ -10,7 +10,7 @@ on:
   # Dry-run only
   workflow_dispatch:
   schedule:
-    - cron: '0 11 * * SUN'
+    - cron: '0 9 * * SUN'
 
 jobs:
   conda_build:

@@ -9,7 +9,7 @@ on:
     - '*'
   workflow_dispatch:
   schedule:
-    - cron: '0 11 * * SUN'
+    - cron: '0 9 * * SUN'
 
 jobs:
   test_suite:

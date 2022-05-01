@@ -20,7 +20,7 @@ on:
         required: true
         default: dryrun
   schedule:
-    - cron: '0 11 * * SUN'
+    - cron: '0 9 * * SUN'
 
 jobs:
   build_docs:
