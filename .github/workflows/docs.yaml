@@ -11,9 +11,16 @@ on:
   workflow_dispatch:
     inputs:
       target:
-        description: 'dev or main'     
+        description: 'Site to build and deploy'
+        type: choice
+        options:
+        - dev
+        - main
+        - dryrun
         required: true
-        default: 'dev'
+        default: dryrun
+  schedule:
+    - cron: '0 9 * * SUN'
 
 jobs:
   build_docs:
@@ -80,14 +87,18 @@ jobs:
           git diff
       - name: Deploy dev
         uses: peaceiris/actions-gh-pages@v3
-        if: (github.event.inputs.target == 'dev' || contains(steps.vars.outputs.tag, 'a') || contains(steps.vars.outputs.tag, 'b') || contains(steps.vars.outputs.tag, 'rc'))
+        if: |
+          (github.event_name == 'workflow_dispatch' && github.event.inputs.target == 'dev') ||
+          (github.event_name == 'push' && (contains(steps.vars.outputs.tag, 'a') || contains(steps.vars.outputs.tag, 'b') || contains(steps.vars.outputs.tag, 'rc')))
         with:
           personal_token: ${{ secrets.ACCESS_TOKEN }}
           external_repository: pyviz-dev/colorcet
           publish_dir: ./builtdocs
           force_orphan: true
       - name: Deploy main
-        if: (github.event.inputs.target == 'main' || !(contains(steps.vars.outputs.tag, 'a') || contains(steps.vars.outputs.tag, 'b') || contains(steps.vars.outputs.tag, 'rc')))
+        if: |
+          (github.event_name == 'workflow_dispatch' && github.event.inputs.target == 'main') ||
+          (github.event_name == 'push' && !(contains(steps.vars.outputs.tag, 'a') || contains(steps.vars.outputs.tag, 'b') || contains(steps.vars.outputs.tag, 'rc')))
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
