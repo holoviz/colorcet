@@ -51,7 +51,7 @@ extras_require = {
     'examples': examples,
     'doc': examples + [
         'nbsite >=0.7.1',
-        'pydata-sphinx-theme',
+        'pydata-sphinx-theme <0.9.0',
         'sphinx-copybutton',
     ],
     'tests_extra': tests + [
