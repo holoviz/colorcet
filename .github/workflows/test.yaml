@@ -41,54 +41,34 @@ jobs:
           miniconda-version: "latest"
       - name: Fetch
         run: git fetch --prune --tags -f
-      - name: conda setup 3.6
-        if: matrix.python-version == '3.6'
-        run: |
-          conda --version
-          conda install -c pyviz "pyctdev>=0.5"
-          doit env_create -c pyviz --name=${{ env.ENV_NAME }} --python=${{ matrix.python-version }}
-      - name: conda setup > 3.6
-        if: matrix.python-version != '3.6'
+      - name: conda setup
         run: |
           conda update -n base -c defaults conda
           conda --version
           conda install -c pyviz "pyctdev>=0.5"
           conda create -c pyviz -c conda-forge -c nodefaults -n ${{ env.ENV_NAME }} python=${{ matrix.python-version }} pyctdev
-      - name: doit develop_install 3.6
-        if: matrix.python-version == '3.6'
+      - name: doit develop_install
         run: |
-          eval "$(conda shell.bash hook)"
-          conda activate ${{ env.ENV_NAME }}
-          doit develop_install -c pyviz -o tests -o examples
-      - name: doit develop_install > 3.6
-        if: matrix.python-version != '3.6'
-        run: |
-          eval "$(conda shell.bash hook)"
           conda activate ${{ env.ENV_NAME }}
           doit develop_install -c pyviz -c conda-forge -c nodefaults -o tests -o examples
       - name: doit env_capture
         run: |
-          eval "$(conda shell.bash hook)"
           conda activate ${{ env.ENV_NAME }}
           doit env_capture
       - name: doit test_lint
         run: |
-          eval "$(conda shell.bash hook)"
           conda activate ${{ env.ENV_NAME }}
           doit test_lint
       - name: doit test_unit
         run: |
-          eval "$(conda shell.bash hook)"
           conda activate ${{ env.ENV_NAME }}
           doit test_unit
       - name: doit test_examples
         run: |
-          eval "$(conda shell.bash hook)"
           conda activate ${{ env.ENV_NAME }}
           doit test_examples
       - name: doit test_unit_extra
         run: |
-          eval "$(conda shell.bash hook)"
           conda activate ${{ env.ENV_NAME }}
           pip install pytest-mpl
           doit test_unit_extra
