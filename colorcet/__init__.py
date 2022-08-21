@@ -60,8 +60,13 @@ class AttrODict(OrderedDict):
 
 try:
     from matplotlib.colors import LinearSegmentedColormap, ListedColormap
-    from matplotlib.cm import register_cmap
-except:
+    try:
+        from matplotlib import colormaps
+        register_cmap = lambda name, cmap: colormaps.register(cmap, name=name)
+    except ImportError:
+        # PendingDeprecationWarning from matplotlib 3.6
+        from matplotlib.cm import register_cmap
+except ImportError:
     def LinearSegmentedColormap(colorlist,name): pass
     def ListedColormap(colorlist,name): pass
     def register_cmap(name,cmap): pass

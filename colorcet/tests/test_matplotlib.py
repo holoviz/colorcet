@@ -44,5 +44,5 @@ def test_matplotlib_default_colormap_plot_kbc():
 
 @pytest.mark.parametrize('k,v', list(cc.cm.items()))
 def test_get_cm(k, v):
-    import matplotlib.cm as mcm
-    assert mcm.get_cmap('cet_' + k) is v
+    from matplotlib import colormaps
+    assert colormaps['cet_' + k] == v
