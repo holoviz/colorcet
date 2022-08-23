@@ -41,9 +41,6 @@ tests = [
     'nbsmoke >=0.2.6',
     'pytest >=2.8.5',
     'pytest-cov',
-    'twine',   # required for pip packaging
-    'rfc3986', # required by twine
-    'keyring', # required by twine
 ]
 
 extras_require = {
