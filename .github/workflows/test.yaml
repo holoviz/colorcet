@@ -50,6 +50,11 @@ jobs:
         run: |
           conda activate ${{ env.ENV_NAME }}
           doit develop_install -o tests -o examples
+      - name: Panel 3.6
+        if: matrix.python-version == '3.6'
+        run: |
+          conda activate ${{ env.ENV_NAME }}
+          conda install "panel=0.12.6"
       - name: doit env_capture
         run: |
           conda activate ${{ env.ENV_NAME }}
