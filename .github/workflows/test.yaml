@@ -41,11 +41,9 @@ jobs:
       - name: conda setup
         run: |
           conda update -n base conda
-          conda install -n base conda-libmamba-solver
-          conda config --set experimental_solver libmamba
           conda create -n ${{ env.ENV_NAME }}
           conda activate ${{ env.ENV_NAME }}
-          conda config --env --prepend channels pyviz
+          conda config --env --prepend channels pyviz/label/dev
           conda config --env --show-sources
           conda install python=${{ matrix.python-version }} pyctdev
       - name: doit develop_install
