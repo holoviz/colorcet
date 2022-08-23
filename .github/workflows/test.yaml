@@ -42,7 +42,8 @@ jobs:
         run: |
           conda create -n ${{ env.ENV_NAME }}
           conda activate ${{ env.ENV_NAME }}
-          conda config --env --append channels pyviz --append channels conda-forge --prepend channels nodefaults
+          conda config --env --append channels pyviz --append channels conda-forge
+          conda config --env --prepend channels nodefaults
           conda config --env --show-sources
           conda install python=${{ matrix.python-version }} pyctdev
       - name: doit develop_install
