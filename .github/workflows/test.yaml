@@ -48,7 +48,6 @@ jobs:
           conda create -n ${{ env.ENV_NAME }}
           conda activate ${{ env.ENV_NAME }}
           conda config --env --prepend channels nodefaults --prepend channels conda-forge --prepend channels pyviz
-          conda config --env --set channel_priority strict
           conda config --env --show-sources
           conda install python=${{ matrix.python-version }} pyctdev
       - name: doit develop_install
