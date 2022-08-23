@@ -40,11 +40,9 @@ jobs:
         run: git fetch --prune --tags -f
       - name: conda setup
         run: |
-          conda update -n base -c defaults conda
-          conda --version
           conda create -n ${{ env.ENV_NAME }}
           conda activate ${{ env.ENV_NAME }}
-          conda config --env --append channels pyviz --append channels conda-forge --append channels nodefaults
+          conda config --env --append channels pyviz --append channels conda-forge --prepend channels nodefaults
           conda config --env --show-sources
           conda install python=${{ matrix.python-version }} pyctdev
       - name: doit develop_install
