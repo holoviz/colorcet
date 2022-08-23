@@ -25,9 +25,6 @@ jobs:
       run:
         shell: bash -l {0} 
     env:
-      # For the step that installs pyctdev in doit env_create
-      PYCTDEV_SELF_CHANNEL: "pyviz"
-      PYTHON_VERSION: ${{ matrix.python-version }}
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       ENV_NAME: "colorcet"
       MPLBACKEND: "Agg"
@@ -47,7 +44,7 @@ jobs:
           conda --version
           conda create -n ${{ env.ENV_NAME }}
           conda activate ${{ env.ENV_NAME }}
-          conda config --env --prepend channels nodefaults --prepend channels conda-forge --prepend channels pyviz
+          conda config --env --append channels pyviz --append channels conda-forge --append channels nodefaults
           conda config --env --show-sources
           conda install python=${{ matrix.python-version }} pyctdev
       - name: doit develop_install
