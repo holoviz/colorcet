@@ -114,7 +114,7 @@ jobs:
           conda activate ${{ env.ENV_NAME }}
           conda config --env --prepend channels pyviz
           conda config --env --show-sources
-          mamba install python=${{ matrix.python-version }} pyctdev
+          conda install python=${{ matrix.python-version }} pyctdev
       - name: doit develop_install
         run: |
           conda activate ${{ env.ENV_NAME }}
