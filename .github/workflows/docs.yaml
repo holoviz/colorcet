@@ -33,16 +33,12 @@ jobs:
     env:
       DESC: "Documentation build"
       # conda-forge is required to install pydata-sphinx-theme and sphinx-copybutton.
-      CHANS_DEV: "-c pyviz/label/dev -c bokeh -c conda-forge"
+      CHANS_DEV: "-c nodefaults -c pyviz/label/dev -c bokeh -c conda-forge"
       MPLBACKEND: "Agg"
       DISPLAY: ":99.0"
-      PYTHON_DOCS_VERSION: "3.7"
+      PYTHON_DOCS_VERSION: "3.9"
     steps:
-      - name: remove nodejs
-        run: |
-          sudo rm /usr/local/bin/node
-          sudo rm /usr/local/bin/npm
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: "100"
       - uses: conda-incubator/setup-miniconda@v2
@@ -55,30 +51,19 @@ jobs:
         run: echo ::set-output name=tag::${GITHUB_REF#refs/*/}
       - name: conda setup
         run: |
-          conda config --set always_yes True
-          conda install -c pyviz "pyctdev>=0.5"
-          doit ecosystem_setup
-          doit env_create ${{ env.CHANS_DEV}} --python=${{ env.PYTHON_DOCS_VERSION}}
-      - uses: actions/setup-node@v2
-        with:
-          node-version: '15'
+          conda create -n test-environment
+          conda activate test-environment
+          conda install ${{ env.CHANS_DEV}} python=${{ env.PYTHON_DOCS_VERSION}} pyctdev
       - name: doit develop_install
         run: |
-          eval "$(conda shell.bash hook)"
           conda activate test-environment
-          conda install ${{ env.CHANS_DEV }} "pip<21.2.1" 
-          conda list
           doit develop_install ${{ env.CHANS_DEV}} -o doc -o examples
-          # Temporarily pin these two
-          conda install ${{ env.CHANS_DEV}} 'nbconvert==5.6.1' 'jupyter_client==6.1.12'
       - name: doit env_capture
         run: |
-          eval "$(conda shell.bash hook)"
           conda activate test-environment
           doit env_capture
       - name: build docs
         run: |
-          eval "$(conda shell.bash hook)"
           conda activate test-environment
           doit build_website
       - name: git status

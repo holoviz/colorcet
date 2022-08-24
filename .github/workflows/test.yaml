@@ -19,15 +19,12 @@ jobs:
       fail-fast: false
       matrix:
         os: ['ubuntu-latest', 'macos-latest', 'windows-latest']
-        python-version: ['3.6', '3.7', '3.8', '3.9', '3.10']
+        python-version: ['3.7', '3.8', '3.9', '3.10']
     timeout-minutes: 60
     defaults:
       run:
         shell: bash -l {0} 
     env:
-      # For the step that installs pyctdev in doit env_create
-      PYCTDEV_SELF_CHANNEL: "pyviz"
-      PYTHON_VERSION: ${{ matrix.python-version }}
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       ENV_NAME: "colorcet"
       MPLBACKEND: "Agg"
@@ -41,58 +38,109 @@ jobs:
           miniconda-version: "latest"
       - name: Fetch
         run: git fetch --prune --tags -f
-      - name: conda setup 3.6
+      - name: conda setup
+        run: |
+          conda update -n base conda
+          conda create -n ${{ env.ENV_NAME }}
+          conda activate ${{ env.ENV_NAME }}
+          conda config --env --prepend channels pyviz/label/dev
+          conda config --env --show-sources
+          conda install python=${{ matrix.python-version }} pyctdev
+      - name: doit develop_install
+        run: |
+          conda activate ${{ env.ENV_NAME }}
+          doit develop_install -o tests -o examples
+      - name: Panel 3.6
         if: matrix.python-version == '3.6'
         run: |
-          conda --version
-          conda install -c pyviz "pyctdev>=0.5"
-          doit env_create -c pyviz --name=${{ env.ENV_NAME }} --python=${{ matrix.python-version }}
-      - name: conda setup > 3.6
-        if: matrix.python-version != '3.6'
-        run: |
-          conda update -n base -c defaults conda
-          conda --version
-          conda install -c pyviz "pyctdev>=0.5"
-          conda create -c pyviz -c conda-forge -c nodefaults -n ${{ env.ENV_NAME }} python=${{ matrix.python-version }} pyctdev
-      - name: doit develop_install 3.6
-        if: matrix.python-version == '3.6'
-        run: |
-          eval "$(conda shell.bash hook)"
           conda activate ${{ env.ENV_NAME }}
-          doit develop_install -c pyviz -o tests -o examples
-      - name: doit develop_install > 3.6
-        if: matrix.python-version != '3.6'
-        run: |
-          eval "$(conda shell.bash hook)"
-          conda activate ${{ env.ENV_NAME }}
-          doit develop_install -c pyviz -c conda-forge -c nodefaults -o tests -o examples
+          conda install "panel=0.12.6"
       - name: doit env_capture
         run: |
-          eval "$(conda shell.bash hook)"
           conda activate ${{ env.ENV_NAME }}
           doit env_capture
       - name: doit test_lint
         run: |
-          eval "$(conda shell.bash hook)"
           conda activate ${{ env.ENV_NAME }}
           doit test_lint
       - name: doit test_unit
         run: |
-          eval "$(conda shell.bash hook)"
           conda activate ${{ env.ENV_NAME }}
           doit test_unit
       - name: doit test_examples
         run: |
-          eval "$(conda shell.bash hook)"
           conda activate ${{ env.ENV_NAME }}
           doit test_examples
       - name: doit test_unit_extra
         run: |
-          eval "$(conda shell.bash hook)"
           conda activate ${{ env.ENV_NAME }}
           pip install pytest-mpl
           doit test_unit_extra
-      - uses: codecov/codecov-action@v2
+      - uses: codecov/codecov-action@v3
+        if: github.event_name == 'push'
+
+  test_suite_36:
+    name: Pytest on ${{ matrix.python-version }}, ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: ['ubuntu-latest', 'macos-latest', 'windows-latest']
+        python-version: ['3.6']
+    timeout-minutes: 60
+    defaults:
+      run:
+        shell: bash -l {0} 
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      ENV_NAME: "colorcet"
+      MPLBACKEND: "Agg"
+      DISPLAY: ":99.0"
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: "100"
+      - uses: conda-incubator/setup-miniconda@v2
+        with:
+          miniconda-version: "latest"
+      - name: Fetch
+        run: git fetch --prune --tags -f
+      - name: conda setup
+        run: |
+          conda update -n base conda
+          conda install -n base -c conda-forge "mamba>=0.23" --no-update-deps
+          conda create -n ${{ env.ENV_NAME }}
+          conda activate ${{ env.ENV_NAME }}
+          conda config --env --prepend channels pyviz
+          conda config --env --show-sources
+          conda install python=${{ matrix.python-version }} pyctdev
+      - name: doit develop_install
+        run: |
+          conda activate ${{ env.ENV_NAME }}
+          doit develop_install -o tests -o examples --conda-mode=mamba
+      - name: doit env_capture
+        run: |
+          conda activate ${{ env.ENV_NAME }}
+          doit env_capture
+      - name: doit test_lint
+        run: |
+          conda activate ${{ env.ENV_NAME }}
+          doit test_lint
+      - name: doit test_unit
+        run: |
+          conda activate ${{ env.ENV_NAME }}
+          doit test_unit
+      - name: doit test_examples
+        run: |
+          conda activate ${{ env.ENV_NAME }}
+          doit test_examples
+      - name: doit test_unit_extra
+        run: |
+          conda activate ${{ env.ENV_NAME }}
+          pip install pytest-mpl
+          doit test_unit_extra
+      - uses: codecov/codecov-action@v3
+        if: github.event_name == 'push'
 
   test_suite_py27:
     name: Pytest on Python 2.7 only
