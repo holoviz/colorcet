@@ -12,14 +12,82 @@ on:
     - cron: '0 9 * * SUN'
 
 jobs:
-  test_suite:
+  # test_suite:
+  #   name: Pytest on ${{ matrix.python-version }}, ${{ matrix.os }}
+  #   runs-on: ${{ matrix.os }}
+  #   strategy:
+  #     fail-fast: false
+  #     matrix:
+  #       os: ['ubuntu-latest', 'macos-latest', 'windows-latest']
+  #       python-version: ['3.7', '3.8', '3.9', '3.10']
+  #   timeout-minutes: 60
+  #   defaults:
+  #     run:
+  #       shell: bash -l {0} 
+  #   env:
+  #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  #     ENV_NAME: "colorcet"
+  #     MPLBACKEND: "Agg"
+  #     DISPLAY: ":99.0"
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #       with:
+  #         fetch-depth: "100"
+  #     - uses: conda-incubator/setup-miniconda@v2
+  #       with:
+  #         miniconda-version: "latest"
+  #     - name: Fetch
+  #       run: git fetch --prune --tags -f
+  #     - name: conda setup
+  #       run: |
+  #         conda update -n base conda
+  #         conda create -n ${{ env.ENV_NAME }}
+  #         conda activate ${{ env.ENV_NAME }}
+  #         conda config --env --prepend channels pyviz/label/dev
+  #         conda config --env --show-sources
+  #         conda install python=${{ matrix.python-version }} pyctdev
+  #     - name: doit develop_install
+  #       run: |
+  #         conda activate ${{ env.ENV_NAME }}
+  #         doit develop_install -o tests -o examples
+  #     - name: Panel 3.6
+  #       if: matrix.python-version == '3.6'
+  #       run: |
+  #         conda activate ${{ env.ENV_NAME }}
+  #         conda install "panel=0.12.6"
+  #     - name: doit env_capture
+  #       run: |
+  #         conda activate ${{ env.ENV_NAME }}
+  #         doit env_capture
+  #     - name: doit test_lint
+  #       run: |
+  #         conda activate ${{ env.ENV_NAME }}
+  #         doit test_lint
+  #     - name: doit test_unit
+  #       run: |
+  #         conda activate ${{ env.ENV_NAME }}
+  #         doit test_unit
+  #     - name: doit test_examples
+  #       run: |
+  #         conda activate ${{ env.ENV_NAME }}
+  #         doit test_examples
+  #     - name: doit test_unit_extra
+  #       run: |
+  #         conda activate ${{ env.ENV_NAME }}
+  #         pip install pytest-mpl
+  #         doit test_unit_extra
+  #     - uses: codecov/codecov-action@v3
+  #       if: github.event_name == 'push'
+
+
+  test_suite_36:
     name: Pytest on ${{ matrix.python-version }}, ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
         os: ['ubuntu-latest', 'macos-latest', 'windows-latest']
-        python-version: ['3.6', '3.7', '3.8', '3.9', '3.10']
+        python-version: ['3.6']
     timeout-minutes: 60
     defaults:
       run:
@@ -41,20 +109,16 @@ jobs:
       - name: conda setup
         run: |
           conda update -n base conda
+          conda install -n base -c conda-forge "mamba>=0.23" --no-update-deps
           conda create -n ${{ env.ENV_NAME }}
           conda activate ${{ env.ENV_NAME }}
-          conda config --env --prepend channels pyviz/label/dev
+          conda config --env --prepend channels pyviz
           conda config --env --show-sources
-          conda install python=${{ matrix.python-version }} pyctdev
+          mamba install python=${{ matrix.python-version }} pyctdev
       - name: doit develop_install
         run: |
           conda activate ${{ env.ENV_NAME }}
-          doit develop_install -o tests -o examples
-      - name: Panel 3.6
-        if: matrix.python-version == '3.6'
-        run: |
-          conda activate ${{ env.ENV_NAME }}
-          conda install "panel=0.12.6"
+          doit develop_install -o tests -o examples --conda-mode=mamba
       - name: doit env_capture
         run: |
           conda activate ${{ env.ENV_NAME }}
