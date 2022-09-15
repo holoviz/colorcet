@@ -31,19 +31,19 @@ by Peter Kovesi at the Center for Exploration Targeting.
 Colorcet supports Python 2.7, 3.6, 3.7, 3.8, 3.9 and 3.10  on Linux, Windows, or Mac
 and can be installed with conda:
 
-```
-    conda install colorcet
+```sh
+conda install colorcet
 ```
 
 or with pip:
 
-```
-    pip install colorcet
+```sh
+python -m pip install colorcet
 ```
 
 Once installed you can copy the examples into the current directory using the colorcet command and run them using the Jupyter notebook:
 
-```
+```sh
 colorcet examples
 cd colorcet-examples
 jupyter notebook
@@ -53,18 +53,22 @@ jupyter notebook
 
 To work with JupyterLab you will also need the PyViz JupyterLab extension:
 
-```
+```sh
 conda install -c conda-forge jupyterlab
 jupyter labextension install @pyviz/jupyterlab_pyviz
 ```
 
 Once you have installed JupyterLab and the extension launch it with:
 
-```
+```sh
 jupyter-lab
 ```
 
-If you want to try out the latest features between releases, you can get the latest dev release by installing `conda install -c pyviz/label/dev colorcet`.
+If you want to try out the latest features between releases, you can get the latest dev release by installing:
+
+```sh
+conda install -c pyviz/label/dev colorcet
+```
 
 For more information take a look at [Getting Started](http://colorcet.holoviz.org/getting_started).
 
