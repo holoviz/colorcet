@@ -74,7 +74,7 @@ def swatches(*args, group=None, not_group=None, only_aliased=False, cols=None, *
               swatch(*arg, **kwargs) for
               arg in args]
 
-    plot = hv.Layout(images).opts(plot=dict(transpose=True)).cols(int(np.ceil(len(images)*1.0/cols)))
+    plot = hv.Layout(images).opts(transpose=True).cols(int(np.ceil(len(images)*1.0/cols)))
 
     if 'matplotlib' in backends:
         plot.opts(opts.Layout(backend='matplotlib', sublabel_format=None,
@@ -106,7 +106,7 @@ def sine_combs(*args, group=None, not_group=None, only_aliased=False, cols=1, **
               sine_comb(*arg, **kwargs) for
               arg in args]
 
-    plot = hv.Layout(images).opts(plot=dict(transpose=True)).cols(int(np.ceil(len(images)*1.0/cols)))
+    plot = hv.Layout(images).opts(transpose=True).cols(int(np.ceil(len(images)*1.0/cols)))
 
     backends = hv.Store.loaded_backends()
     if 'matplotlib' in backends:
