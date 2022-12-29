@@ -1,4 +1,4 @@
-<img src="https://github.com/holoviz/colorcet/blob/master/doc/_static/logo.png" width=200><br>
+<img src="https://github.com/holoviz/colorcet/blob/main/doc/_static/logo.png" width=200><br>
 
 -----------------
 
@@ -6,8 +6,8 @@
 
 |    |    |
 | --- | --- |
-| Build Status | [![Linux/MacOS Build Status](https://github.com/holoviz/colorcet/workflows/tests/badge.svg?query=branch%3Amaster)](https://github.com/holoviz/colorcet/actions/workflows/tests.yaml?query=branch%3Amaster) |
-| Coverage | [![codecov](https://codecov.io/gh/holoviz/colorcet/branch/master/graph/badge.svg)](https://codecov.io/gh/holoviz/colorcet) ||
+| Build Status | [![Linux/MacOS Build Status](https://github.com/holoviz/colorcet/workflows/tests/badge.svg?query=branch%3Amain)](https://github.com/holoviz/colorcet/actions/workflows/tests.yaml?query=branch%3Amain) |
+| Coverage | [![codecov](https://codecov.io/gh/holoviz/colorcet/branch/main/graph/badge.svg)](https://codecov.io/gh/holoviz/colorcet) ||
 | Latest dev release | [![Github tag](https://img.shields.io/github/tag/holoviz/colorcet.svg?label=tag&colorB=11ccbb)](https://github.com/holoviz/colorcet/tags) [![dev-site](https://img.shields.io/website-up-down-green-red/https/pyviz-dev.github.io/colorcet.svg?label=dev%20website)](https://pyviz-dev.github.io/colorcet/) |
 | Latest release | [![Github release](https://img.shields.io/github/release/holoviz/colorcet.svg?label=tag&colorB=11ccbb)](https://github.com/holoviz/colorcet/releases) [![PyPI version](https://img.shields.io/pypi/v/colorcet.svg?colorB=cc77dd)](https://pypi.python.org/pypi/colorcet) [![colorcet version](https://img.shields.io/conda/v/holoviz/colorcet.svg?colorB=4488ff&style=flat)](https://anaconda.org/holoviz/colorcet) [![conda-forge version](https://img.shields.io/conda/v/conda-forge/colorcet.svg?label=conda%7Cconda-forge&colorB=4488ff)](https://anaconda.org/conda-forge/colorcet) [![defaults version](https://img.shields.io/conda/v/anaconda/colorcet.svg?label=conda%7Cdefaults&style=flat&colorB=4488ff)](https://anaconda.org/anaconda/colorcet) |
 | Python | [![Python support](https://img.shields.io/pypi/pyversions/colorcet.svg)](https://pypi.org/project/colorcet/) |
