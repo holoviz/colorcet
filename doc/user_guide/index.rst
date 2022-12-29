@@ -22,4 +22,4 @@ User Guide
 
 -------
 
-`Right click to download this notebook from GitHub. <https://raw.githubusercontent.com/holoviz/colorcet/master/examples/user_guide/index.ipynb>`_
+`Right click to download this notebook from GitHub. <https://raw.githubusercontent.com/holoviz/colorcet/main/examples/user_guide/index.ipynb>`_

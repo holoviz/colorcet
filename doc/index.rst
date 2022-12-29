@@ -23,4 +23,4 @@
 
 -------
 
-`Right click to download this notebook from GitHub. <https://raw.githubusercontent.com/holoviz/colorcet/master/examples/index.ipynb>`_
+`Right click to download this notebook from GitHub. <https://raw.githubusercontent.com/holoviz/colorcet/main/examples/index.ipynb>`_

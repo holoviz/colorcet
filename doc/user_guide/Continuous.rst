@@ -14,4 +14,4 @@ Continuous
 
 -------
 
-`Right click to download this notebook from GitHub. <https://raw.githubusercontent.com/holoviz/colorcet/master/examples/user_guide/Continuous.ipynb>`_
+`Right click to download this notebook from GitHub. <https://raw.githubusercontent.com/holoviz/colorcet/main/examples/user_guide/Continuous.ipynb>`_
