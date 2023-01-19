@@ -2,6 +2,7 @@ import sys
 
 import pytest
 import colorcet as cc
+from packaging.version import Version
 
 pytest.importorskip('matplotlib')
 
@@ -46,7 +47,9 @@ def test_matplotlib_default_colormap_plot_kbc():
 
 @pytest.mark.parametrize('k,v', list(cc.cm.items()))
 def test_get_cm(k, v):
-    if sys.version_info < (3, 7):
+    import matplotlib as mpl
+
+    if Version(mpl.__version__) < Version("3.5"):
         import matplotlib.cm as mcm
         assert mcm.get_cmap('cet_' + k) is v
     else:

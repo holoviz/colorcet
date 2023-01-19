@@ -41,6 +41,7 @@ tests = [
     'nbsmoke >=0.2.6',
     'pytest >=2.8.5',
     'pytest-cov',
+    'packaging',
 ]
 
 extras_require = {
