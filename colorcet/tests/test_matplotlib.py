@@ -1,5 +1,3 @@
-import sys
-
 import pytest
 import colorcet as cc
 from packaging.version import Version
