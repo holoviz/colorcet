@@ -1,6 +1,5 @@
 # Governance Policy
 
-
 The "Project" is herein defined as the activities related to this specific GitHub repository [`Colorcet`](https://github.com/holoviz/colorcet), within the `HoloViz` GitHub Organization.
 
 
