@@ -70,7 +70,7 @@ setup_args = dict(
     name='colorcet',
     description='Collection of perceptually uniform colormaps',
     version=get_setup_version('colorcet'),
-    long_description='README.md',
+    long_description=open("README.md", mode="r", encoding="utf-8").read(),
     long_description_type='text/markdown',
     license_files=['LICENSE.txt'],
     license='CC-BY License',
