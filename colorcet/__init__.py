@@ -62,7 +62,10 @@ try:
     from matplotlib.colors import LinearSegmentedColormap, ListedColormap
     try:
         from matplotlib import colormaps
-        register_cmap = lambda name, cmap: colormaps.register(cmap, name=name)
+        def register_cmap(name, cmap):
+            if name not in colormaps or colormaps[name] != cmap:
+                # The last condition will raise an error
+                colormaps.register(cmap, name=name)
     except ImportError:
         # PendingDeprecationWarning from matplotlib 3.6
         from matplotlib.cm import register_cmap
