@@ -71,7 +71,6 @@ def test_register_cmap():
     cc.register_cmap(name, cmap1)
 
     # Not same values should raise an Error
-    with pytest.raises(
-        ValueError, match=f'A colormap named "{name}" is already registered'
-    ):
+    msg = 'A colormap named "{}" is already registered'.format(name)
+    with pytest.raises(ValueError, match=msg):
         cc.register_cmap(name, cmap2)
