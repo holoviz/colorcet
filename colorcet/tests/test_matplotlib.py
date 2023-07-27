@@ -53,3 +53,24 @@ def test_get_cm(k, v):
     else:
         from matplotlib import colormaps
         assert colormaps['cet_' + k] == v
+
+
+def test_register_cmap():
+    import matplotlib as mpl
+    if Version(mpl.__version__) < Version("3.5"):
+        return
+
+    cmap0 = cc.ListedColormap([[0, 0, 0], [1, 1, 1]])
+    cmap1 = cc.ListedColormap([[0, 0, 0], [1, 1, 1]])
+    cmap2 = cc.ListedColormap([[1, 1, 1], [0, 0, 0]])
+
+    name = "test_long_random_name_just_to_be_sure"
+    cc.register_cmap(name, cmap0)
+
+    # Same values as before should pass
+    cc.register_cmap(name, cmap1)
+
+    # Not same values should raise an Error
+    msg = 'A colormap named "{}" is already registered'.format(name)
+    with pytest.raises(ValueError, match=msg):
+        cc.register_cmap(name, cmap2)
