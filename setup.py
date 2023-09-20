@@ -33,7 +33,9 @@ examples = [
     'numpy',
     'holoviews',
     'matplotlib',
-    'bokeh',
+    # Lower pin to avoid pulling an old version of Bokeh and Panel on Python 3.8.
+    # Can be removed when support is dropped.
+    'bokeh >=3',
 ]
 
 tests = [
