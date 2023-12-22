@@ -47,12 +47,16 @@ html_theme_options = {
 
 extensions += [
     'sphinx_copybutton',
+    'nbsite.analytics,'
 ]
+
+nbsite_analytics = {
+    'goatcounter_holoviz': True,
+}
 
 html_context.update({
     "github_user": "holoviz",
     "github_repo": "colorcet",
-    "google_analytics_id": "UA-154795830-4",
 })
 
 # Override the Sphinx default title that appends `documentation`
