@@ -47,7 +47,7 @@ html_theme_options = {
 
 extensions += [
     'sphinx_copybutton',
-    'nbsite.analytics,'
+    'nbsite.analytics',
 ]
 
 nbsite_analytics = {
