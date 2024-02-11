@@ -40,11 +40,11 @@ jobs:
       - name: conda dev upload
         if: (github.event_name == 'push' && (contains(steps.vars.outputs.tag, 'a') || contains(steps.vars.outputs.tag, 'b') || contains(steps.vars.outputs.tag, 'rc')))
         run: |
-          anaconda --token ${{ secrets.CONDA_UPLOAD_TOKEN }} upload --user pyviz --label=dev $(VERSION=`hatch version` conda build --output conda.recipe)
+          anaconda --token ${{ secrets.CONDA_UPLOAD_TOKEN }} upload --user pyviz --label=dev $(VERSION=`python -m setuptools_scm` conda build --output conda.recipe)
       - name: conda main upload
         if: (github.event_name == 'push' && !(contains(steps.vars.outputs.tag, 'a') || contains(steps.vars.outputs.tag, 'b') || contains(steps.vars.outputs.tag, 'rc')))
         run: |
-          anaconda --token ${{ secrets.CONDA_UPLOAD_TOKEN }} upload --user pyviz --label=dev --label=main $(VERSION=`hatch version` conda build --output conda.recipe)
+          anaconda --token ${{ secrets.CONDA_UPLOAD_TOKEN }} upload --user pyviz --label=dev --label=main $(VERSION=`python -m setuptools_scm` conda build --output conda.recipe)
   pip_build:
     name: Build PyPI Packages
     runs-on: 'ubuntu-latest'

@@ -38,7 +38,7 @@ test:
     - colorcet
   commands:
     - python -c "import colorcet; ver = colorcet.__version__; assert ver != '0.0.0' and ver != 'unknown'"
-    - pytest colorcet
+    - pytest colorcet/
 
 about:
   home: {{ project['urls']['Homepage'] }}
