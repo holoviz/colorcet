@@ -18,10 +18,12 @@ coverage.xml
 __pycache__
 .doit*
 *.egg-info
-*/.version
 pip-wheel-metadata
 **.ipynb_checkpoints
 /build
+dist/
+.venv/
+venv/
 
 # nbsite
 # these files normally shouldn't be checked in as they should be
@@ -36,3 +38,6 @@ jupyter_execute/
 
 # CET_updates.py is an intermediate file and should not be versioned.
 assets/CET_updates.py
+
+# setuptools_scm
+colorcet/_version.py

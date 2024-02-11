@@ -19,12 +19,6 @@ jobs:
     defaults:
       run:
         shell: bash -l {0}
-    env:
-      CHANS_DEV: "-c pyviz/label/dev"
-      PKG_TEST_PYTHON: "--test-python=py37"
-      PYTHON_VERSION: "3.9"
-      CHANS: "-c pyviz"
-      CONDA_UPLOAD_TOKEN: ${{ secrets.CONDA_UPLOAD_TOKEN }}
     steps:
       - uses: actions/checkout@v4
       - name: Fetch unshallow
@@ -39,21 +33,18 @@ jobs:
         run: echo "tag=${GITHUB_REF#refs/*/}" >> $GITHUB_OUTPUT
       - name: conda setup
         run: |
-          conda update --name base conda
-          conda install anaconda-client conda-build
-          pip install hatch
+          conda install anaconda-client conda-build setuptools_scm
       - name: conda build
         run: |
-          VERSION=`hatch version` conda build conda.recipe/
+          VERSION=`python -m setuptools_scm` conda build conda.recipe/
       - name: conda dev upload
         if: (github.event_name == 'push' && (contains(steps.vars.outputs.tag, 'a') || contains(steps.vars.outputs.tag, 'b') || contains(steps.vars.outputs.tag, 'rc')))
         run: |
-          anaconda --token $CONDA_UPLOAD_TOKEN upload --user pyviz --label=dev $(VERSION=`hatch version` conda build --output conda.recipe)
+          anaconda --token ${{ secrets.CONDA_UPLOAD_TOKEN }} upload --user pyviz --label=dev $(VERSION=`hatch version` conda build --output conda.recipe)
       - name: conda main upload
         if: (github.event_name == 'push' && !(contains(steps.vars.outputs.tag, 'a') || contains(steps.vars.outputs.tag, 'b') || contains(steps.vars.outputs.tag, 'rc')))
         run: |
-          anaconda --token $CONDA_UPLOAD_TOKEN upload --user pyviz --label=dev --label=main $(VERSION=`hatch version` conda build --output conda.recipe)
-
+          anaconda --token ${{ secrets.CONDA_UPLOAD_TOKEN }} upload --user pyviz --label=dev --label=main $(VERSION=`hatch version` conda build --output conda.recipe)
   pip_build:
     name: Build PyPI Packages
     runs-on: 'ubuntu-latest'
