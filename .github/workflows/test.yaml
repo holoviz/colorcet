@@ -49,8 +49,18 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
           allow-prereleases: true
+      - name: pip update
+        run: install --upgrade pip
+      - name: install (patch 3.7)
+        if: matrix.python-version == '3.7'
+        # Got this error with setuptools/setuptools_scm on 3.7 that can be "fixed" with --no-build-isolation.
+        # File "/tmp/pip-build-env-64dq88_c/overlay/lib/python3.7/site-packages/setuptools_scm/config.py", line 216, in from_file
+        # return cls(relative_to=name, **args)
+        # TypeError: __init__() got an unexpected keyword argument 'version_file'
+        run: pip install -e ."[tests, tests_examples]" --no-build-isolation
       - name: install
-        run: pip install ."[tests, tests_examples]"
+        if: matrix.python-version != '3.7'
+        run: pip install -e ."[tests, tests_examples]"
       - name: unit tests
         run: pytest colorcet --cov=colorcet   --cov-append --cov-report xml
       - name: examples tests
