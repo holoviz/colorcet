@@ -51,10 +51,10 @@ jobs:
           allow-prereleases: true
       - name: pip update
         run: pip install --upgrade pip
-      - name: pip list
-        run: pip list
       - name: install
         run: pip install -e ."[tests,tests_examples,tests_extra]"
+      - name: pip list
+        run: pip list
       - name: unit tests
         run: pytest colorcet --cov=colorcet   --cov-append --cov-report xml
       - name: examples tests
