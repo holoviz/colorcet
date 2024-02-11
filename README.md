@@ -41,16 +41,6 @@ or with pip:
 python -m pip install colorcet
 ```
 
-Once installed you can copy the examples into the current directory using the colorcet command and run them using the Jupyter notebook:
-
-```sh
-colorcet examples
-cd colorcet-examples
-jupyter notebook
-```
-
-(Here colorcet examples is a shorthand for colorcet copy-examples --path colorcet-examples && colorcet fetch-data --path colorcet-examples.)
-
 To work with JupyterLab you will also need the PyViz JupyterLab extension:
 
 ```sh
