@@ -50,7 +50,7 @@ jobs:
           python-version: ${{ matrix.python-version }}
           allow-prereleases: true
       - name: pip update
-        run: install --upgrade pip
+        run: pip install --upgrade pip
       - name: install (patch 3.7)
         if: matrix.python-version == '3.7'
         # Got this error with setuptools/setuptools_scm on 3.7 that can be "fixed" with --no-build-isolation.
