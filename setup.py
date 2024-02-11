@@ -1,9 +1,5 @@
 import os
-import sys
-import shutil
 from setuptools import setup, find_packages
-
-import pyct.build
 
 def get_setup_version(reponame):
     """
@@ -25,9 +21,7 @@ def get_setup_version(reponame):
 
 ########## dependencies ##########
 
-install_requires = [
-    'pyct >=0.4.4',
-]
+install_requires = []
 
 examples = [
     'numpy',
@@ -57,7 +51,6 @@ extras_require = {
     # until pyproject.toml/equivalent is widely supported (setup_requires
     # doesn't work well with pip)
     'build': [
-        'pyct >=0.4.4',
         'setuptools >=30.3.0',
         'wheel',
     ]
