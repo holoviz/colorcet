@@ -57,17 +57,17 @@ jobs:
         # File "/tmp/pip-build-env-64dq88_c/overlay/lib/python3.7/site-packages/setuptools_scm/config.py", line 216, in from_file
         # return cls(relative_to=name, **args)
         # TypeError: __init__() got an unexpected keyword argument 'version_file'
-        run: pip install -e ."[tests, tests_examples]" --no-build-isolation
+        run: |
+          pip install wheel
+          pip install -e ."[tests,tests_examples,tests_extra]" --no-build-isolation
       - name: install
         if: matrix.python-version != '3.7'
-        run: pip install -e ."[tests, tests_examples]"
+        run: pip install -e ."[tests,tests_examples,tests_extra]"
       - name: unit tests
         run: pytest colorcet --cov=colorcet   --cov-append --cov-report xml
       - name: examples tests
         run: pytest --nbval-lax -p no:python
       - name: doit test_unit_extra
-        run: |
-          pip install ."[tests_extra]"
-          pytest colorcet --mpl
+        run: pytest colorcet --mpl
       - uses: codecov/codecov-action@v4
         if: github.event_name == 'push'
