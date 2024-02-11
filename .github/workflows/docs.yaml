@@ -31,42 +31,27 @@ jobs:
       run:
         shell: bash -l {0}
     env:
-      DESC: "Documentation build"
       MPLBACKEND: "Agg"
       DISPLAY: ":99.0"
-      PYTHON_DOCS_VERSION: "3.9"
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: "100"
-      - uses: conda-incubator/setup-miniconda@v2
-        with:
-          miniconda-version: "latest"
       - name: Fetch
         run: git fetch --prune --tags -f
       - name: Set output
         id: vars
         run: echo "tag=${GITHUB_REF#refs/*/}" >> $GITHUB_OUTPUT
-      - name: conda setup
-        # conda-forge is required to install pydata-sphinx-theme and sphinx-copybutton.
-        run: |
-          conda create -n test-environment
-          conda activate test-environment
-          conda config --env --append channels pyviz/label/dev --append channels conda-forge
-          conda config --env --remove channels defaults
-          conda install python=${{ env.PYTHON_DOCS_VERSION}} pyctdev
-      - name: doit develop_install
-        run: |
-          conda activate test-environment
-          doit develop_install -o doc -o examples
-      - name: doit env_capture
-        run: |
-          conda activate test-environment
-          doit env_capture
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: install
+        run: pip install ."[doc, examples]"
       - name: build docs
         run: |
-          conda activate test-environment
-          doit build_website
+          nbsite generate-rst --org holoviz --project-name colorcet
+          nbsite build --what=html --output=builtdocs --org holoviz --project-name colorcet
       - name: git status
         run: |
           git status

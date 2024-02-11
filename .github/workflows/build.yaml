@@ -20,91 +20,65 @@ jobs:
       run:
         shell: bash -l {0}
     env:
-      CHANS: "-c pyviz -c bokeh"
+      CHANS_DEV: "-c pyviz/label/dev"
       PKG_TEST_PYTHON: "--test-python=py37"
-      PYTHON_VERSION: "3.7"
-      MPLBACKEND: "Agg"
+      PYTHON_VERSION: "3.9"
+      CHANS: "-c pyviz"
       CONDA_UPLOAD_TOKEN: ${{ secrets.CONDA_UPLOAD_TOKEN }}
     steps:
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: "100"
-      - uses: actions/setup-python@v4
-        with:
-          python-version: ${{ matrix.python-version }}
+      - uses: actions/checkout@v4
+      - name: Fetch unshallow
+        run: git fetch --prune --tags --unshallow -f
       - uses: conda-incubator/setup-miniconda@v2
         with:
           miniconda-version: "latest"
-          python-version: ${{ env.PYTHON_VERSION }}
-      - name: Fetch
-        run: git fetch --prune --tags -f
+          python-version: "3.11"
+          auto-update-conda: true
       - name: Set output
         id: vars
         run: echo "tag=${GITHUB_REF#refs/*/}" >> $GITHUB_OUTPUT
       - name: conda setup
         run: |
-          conda config --set always_yes True
-          conda install -c pyviz "pyctdev>=0.5"
-          doit ecosystem_setup
+          conda update --name base conda
+          conda install anaconda-client conda-build
+          pip install hatch
       - name: conda build
-        run: doit package_build $CHANS $PKG_TEST_PYTHON --test-group=unit
+        run: |
+          VERSION=`hatch version` conda build conda.recipe/
       - name: conda dev upload
         if: (github.event_name == 'push' && (contains(steps.vars.outputs.tag, 'a') || contains(steps.vars.outputs.tag, 'b') || contains(steps.vars.outputs.tag, 'rc')))
-        run: doit package_upload --token=$CONDA_UPLOAD_TOKEN --label=dev
+        run: |
+          anaconda --token $CONDA_UPLOAD_TOKEN upload --user pyviz --label=dev $(VERSION=`hatch version` conda build --output conda.recipe)
       - name: conda main upload
         if: (github.event_name == 'push' && !(contains(steps.vars.outputs.tag, 'a') || contains(steps.vars.outputs.tag, 'b') || contains(steps.vars.outputs.tag, 'rc')))
-        run: doit package_upload --token=$CONDA_UPLOAD_TOKEN --label=dev --label=main
+        run: |
+          anaconda --token $CONDA_UPLOAD_TOKEN upload --user pyviz --label=dev --label=main $(VERSION=`hatch version` conda build --output conda.recipe)
+
   pip_build:
     name: Build PyPI Packages
     runs-on: 'ubuntu-latest'
     defaults:
       run:
         shell: bash -l {0}
-    env:
-      CHANS: "-c pyviz -c bokeh"
-      PKG_TEST_PYTHON: "--test-python=py37"
-      PYTHON_VERSION: "3.7"
-      MPLBACKEND: "Agg"
-      PPU: ${{ secrets.PPU }}
-      PPP: ${{ secrets.PPP }}
-      PYPI: "https://upload.pypi.org/legacy/"
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
+      - name: Fetch unshallow
+        run: git fetch --prune --tags --unshallow -f
+      - name: Set up Python
+        uses: actions/setup-python@v5
         with:
-          fetch-depth: "100"
-      - uses: actions/setup-python@v4
-        with:
-          python-version: ${{ matrix.python-version }}
-      - uses: conda-incubator/setup-miniconda@v2
-        with:
-          miniconda-version: "latest"
-          python-version: ${{ env.PYTHON_VERSION }}
-      - name: Fetch
-        run: git fetch --prune --tags -f
-      - name: conda setup
-        run: |
-          conda config --set always_yes True
-          conda install -c pyviz "pyctdev>=0.5"
-          doit ecosystem_setup
-          doit env_create $CHANS --python=$PYTHON_VERSION
+          python-version: "3.11"
       - name: env setup
         run: |
-          eval "$(conda shell.bash hook)"
-          conda activate test-environment
-          doit develop_install $CHANS_DEV -o unit_tests
-          doit pip_on_conda
-      - name: doit env_capture
-        run: |
-          conda activate test-environment
-          doit env_capture
+          python -m pip install --upgrade pip
+          python -m pip install build
       - name: pip build
         run: |
-          eval "$(conda shell.bash hook)"
-          conda activate test-environment
-          doit ecosystem=pip package_build
-      - name: pip upload
+          python -m build
+      - name: Publish package to PyPI
         if: github.event_name == 'push'
-        run: |
-          eval "$(conda shell.bash hook)"
-          conda activate test-environment
-          doit ecosystem=pip package_upload -u $PPU -p $PPP -r $PYPI
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          user: ${{ secrets.PPU }}
+          password: ${{ secrets.PPP }}
+          packages-dir: dist/
