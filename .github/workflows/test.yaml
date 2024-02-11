@@ -16,8 +16,14 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  pre_commit:
+    name: Run pre-commit
+    runs-on: 'ubuntu-latest'
+    steps:
+      - uses: holoviz-dev/holoviz_tasks/pre-commit@v0.1a19
   test_suite:
     name: Pytest on ${{ matrix.python-version }}, ${{ matrix.os }}
+    needs: [pre_commit]
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
@@ -28,7 +34,7 @@ jobs:
     timeout-minutes: 60
     defaults:
       run:
-        shell: bash -l {0} 
+        shell: bash -l {0}
     env:
       MPLBACKEND: "Agg"
       DISPLAY: ":99.0"
@@ -44,15 +50,11 @@ jobs:
           python-version: ${{ matrix.python-version }}
           allow-prereleases: true
       - name: install
-        run: pip install ."[tests, examples]"
-      - name: doit test_lint
-        run: |
-          flake8
-          pytest --nbsmoke-lint -k ".ipynb"
+        run: pip install ."[tests, tests_examples]"
       - name: unit tests
         run: pytest colorcet --cov=colorcet   --cov-append --cov-report xml
       - name: examples tests
-        run: pytest --nbsmoke-run -k ".ipynb"
+        run: pytest --nbval-lax -p no:python
       - name: doit test_unit_extra
         run: |
           pip install ."[tests_extra]"

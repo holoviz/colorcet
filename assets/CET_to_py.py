@@ -184,7 +184,7 @@ def all_original_names(group=None, not_group=None, only_aliased=False, only_CET=
     Returns a list (optionally filtered) of the names of the available colormaps
     Filters available:
     - group: only include maps whose name include the given string(s)
-      (e.g. "'linear'" or "['linear','diverging']"). 
+      (e.g. "'linear'" or "['linear','diverging']").
     - not_group: filter out any maps whose names include the given string(s)
     - only_aliased: only include maps with shorter/simpler aliases
     - only_CET: only include maps from CET

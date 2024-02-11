@@ -31,4 +31,3 @@ for path in CET_csvs:
     subprocess.run(f'git mv -vk "{path}" "{new_path}"', shell=True)
 
 subprocess.run("git rm -rf CETperceptual_csv_0_1_v2", shell=True)
-

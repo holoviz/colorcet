@@ -38,8 +38,7 @@ HoloViz = "https://holoviz.org/"
 
 [project.optional-dependencies]
 tests = [
-    "flake8",
-    "nbsmoke >=0.2.6",
+    "pre-commit",
     "pytest >=2.8.5",
     "pytest-cov",
     "packaging",
@@ -53,6 +52,10 @@ examples = [
     "holoviews",
     "matplotlib",
     "bokeh",
+]
+tests_examples = [
+    "colorcet[examples]",
+    "nbval",
 ]
 doc = [
     "colorcet[examples]",
@@ -75,3 +78,7 @@ include = ["colorcet"]
 
 [tool.setuptools_scm]
 version_file = "colorcet/_version.py"
+
+[tool.pytest.ini_options]
+addopts = "-v --pyargs"
+norecursedirs = "doc .git dist build _build .ipynb_checkpoints"
