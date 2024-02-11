@@ -49,9 +49,7 @@ jobs:
       - name: install
         run: pip install ."[doc, examples]"
       - name: build docs
-        run: |
-          nbsite generate-rst --org holoviz --project-name colorcet
-          nbsite build --what=html --output=builtdocs --org holoviz --project-name colorcet
+        run: sphinx-build -b html doc builtdocs
       - name: git status
         run: |
           git status

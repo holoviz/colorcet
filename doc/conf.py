@@ -12,15 +12,12 @@ version = release = base_version(colorcet.__version__)
 
 nbbuild_cell_timeout = 10000
 
+exclude_patterns = ['governance']
 html_static_path += ['_static']
 html_theme = 'pydata_sphinx_theme'
-
-templates_path = ['_templates']
-
 html_logo = "_static/logo_horizontal.png"
 html_favicon = "_static/favicon.ico"
-html_css_files = [
-    'nbsite.css',
+html_css_files += [
     'custom.css'
 ]
 
