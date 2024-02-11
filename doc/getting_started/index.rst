@@ -57,18 +57,20 @@ or discuss on Gitter.
 Developer Instructions
 ----------------------
 
-1. Install Python 3 `miniconda <https://docs.conda.io/en/latest/miniconda.html>`_ or `anaconda <https://www.anaconda.com/products/individual/>`_, if you don't already have it on your system.
+1. Install Python and pip.
 
 2. Clone the colorcet git repository if you do not already have it::
 
     git clone git://github.com/pyviz/colorcet.git
 
-3. Set up a new conda environment with optional plotting tools::
+3. Set up a new environment with all the required dependencies::
 
     cd colorcet
-    conda env create -n colorcet matplotlib bokeh holoviews
-    conda activate colorcet
+    # <your command to create a new environment>
+    pip install -e .[all]
 
-4. Put the colorcet directory into the Python path in this environment::
+4. Run the unit tests / run the examples tests / build the docs ::
 
-    pip install -e .
+    pytest colorcet
+    pytest --nbval-lax -p no:python
+    sphinx-build -b html doc builtdocs
