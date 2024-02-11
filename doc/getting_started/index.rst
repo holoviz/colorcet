@@ -72,5 +72,5 @@ Developer Instructions
 4. Run the unit tests / run the examples tests / build the docs ::
 
     pytest colorcet
-    pytest --nbval-lax -p no:python
+    pytest doc --nbval-lax -p no:python
     sphinx-build -b html doc builtdocs
