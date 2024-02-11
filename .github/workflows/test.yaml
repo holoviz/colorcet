@@ -60,6 +60,8 @@ jobs:
         run: |
           pip install wheel
           pip install -e ."[tests,tests_examples,tests_extra]" --no-build-isolation
+      - name: pip list
+        run: pip list
       - name: install
         if: matrix.python-version != '3.7'
         run: pip install -e ."[tests,tests_examples,tests_extra]"
