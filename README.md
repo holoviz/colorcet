@@ -28,7 +28,7 @@ by Peter Kovesi at the Center for Exploration Targeting.
 
 ## Installation
 
-Colorcet supports Python 3.8 and greater on Linux, Windows, or Mac
+Colorcet supports Python 3.7 and greater on Linux, Windows, or Mac
 and can be installed with conda:
 
 ```sh
