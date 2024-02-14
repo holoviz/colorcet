@@ -43,8 +43,6 @@ tests = [
     "pytest >=2.8.5",
     "pytest-cov",
     "packaging",
-    # To keep __version__ up-to-date in editable installs
-    "setuptools_scm",
 ]
 tests_extra = [
     "colorcet[tests]",
