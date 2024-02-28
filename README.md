@@ -28,7 +28,7 @@ by Peter Kovesi at the Center for Exploration Targeting.
 
 ## Installation
 
-Colorcet supports Python 3.7, 3.8, 3.9, 3.10 and 3.11  on Linux, Windows, or Mac
+Colorcet supports Python 3.7 and greater on Linux, Windows, or Mac
 and can be installed with conda:
 
 ```sh
@@ -40,16 +40,6 @@ or with pip:
 ```sh
 python -m pip install colorcet
 ```
-
-Once installed you can copy the examples into the current directory using the colorcet command and run them using the Jupyter notebook:
-
-```sh
-colorcet examples
-cd colorcet-examples
-jupyter notebook
-```
-
-(Here colorcet examples is a shorthand for colorcet copy-examples --path colorcet-examples && colorcet fetch-data --path colorcet-examples.)
 
 To work with JupyterLab you will also need the PyViz JupyterLab extension:
 

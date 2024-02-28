@@ -40,11 +40,28 @@ same methods described above and are named:
 Some of the Glasbey sets are aliased to short names as explained in the User Guide.
 """
 
-from .version import Version
-__version__ = str(Version(fpath=__file__, archive_commit="$Format:%h$", reponame="colorcet"))
-
 from collections import OrderedDict
 from itertools import chain
+
+# Define '__version__'
+try:
+    # __version__ was added in _version in setuptools-scm 7.0.0, we rely on
+    # the hopefully stable version variable.
+    from ._version import version as __version__
+except (ModuleNotFoundError, ImportError):
+    # Either _version doesn't exist (ModuleNotFoundError) or version isn't
+    # in _version (ImportError). ModuleNotFoundError is a subclass of
+    # ImportError, let's be explicit anyway.
+
+    # Try something else:
+    from importlib.metadata import version as mversion, PackageNotFoundError
+
+    try:
+        __version__ = mversion("colorcet")
+    except PackageNotFoundError:
+        # The user is probably trying to run this without having installed
+        # the package.
+        __version__ = "0.0.0+unknown"
 
 
 class AttrODict(OrderedDict):
@@ -143,7 +160,7 @@ def all_original_names(group=None, not_group=None, only_aliased=False, only_CET=
     Returns a list (optionally filtered) of the names of the available colormaps
     Filters available:
     - group: only include maps whose name include the given string(s)
-      (e.g. "'linear'" or "['linear','diverging']"). 
+      (e.g. "'linear'" or "['linear','diverging']").
     - not_group: filter out any maps whose names include the given string(s)
     - only_aliased: only include maps with shorter/simpler aliases
     - only_CET: only include maps from CET

@@ -1,6 +1,86 @@
 [build-system]
 requires = [
-    "pyct >=0.4.4",
     "setuptools >=30.3.0",
-    "wheel",
+    "setuptools_scm >=6",
 ]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "colorcet"
+dynamic = ["version"]
+description = "Collection of perceptually uniform colormaps"
+readme = "README.md"
+license = { text = "CC-BY License" }
+requires-python = ">=3.7"
+authors = [
+    { name = "James A. Bednar", email = "jbednar@anaconda.com" },
+]
+maintainers = [
+    { name = "James A. Bednar", email = "jbednar@anaconda.com" },
+]
+classifiers = [
+    "License :: OSI Approved",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Development Status :: 5 - Production/Stable",
+]
+dependencies = []
+
+[project.urls]
+Homepage = "https://colorcet.holoviz.org"
+Source = "http://github.com/holoviz/colorcet"
+HoloViz = "https://holoviz.org/"
+
+[project.optional-dependencies]
+tests = [
+    "pre-commit",
+    "pytest >=2.8.5",
+    "pytest-cov",
+    "packaging",
+]
+tests_extra = [
+    "colorcet[tests]",
+    "pytest-mpl",  # only available on pip and conda-forge
+]
+examples = [
+    "numpy",
+    "holoviews",
+    "matplotlib",
+    "bokeh",
+]
+tests_examples = [
+    "colorcet[examples]",
+    "nbval",
+]
+doc = [
+    "colorcet[examples]",
+    "nbsite >=0.8.4",
+    "sphinx-copybutton",
+]
+all = [
+    "colorcet[tests]",
+    "colorcet[tests_extra]",
+    "colorcet[examples]",
+    "colorcet[doc]",
+]
+
+[tool.setuptools]
+# To exclude PNG files in colorcet/tests/baseline
+include-package-data = false
+
+[tool.setuptools.packages.find]
+include = ["colorcet"]
+
+[tool.setuptools_scm]
+# Replace with version_file when Python 3.7 is dropped.
+write_to = "colorcet/_version.py"
+
+[tool.pytest.ini_options]
+addopts = "-v --pyargs"
+norecursedirs = "doc .git dist build _build .ipynb_checkpoints"
