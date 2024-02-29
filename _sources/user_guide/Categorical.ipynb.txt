@@ -1,0 +1,284 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# Categorical\n",
+    "\n",
+    "## Glasbey colormaps for categorical data\n",
+    "\n",
+    "Colorcet primarily includes continuous colormaps, where each color is meant to be equally spaced in perceptual color space from the preceding and following colors. The resulting colors then convey numerical magnitude to the viewer. Categorical data can also be represented as numbers, but each number is then distinct, with the numerical value important only to distinguish from other values. When categorical data is plotted as colors, each category should have a color visibly distinct from all the other colors, _not_ nearby in color space, to make each category separately visible. \n",
+    "\n",
+    "There are [many sets of categorical colors available](https://graphicdesign.stackexchange.com/questions/3682), but these tend to be relatively small numbers of hand-chosen colors, typically under 10 and nearly always under 25.  To support visualizing larger numbers of categories, it would be good if an arbitrarily large number of colors could be chosen in a principled way from an available color space. Glasbey et al. presented such a method in:\n",
+    "\n",
+    "> [Glasbey, Chris; van der Heijden, Gerie & Toh, Vivian F. K. et al. (2007)](https://strathprints.strath.ac.uk/30312/1/colorpaper_2006.pdf), \"Colour displays for categorical images\", Color Research & Application 32.4: 304-309.\n",
+    "\n",
+    "Given a starting palette (e.g. white, black), this approach selects each new color to be maximally perceptually dissimilar from all the preceding colors, out of an allowed color space. Glasbey colors are available in [ImageJ](http://imagej.net/Glasbey) and for [R](https://github.com/btupper/catecolors), and there is a [Python implementation](https://github.com/taketwo/glasbey) of the method.  \n",
+    "\n",
+    "Generating the colors from Python is time consuming, so we have generated some specific large sets of Glasbey colors to distribute in colorcet, as outlined below. We'll use [Bokeh](http://bokeh.pydata.org) with [HoloViews](http://holoviews.org) for displaying these colormaps so that you can zoom in for a closer look."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "from colorcet.plotting import swatch, swatches, candy_buttons\n",
+    "\n",
+    "import holoviews as hv\n",
+    "hv.extension('bokeh')"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Color space\n",
+    "\n",
+    "The results from the Glasbey algorithm depend on two factors: the initial starting set of colors, and the color space used. The default color space is the full [CIELAB](https://en.wikipedia.org/wiki/CIELAB_color_space) gamut, which results in colors of all the different available saturations, brightnesses, and hues:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "swatch(\"glasbey_bw\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "If you need *n* colors that are distinct from each other and you have no other criteria to apply, just take the first *n* colors from this palette. Note that these colors won't necessarily be the _most_ distinct that are possible in a set of that size, because they are chosen iteratively (each compared to those that come before it) using a greedy algorithm rather than being globally optimized for that specific size. The Glasbey algorithm can also be used to create such fully optimal sets, but it would not be practical to distribute all those sets and the color assignments would then vary each time a new data point was added, so this single set represents a good compromise.\n",
+    "\n",
+    "### Light/Dark\n",
+    "What if you have additional constraints to consider?  For instance, if you are making a scatter or line plot on a white or black background, some of the colors above will show up vividly in contrast, and others will fade into the background because they are very dark or very light:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "candy_buttons('glasbey_bw') + candy_buttons('glasbey_bw', bgcolor='black')"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "For this reason, the basic **glasbey_bw** set is generally useful only when the page background isn't visible between data points, such as for heatmaps with no missing values. To work well in the more common case when the background is visible, we also provide Glasbey colors selected from a subset of the full CIELAB space.  First, let's consider sets created for light or dark backgrounds:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "swatches(\"glasbey_bw_minc_20_maxl_70\", \"glasbey_bw_minc_20_minl_30\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Here we are using a naming scheme indicating the starting palette and any restrictions on the color space:\n",
+    "       \n",
+    "       glasbey_<starting_palette>[_<min|max>c_<chroma_value>][_<min|max>l_<lightness_value>][_hue_<start>_<end>]\n",
+    "       \n",
+    "The **glasbey_dark** colors were generated by eliminating all colors with lightness above 70 (out of 100) in the [CIECAM02-JCh](https://colorspacious.readthedocs.io/en/latest/tutorial.html#tutorial-perception) color space, and similarly the **glasbey_light** colors eliminated those with lightness below 30. In both cases, shades of gray were also eliminated by removing colors with chromaticity below 20. After trimming the space, the same Glasbey procedure was followed as usual, making each subsequent color maximally distinct (from the remaining possible colors) from all those that precede it. These sets are intended to be useful on light and dark backgrounds, respectively, providing good contrast in each case. \n",
+    "\n",
+    "In order to test the viability of categorical color sets, we should display them on the color of background where they will be used. This helps us discern whether the colors are distinguishable between themselves and against the background. We'll make a candy-button-style plot to capture this property:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "candy_buttons('glasbey_dark') + candy_buttons('glasbey_light', bgcolor='black')"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "E.g., notice how the dots on the black background above are all clearly visible, unlike the **glasbey_bw** example from the start. "
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Cool/Warm\n",
+    "What if you are working within a particular color palette or want to combine two relatively large sets of categories? For this case we created sets of warm and cool colors from a subset of the full CIELAB hue space:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "swatches(\"glasbey_bw_minc_20_hue_330_100\", \"glasbey_bw_minc_20_hue_150_280\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Similar to how the dark and light sets were created, these warm and cool sets were generated by first trimming the colorspace and then applying the Glasbey procedure to make the colors maximally distinct. The \"warm\" colors were generated by only including colors with hues between 330° and 100°, and similarly the \"cool\" colors only include those between 150° and 280°. These sets can be used by themselves or in conjunction. It is important to note that by reducing the color space, we are decreasing the number of meaningfully distinct colors. So these sets should only be used when there is a strong reason to do so. E.g. in the blue plot, you can probably notice colors that _nearly_ reappear in other locations, even though each of the 100 dots is in a separate category:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "candy_buttons('glasbey_warm') + candy_buttons('glasbey_cool')"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### No gray\n",
+    "\n",
+    "We also generated a set where we eliminated gray values, i.e. those with chromaticity in the JCh color space below 20. These are useful if you truly need \"colors\", i.e. not grays: "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "swatch(\"glasbey_bw_minc_20\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "You might have noticed that most of the colormaps mentioned above have more than one name. The short name is provided as an easy to remember alias for accessing the colormaps, while the long names indicate precisely how that set was created. In the case of the alias **glasbey**, we decided that the version with no gray would provide a better default than the regular glasbey set, called **glasbey_bw**. In the plot below you can see that the less-constrained **glasbey_bw** has several colors that are very dark and hard to distinguish, compared to the more distinguishable **glasbey** set on the right. "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "candy_buttons('glasbey_bw') + candy_buttons('glasbey_bw_minc_20')"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Starting colors\n",
+    "\n",
+    "For a given color space, the results also depend on the set of starting colors, which above was always [white, black]. We have removed those two colors from the final palettes, because white and black are generally already in use for plotting as the page background or for plot annotations. If you do need the colormap to include white and black, you can use the Bokeh palettes (those prefixed with `b_`, which are simply Python lists of RGB hex colors) and simply add `[\"white\",\"black\"]` to the front of the list.\n",
+    "\n",
+    "In some cases, you may already have an initial set of colors that you use regularly, and you just want to extend that set to allow additional colors that are distinct from the original set. In that case, the Glasbey algorithm can be initialized with the starting set, and then extended using a selected color space.\n",
+    "\n",
+    "Here, we've extended the Category10 colormap used in [bokeh](https://bokeh.pydata.org/en/latest/docs/reference/palettes.html#bokeh.palettes.d3) and originally from [D3](https://github.com/d3/d3-3.x-api-reference/blob/master/Ordinal-Scales.md#categorical-colors) to make a 256-color drop-in replacement that provides more colors for when they are needed, but the same first 10 colors to keep results the same for all cases previously covered by the palette:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "swatch(\"glasbey_category10\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "To check how these compare with the original sets in Bokeh, we can render them side by side. Drag to the right or scroll out to see more of the Glasbey versions:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "from bokeh.palettes import Category10_10\n",
+    "\n",
+    "(swatch(name='bokeh: Category10', cmap=Category10_10, bounds=(0, 0, 10, 1)) +\n",
+    " swatch('glasbey_category10')).cols(1).redim.range(x=(0, 50))"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "We did the same for the default holoviews values:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "(swatch(name='holoviews default', cmap=hv.Cycle().values, bounds=(0, 0, 12, 1)) +\n",
+    " swatch('glasbey_hv')).cols(1).redim.range(x=(0, 50))"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Note that as you include more and more colors, it will be more and more difficult for people to perceive their differences, but this approach is still better than the highly misleading alternative of having to cycle through the same colors again as one would do when only 10 colors are available:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "candy_buttons('bokeh: Category10', cmap=Category10_10) + candy_buttons('glasbey_category10')"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Complete list, for reference\n",
+    "\n",
+    "The colormaps with relatively short names above are expected to be the most useful in practice. The complete list of categorical colormaps provided is:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "swatches(group='glasbey', cols=1)"
+   ]
+  }
+ ],
+ "metadata": {
+  "language_info": {
+   "name": "python",
+   "pygments_lexer": "ipython3"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 2
+}
