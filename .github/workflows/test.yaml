@@ -20,7 +20,7 @@ jobs:
     name: Run pre-commit
     runs-on: "ubuntu-latest"
     steps:
-      - uses: holoviz-dev/holoviz_tasks/pre-commit@v0.1a19
+      - uses: holoviz-dev/holoviz_tasks/pre-commit@v0
   test_suite:
     name: Pytest on ${{ matrix.python-version }}, ${{ matrix.os }}
     needs: [pre_commit]
