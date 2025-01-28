@@ -3,7 +3,8 @@ import colorcet as cc
 from packaging.version import Version
 
 mpl = pytest.importorskip('matplotlib')
-mpl_version = Version(mpl.__version__).release
+MPL_VERSION = Version(mpl.__version__).release
+MPL_GE_3_10 = MPL_VERSION >= (3, 10, 0)
 
 def test_matplotlib_colormaps_available():
     assert len(cc.cm.items()) == 420
@@ -20,7 +21,7 @@ def test_matplotlib():
 
 
 @pytest.mark.mpl_image_compare
-@pytest.mark.skipif(not Version(mpl.__version__).release < (3, 10, 0), reason="Only for matplotlib < 3.10")
+@pytest.mark.skipif(MPL_GE_3_10, reason="Only for matplotlib < 3.10")
 def test_matplotlib_glasbey_lt_3_10():
     import numpy as np
     import matplotlib.pyplot as plt
@@ -29,7 +30,7 @@ def test_matplotlib_glasbey_lt_3_10():
     return fig
 
 @pytest.mark.mpl_image_compare
-@pytest.mark.skipif(not Version(mpl.__version__).release >= (3, 10, 0), reason="Only for matplotlib >= 3.10")
+@pytest.mark.skipif(not MPL_GE_3_10, reason="Only for matplotlib >= 3.10")
 def test_matplotlib_glasbey_ge_3_10():
     import numpy as np
     import matplotlib.pyplot as plt
