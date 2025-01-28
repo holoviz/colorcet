@@ -53,10 +53,10 @@ jobs:
       - name: install
         run: uv pip install -e ."[tests,tests_examples,tests_extra]"
       - name: unit tests
-        run: uv run pytest colorcet --cov=colorcet --cov-append --cov-report xml
+        run: uv run python -m pytest colorcet --cov=colorcet --cov-append --cov-report xml
       - name: examples tests
-        run: uv run pytest doc --nbval-lax -p no:python
+        run: uv run python -m pytest doc --nbval-lax -p no:python
       - name: doit test_unit_extra
-        run: uv run pytest colorcet --mpl
+        run: uv run python -m pytest colorcet --mpl
       - uses: codecov/codecov-action@v4
         if: github.event_name == 'push'
