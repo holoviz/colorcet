@@ -35,7 +35,7 @@ jobs:
     timeout-minutes: 60
     defaults:
       run:
-        shell: bash -l {0}
+        shell: bash -e {0}
     env:
       MPLBACKEND: "Agg"
       DISPLAY: ":99.0"
@@ -46,21 +46,16 @@ jobs:
       - name: Fetch
         run: git fetch --prune --tags -f
       - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v5
+        uses: astral-sh/setup-uv@v5
         with:
           python-version: ${{ matrix.python-version }}
-          allow-prereleases: true
-      - name: pip update
-        run: pip install --upgrade pip
       - name: install
-        run: pip install -e ."[tests,tests_examples,tests_extra]"
-      - name: pip list
-        run: pip list
+        run: uv pip install -e ."[tests,tests_examples,tests_extra]"
       - name: unit tests
-        run: pytest colorcet --cov=colorcet   --cov-append --cov-report xml
+        run: uv run pytest colorcet --cov=colorcet --cov-append --cov-report xml
       - name: examples tests
-        run: pytest doc --nbval-lax -p no:python
+        run: uv run pytest doc --nbval-lax -p no:python
       - name: doit test_unit_extra
-        run: pytest colorcet --mpl
+        run: uv run pytest colorcet --mpl
       - uses: codecov/codecov-action@v4
         if: github.event_name == 'push'
