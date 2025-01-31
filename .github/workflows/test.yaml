@@ -6,10 +6,10 @@ on:
       - main
   pull_request:
     branches:
-    - '*'
+      - "*"
   workflow_dispatch:
   schedule:
-    - cron: '0 9 * * SUN'
+    - cron: "0 9 * * SUN"
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
@@ -18,9 +18,9 @@ concurrency:
 jobs:
   pre_commit:
     name: Run pre-commit
-    runs-on: 'ubuntu-latest'
+    runs-on: "ubuntu-latest"
     steps:
-      - uses: holoviz-dev/holoviz_tasks/pre-commit@v0.1a19
+      - uses: holoviz-dev/holoviz_tasks/pre-commit@v0
   test_suite:
     name: Pytest on ${{ matrix.python-version }}, ${{ matrix.os }}
     needs: [pre_commit]
@@ -28,7 +28,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: ['ubuntu-latest', 'macos-latest', 'windows-latest']
+        os: ["ubuntu-latest", "macos-latest", "windows-latest"]
         # Run on the full set on schedule, workflow_dispatch and push&tags events, otherwise on a subset.
         # python-version: ${{ ( github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' || ( github.event_name == 'push' && github.ref_type == 'tag' ) ) && fromJSON('["3.7", "3.8", "3.9", "3.10", "3.11", "3.12", "3.13"]') || fromJSON('["3.7", "3.13"]') }}
         python-version: ["3.7", "3.8", "3.9", "3.10", "3.11", "3.12", "3.13"]
@@ -38,7 +38,7 @@ jobs:
     timeout-minutes: 60
     defaults:
       run:
-        shell: bash -l {0}
+        shell: bash -e {0}
     env:
       MPLBACKEND: "Agg"
       DISPLAY: ":99.0"
@@ -49,21 +49,17 @@ jobs:
       - name: Fetch
         run: git fetch --prune --tags -f
       - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v5
+        uses: astral-sh/setup-uv@v5
         with:
           python-version: ${{ matrix.python-version }}
-          allow-prereleases: true
-      - name: pip update
-        run: pip install --upgrade pip
+          enable-cache: false
       - name: install
-        run: pip install -e ."[tests,tests_examples,tests_extra]"
-      - name: pip list
-        run: pip list
+        run: uv pip install -e ."[tests,tests_examples,tests_extra]"
       - name: unit tests
-        run: pytest colorcet --cov=colorcet   --cov-append --cov-report xml
+        run: uv run python -m pytest colorcet --cov=colorcet --cov-append --cov-report xml
       - name: examples tests
-        run: pytest doc --nbval-lax -p no:python
+        run: uv run python -m pytest doc --nbval-lax -p no:python
       - name: doit test_unit_extra
-        run: pytest colorcet --mpl
+        run: uv run python -m pytest colorcet --mpl
       - uses: codecov/codecov-action@v4
         if: github.event_name == 'push'
