@@ -32,6 +32,7 @@ def test_matplotlib_glasbey_lt_3_10():
 @pytest.mark.mpl_image_compare
 @pytest.mark.skipif(not MPL_GE_3_10, reason="Only for matplotlib >= 3.10")
 def test_matplotlib_glasbey_ge_3_10():
+    # The interpolation_stage keyword of plt.imshow no longer defaults to `'data'` but to `'auto'`.
     import numpy as np
     import matplotlib.pyplot as plt
     xs, _ = np.meshgrid(np.linspace(0, 1, 256), np.linspace(0, 1, 10))
