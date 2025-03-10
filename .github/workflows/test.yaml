@@ -1,5 +1,4 @@
 name: tests
-
 on:
   push:
     branches:
@@ -14,6 +13,10 @@ on:
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
+
+defaults:
+  run:
+    shell: bash -e {0}
 
 jobs:
   pre_commit:
@@ -36,9 +39,6 @@ jobs:
           - os: 'macos-latest'
             python-version: "3.7"
     timeout-minutes: 60
-    defaults:
-      run:
-        shell: bash -e {0}
     env:
       MPLBACKEND: "Agg"
       DISPLAY: ":99.0"

@@ -1,6 +1,4 @@
-
 name: docs
-
 on:
   push:
     tags:
@@ -22,38 +20,40 @@ on:
   schedule:
     - cron: '0 9 * * SUN'
 
+defaults:
+  run:
+    shell: bash -e {0}
+
+env:
+  PYTHON_VERSION: "3.11"
+
 jobs:
-  build_docs:
-    name: Documentation
+  pixi_lock:
+    name: Pixi lock
+    runs-on: ubuntu-latest
+    steps:
+      - uses: holoviz-dev/holoviz_tasks/pixi_lock@v0
+
+  docs_build:
+    name: Build Documentation
     runs-on: 'ubuntu-latest'
     timeout-minutes: 120
-    defaults:
-      run:
-        shell: bash -l {0}
     env:
-      MPLBACKEND: "Agg"
       DISPLAY: ":99.0"
     steps:
-      - uses: actions/checkout@v4
+      - uses: holoviz-dev/holoviz_tasks/pixi_install@v0
         with:
-          fetch-depth: "100"
-      - name: Fetch
-        run: git fetch --prune --tags -f
+          environments: docs
+      - name: Build documentation
+        run: pixi run -e docs docs-build
       - name: Set output
         id: vars
-        run: echo "tag=${GITHUB_REF#refs/*/}" >> $GITHUB_OUTPUT
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
-      - name: install
-        run: pip install ."[doc, examples]"
-      - name: build docs
-        run: sphinx-build -b html doc builtdocs
-      - name: git status
         run: |
-          git status
-          git diff
+          echo "Deploying from ref ${GITHUB_REF#refs/*/}"
+          echo "tag=${GITHUB_REF#refs/*/}" >> $GITHUB_OUTPUT
+      - name: report failure
+        if: failure()
+        run: cat /tmp/sphinx-*.log | tail -n 100
       - name: Deploy dev
         uses: peaceiris/actions-gh-pages@v3
         if: |
