@@ -1,0 +1,177 @@
+[project]
+name = "colorcet"
+channels = ["pyviz/label/dev",  "conda-forge"]
+platforms = ["linux-64", "osx-arm64", "osx-64", "win-64"]
+
+[environments]
+default = [
+    "py312",
+    "required",
+    "test-core",
+    "test",
+    "example",
+    "test-example",
+    "lint",
+    "dev",
+]
+
+[environments.test-39]
+features = ["py39", "required", "test-core", "test", "example", "test-example"]
+no-default-feature = true
+
+[environments.test-310]
+features = ["py310", "required", "test-core", "test", "example", "test-example"]
+no-default-feature = true
+
+[environments.test-311]
+features = ["py311", "required", "test-core", "test", "example", "test-example"]
+no-default-feature = true
+
+[environments.test-312]
+features = ["py312", "required", "test-core", "test", "example", "test-example"]
+no-default-feature = true
+
+[environments.test-core]
+features = ["py313", "required", "test-core"]
+no-default-feature = true
+
+[environments.docs]
+features = ["py311", "required", "doc", "example"]
+no-default-feature = true
+
+[environments.build]
+features = ["py311", "required", "build"]
+no-default-feature = true
+
+[environments.lint]
+features = ["lint"]
+no-default-feature = true
+
+[feature.required.dependencies]
+nomkl = "*"
+pip = "*"
+# Required
+bokeh = ">=3.1"
+holoviews = ">=1.19.0"
+numpy = ">=1.21"
+packaging = "*"
+panel = ">=1.0"
+param = ">=1.12.0,<3.0"
+
+[feature.required.tasks]
+install = 'python -m pip install --no-deps --disable-pip-version-check -e .'
+install-dev = { cmd = "pre-commit install", depends-on = ["install"] }
+setup-dev = { depends-on = ["install", "lint-install"] }
+sync-git-tags = 'python scripts/sync_git_tags.py colorcet'
+
+[feature.required.activation.env]
+PYTHONIOENCODING = "utf-8"
+
+[feature.py39.dependencies]
+python = "3.9.*"
+
+[feature.py310.dependencies]
+python = "3.10.*"
+
+[feature.py311.dependencies]
+python = "3.11.*"
+
+[feature.py312.dependencies]
+python = "3.12.*"
+
+[feature.py312.activation.env]
+COVERAGE_CORE = "sysmon"
+
+[feature.py313.dependencies]
+python = "3.13.*"
+
+[feature.py313.activation.env]
+COVERAGE_CORE = "sysmon"
+
+# =================== DEV ===================
+
+[feature.dev.dependencies]
+jupyterlab = "*"
+jupyterlab-myst = "*"
+setuptools_scm = ">=6"
+
+[feature.dev.tasks]
+lab = 'jupyter lab'
+
+# =================== SHARED DEPS ===================
+
+# Dependencies required to run the notebooks
+[feature.example.dependencies]
+datashader = ">=0.6.5"
+nbsite = ">=0.8.4"
+
+# =================== TESTS ===================
+
+[feature.test-core.dependencies]
+# Minimum dependencies required to run the test suite.
+matplotlib = "*"
+parameterized = "*"
+pre-commit = "*"
+pytest-cov = "*"
+pytest = "*"
+ruff = "*"
+
+[feature.test-example.dependencies]
+# Dependencies required to run the examples notebooks.
+pytest-xdist = "*"
+nbval = "*"
+
+[feature.test.tasks]
+test-unit-cov = 'pytest -v colorcet --cov=colorcet --cov-append'
+
+[feature.test-core.tasks]
+test-unit = 'pytest -v colorcet'
+
+[feature.test-example.tasks]
+test-example = 'pytest -n logical --dist loadscope --nbval-lax -p no:python'
+
+# =================== DOCS ====================
+
+[feature.doc]
+channels = [
+    # To get dev colorcet, not always needed.
+    "pyviz/label/dev",
+    # To get dev nbsite, not always needed.
+    "pyviz/label/tooling_dev",
+    "conda-forge"
+]
+dependencies = {nbsite = ">=0.8.6", sphinxext-rediraffe = "*"}
+
+[feature.doc.activation.env]
+MOZ_HEADLESS = "1"
+MPLBACKEND = "Agg"
+DISPLAY = ":99.0"
+
+[feature.doc.tasks]
+docs-build-sphinx = 'sphinx-build -b html doc builtdocs'
+_docs-install = 'python -m pip install --no-deps --disable-pip-version-check -e .'
+# Depends on _docs-install instead of install as install
+# in the default environment
+docs-build = { depends-on = ["_docs-install", "docs-build-sphinx"] }
+
+
+# ================== BUILD ====================
+
+[feature.build.dependencies]
+python-build = "*"
+conda-build = "*"
+anaconda-client = "*"
+
+[feature.build.tasks]
+build-conda = 'bash scripts/conda/build.sh'
+publish-conda = 'anaconda'
+build-pip = 'python -m build .'
+
+# =================== LINT ====================
+
+[feature.lint.dependencies]
+pre-commit = "*"
+
+[feature.lint.tasks]
+lint = 'pre-commit run --all-files'
+lint-install = 'pre-commit install'
