@@ -9,7 +9,7 @@ If you have any problems with the steps here, please reach out in the `dev` chan
 0. Open an [issue on Github](https://github.com/holoviz/colorcet/issues) if needed
 1. Fork and clone [colorcet's Github repository](https://github.com/holoviz/colorcet)
 2. Install [`pixi`](https://pixi.sh)
-3. Run `pixi run install-dev` to create your development environment
+3. Run `pixi run install` to create your development environment
 4. Run `pixi shell` to activate the created environment
 5. Make some changes and run:
   - `pixi run test-unit` if you updated the source code to run the unit tests

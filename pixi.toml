@@ -60,7 +60,6 @@ param = ">=1.12.0,<3.0"
 
 [feature.required.tasks]
 install = 'python -m pip install --no-deps --disable-pip-version-check -e .'
-install-dev = { cmd = "pre-commit install", depends-on = ["install"] }
 setup-dev = { depends-on = ["install", "lint-install"] }
 sync-git-tags = 'python scripts/sync_git_tags.py colorcet'
 
