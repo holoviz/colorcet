@@ -105,7 +105,7 @@ jobs:
                 }
               ]
           }')
-          echo "MATRIX=$MATRIX" >> $GITHUB_ENV
+          echo "MATRIX=$MATRIX" >> $GITHUB_OUTPUT
 
   pixi_lock:
       name: Pixi lock
