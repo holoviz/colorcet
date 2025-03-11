@@ -127,9 +127,6 @@ jobs:
       - uses: holoviz-dev/holoviz_tasks/pixi_install@v0
         with:
           environments: ${{ matrix.environment }}
-      - name: Check packages latest version
-        run: |
-          pixi run -e ${{ matrix.environment }} check-latest-packages bokeh panel param datashader
       - name: Test Unit
         run: |
           pixi run -e ${{ matrix.environment }} test-unit $COV
@@ -155,9 +152,6 @@ jobs:
       - uses: holoviz-dev/holoviz_tasks/pixi_install@v0
         with:
           environments: ${{ matrix.environment }}
-      - name: Check packages latest version
-        run: |
-          pixi run -e ${{ matrix.environment }} check-latest-packages numpy pandas bokeh panel param
       - name: Test Unit
         run: |
           pixi run -e ${{ matrix.environment }} test-unit
