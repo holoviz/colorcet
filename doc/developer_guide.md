@@ -9,7 +9,7 @@ If you have any problems with the steps here, please reach out in the `dev` chan
 0. Open an [issue on Github](https://github.com/holoviz/colorcet/issues) if needed
 1. Fork and clone [colorcet's Github repository](https://github.com/holoviz/colorcet)
 2. Install [`pixi`](https://pixi.sh)
-3. Run `pixi run install` to create your development environment
+3. Run `pixi run setup-dev` to create your development environment
 4. Run `pixi shell` to activate the created environment
 5. Make some changes and run:
   - `pixi run test-unit` if you updated the source code to run the unit tests
@@ -75,7 +75,7 @@ This `colorcet` directory is the _source checkout_ for the remainder of this doc
 To start developing, run the following command:
 
 ```bash
-pixi run install-dev
+pixi run setup-dev
 ```
 
 This will create an environment called `default` (in `.pixi/envs`), install colorcet in [editable mode](https://pip.pypa.io/en/stable/topics/local-project-installs/#editable-installs), and install `pre-commit`:
@@ -86,6 +86,7 @@ This will create an environment called `default` (in `.pixi/envs`), install colo
 
 The first time you run it, it will create a `pixi.lock` file with information for all available environments.
 This command will take a minute or so to run.
+
 :::
 
 All available tasks can be found by running `pixi task list`, the following sections will give a brief introduction to the most common tasks.
@@ -104,7 +105,7 @@ pixi run sync-git-tags
 
 The `default` environment is meant to provide all the tools needed to develop colorcet.
 
-This environment is created by running `pixi run install-dev`. Run `pixi shell` to activate it; this is equivalent to `source venv/bin/activate` in a Python virtual environment or `conda activate` in a conda environment.
+This environment is created by running `pixi run setup-dev`. Run `pixi shell` to activate it; this is equivalent to `source venv/bin/activate` in a Python virtual environment or `conda activate` in a conda environment.
 
 If you need to run a command directly instead of via `pixi`, activate the environment and run the command (e.g. `pixi shell` and `pytest colorcet/tests/<somefile.py>`).
 
@@ -135,7 +136,7 @@ You can launch Jupyter lab with the `default` environment with `pixi run lab`. T
 
 ## Linting
 
-colorcet uses [`pre-commit`](https://pre-commit.com/) to lint and format the source code. `pre-commit` is installed automatically when running `pixi run install-dev`; it can also be installed with `pixi run lint-install`.
+Colorcet uses [`pre-commit`](https://pre-commit.com/) to lint and format the source code. `pre-commit` is installed automatically when running `pixi run setup-dev`; it can also be installed with `pixi run lint-install`.
 `pre-commit` runs all the linters when a commit is made locally. Linting can be forced to run for all the files with:
 
 ```bash

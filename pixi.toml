@@ -140,7 +140,6 @@ _docs-install = 'python -m pip install --no-deps --disable-pip-version-check -e 
 # in the default environment
 docs-build = { depends-on = ["_docs-install", "docs-build-sphinx"] }
 
-
 # ================== BUILD ====================
 
 [feature.build.dependencies]

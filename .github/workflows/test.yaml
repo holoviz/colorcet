@@ -32,7 +32,6 @@ defaults:
     shell: bash -e {0}
 
 env:
-  MPLBACKEND: "Agg"
   DISPLAY: ":99.0"
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   COV: "--cov=./colorcet --cov-report=xml"
