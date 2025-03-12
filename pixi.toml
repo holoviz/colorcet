@@ -1,19 +1,14 @@
 [project]
 name = "colorcet"
-channels = ["pyviz/label/dev",  "conda-forge"]
+channels = ["pyviz/label/dev", "conda-forge"]
 platforms = ["linux-64", "osx-arm64", "osx-64", "win-64"]
 
+[activation.env]
+MPLBACKEND = "Agg"
+PYTHONIOENCODING = "utf-8"
+
 [environments]
-default = [
-    "py312",
-    "required",
-    "test-core",
-    "test",
-    "example",
-    "test-example",
-    "lint",
-    "dev",
-]
+default = ["py312", "required", "test-core", "test", "example", "test-example", "lint", "dev"]
 
 [environments.test-39]
 features = ["py39", "required", "test-core", "test", "example", "test-example"]
@@ -50,21 +45,11 @@ no-default-feature = true
 [feature.required.dependencies]
 nomkl = "*"
 pip = "*"
-# Required
-bokeh = ">=3.1"
-holoviews = ">=1.19.0"
-numpy = ">=1.21"
-packaging = "*"
-panel = ">=1.0"
-param = ">=1.12.0,<3.0"
 
 [feature.required.tasks]
 install = 'python -m pip install --no-deps --disable-pip-version-check -e .'
 setup-dev = { depends-on = ["install", "lint-install"] }
 sync-git-tags = 'python scripts/sync_git_tags.py colorcet'
-
-[feature.required.activation.env]
-PYTHONIOENCODING = "utf-8"
 
 [feature.py39.dependencies]
 python = "3.9.*"
@@ -101,30 +86,33 @@ lab = 'jupyter lab'
 
 # Dependencies required to run the notebooks
 [feature.example.dependencies]
-datashader = ">=0.6.5"
-nbsite = ">=0.8.4"
+bokeh = "*"
+holoviews = "*"
+matplotlib = "*"
+numpy = "*"
 
 # =================== TESTS ===================
 
 [feature.test-core.dependencies]
 # Minimum dependencies required to run the test suite.
-matplotlib = "*"
 parameterized = "*"
-pre-commit = "*"
-pytest-cov = "*"
 pytest = "*"
-ruff = "*"
+pytest-cov = "*"
+pytest-mpl = "*"
 
 [feature.test-example.dependencies]
 # Dependencies required to run the examples notebooks.
-pytest-xdist = "*"
 nbval = "*"
+pytest-xdist = "*"
 
-[feature.test.tasks]
-test-unit-cov = 'pytest -v colorcet --cov=colorcet --cov-append'
+[feature.test.dependencies]
+# Minimum dependencies required to run the test suite.
+matplotlib = "*"
+bokeh = "*"
+packaging = "*"
 
 [feature.test-core.tasks]
-test-unit = 'pytest -v colorcet'
+test-unit = 'pytest colorcet/tests'
 
 [feature.test-example.tasks]
 test-example = 'pytest -n logical --dist loadscope --nbval-lax -p no:python'
@@ -137,13 +125,12 @@ channels = [
     "pyviz/label/dev",
     # To get dev nbsite, not always needed.
     "pyviz/label/tooling_dev",
-    "conda-forge"
+    "conda-forge",
 ]
-dependencies = {nbsite = ">=0.8.6", sphinxext-rediraffe = "*"}
+dependencies = { nbsite = ">=0.8.6" }
 
 [feature.doc.activation.env]
 MOZ_HEADLESS = "1"
-MPLBACKEND = "Agg"
 DISPLAY = ":99.0"
 
 [feature.doc.tasks]
@@ -159,11 +146,9 @@ docs-build = { depends-on = ["_docs-install", "docs-build-sphinx"] }
 [feature.build.dependencies]
 python-build = "*"
 conda-build = "*"
-anaconda-client = "*"
 
 [feature.build.tasks]
 build-conda = 'bash scripts/conda/build.sh'
-publish-conda = 'anaconda'
 build-pip = 'python -m build .'
 
 # =================== LINT ====================
