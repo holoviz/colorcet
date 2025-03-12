@@ -22,4 +22,3 @@ jobs:
           AWS_DEFAULT_REGION: "eu-west-1"
         run: |
           zip $(date +%Y-%m-%d).zip pixi.lock pixi.toml
-          aws s3 cp ./$(date +%Y-%m-%d).zip s3://assets.holoviz.org/lock/$PACKAGE/
