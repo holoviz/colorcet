@@ -10,6 +10,10 @@ PYTHONIOENCODING = "utf-8"
 [environments]
 default = ["py312", "required", "test-core", "test", "example", "test-example", "lint", "dev"]
 
+[environments.test-38]
+features = ["py38", "required", "test-core", "test", "example", "test-example"]
+no-default-feature = true
+
 [environments.test-39]
 features = ["py39", "required", "test-core", "test", "example", "test-example"]
 no-default-feature = true
@@ -50,6 +54,9 @@ pip = "*"
 install = 'python -m pip install --no-deps --disable-pip-version-check -e .'
 setup-dev = { depends-on = ["install", "lint-install"] }
 sync-git-tags = 'python scripts/sync_git_tags.py colorcet'
+
+[feature.py38.dependencies]
+python = "3.8.*"
 
 [feature.py39.dependencies]
 python = "3.9.*"
