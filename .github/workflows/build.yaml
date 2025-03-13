@@ -52,7 +52,7 @@ jobs:
         if: always()
         with:
           name: conda
-          path: dist/*.conda
+          path: dist/*.tar.bz2
           if-no-files-found: error
 
   conda-publish:
