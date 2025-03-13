@@ -4,18 +4,17 @@ This guide describes how to install and configure the development environment fo
 
 If you have any problems with the steps here, please reach out in the `dev` channel on [Discord](https://discord.gg/rb6gPXbdAr) or on [Discourse](https://discourse.holoviz.org/).
 
-## TL;DR
+## Quick Overview
 
 0. Open an [issue on Github](https://github.com/holoviz/colorcet/issues) if needed
 1. Fork and clone [colorcet's Github repository](https://github.com/holoviz/colorcet)
 2. Install [`pixi`](https://pixi.sh)
 3. Run `pixi run setup-dev` to create your development environment
-4. Run `pixi shell` to activate the created environment
-5. Make some changes and run:
+4. Make some changes and run:
   - `pixi run test-unit` if you updated the source code to run the unit tests
   - `pixi run test-example` if you updated the notebooks to run them
   - `pixi run docs-build` if you need to build the website locally
-6. Open a Pull Request
+5. Open a Pull Request
 
 ## Preliminaries
 
