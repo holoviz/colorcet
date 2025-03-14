@@ -1,6 +1,4 @@
-
 name: docs
-
 on:
   push:
     tags:
@@ -11,7 +9,7 @@ on:
   workflow_dispatch:
     inputs:
       target:
-        description: 'Site to build and deploy'
+        description: 'Site to build and deploy, or dry-run'
         type: choice
         options:
         - dev
@@ -22,38 +20,69 @@ on:
   schedule:
     - cron: '0 9 * * SUN'
 
+defaults:
+  run:
+    shell: bash -e {0}
+
+env:
+  PYTHON_VERSION: "3.11"
+  MPLBACKEND: "Agg"
+
 jobs:
-  build_docs:
-    name: Documentation
+  pixi_lock:
+    name: Pixi lock
+    runs-on: ubuntu-latest
+    steps:
+      - uses: holoviz-dev/holoviz_tasks/pixi_lock@v0
+
+  docs_build:
+    name: Build Documentation
+    needs: [pixi_lock]
     runs-on: 'ubuntu-latest'
     timeout-minutes: 120
-    defaults:
-      run:
-        shell: bash -l {0}
+    outputs:
+      tag: ${{ steps.vars.outputs.tag }}
     env:
-      MPLBACKEND: "Agg"
       DISPLAY: ":99.0"
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: holoviz-dev/holoviz_tasks/pixi_install@v0
         with:
-          fetch-depth: "100"
-      - name: Fetch
-        run: git fetch --prune --tags -f
+          environments: docs
+      - name: Build documentation
+        run: pixi run -e docs docs-build
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: docs
+          if-no-files-found: error
+          path: builtdocs
       - name: Set output
         id: vars
-        run: echo "tag=${GITHUB_REF#refs/*/}" >> $GITHUB_OUTPUT
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
-      - name: install
-        run: pip install ."[doc, examples]"
-      - name: build docs
-        run: sphinx-build -b html doc builtdocs
-      - name: git status
         run: |
-          git status
-          git diff
+          echo "Deploying from ref ${GITHUB_REF#refs/*/}"
+          echo "tag=${GITHUB_REF#refs/*/}" >> $GITHUB_OUTPUT
+      - name: report failure
+        if: failure()
+        run: cat /tmp/sphinx-*.log | tail -n 100
+
+  docs_publish:
+    name: Publish Documentation
+    runs-on: "ubuntu-latest"
+    needs: [docs_build]
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: docs
+          path: builtdocs/
+      - name: Set output
+        id: vars
+        run: echo "tag=${{ needs.docs_build.outputs.tag }}" >> $GITHUB_OUTPUT
       - name: Deploy dev
         uses: peaceiris/actions-gh-pages@v3
         if: |

@@ -38,3 +38,7 @@ assets/CET_updates.py
 
 # setuptools_scm
 colorcet/_version.py
+
+# pixi
+.pixi
+pixi.lock

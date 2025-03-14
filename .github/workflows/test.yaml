@@ -1,5 +1,4 @@
 name: tests
-
 on:
   push:
     branches:
@@ -8,6 +7,19 @@ on:
     branches:
       - "*"
   workflow_dispatch:
+    inputs:
+      target:
+        description: "How much of the test suite to run"
+        type: choice
+        default: default
+        options:
+          - default
+          - full
+      cache:
+        description: "Use cache"
+        type: boolean
+        default: true
+
   schedule:
     - cron: "0 9 * * SUN"
 
@@ -15,51 +27,128 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 
+defaults:
+  run:
+    shell: bash -e {0}
+
+env:
+  DISPLAY: ":99.0"
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  COV: "--cov=./colorcet --cov-report=xml"
+
 jobs:
   pre_commit:
     name: Run pre-commit
     runs-on: "ubuntu-latest"
     steps:
       - uses: holoviz-dev/holoviz_tasks/pre-commit@v0
-  test_suite:
-    name: Pytest on ${{ matrix.python-version }}, ${{ matrix.os }}
-    needs: [pre_commit]
+
+  setup:
+    name: Setup workflow
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: read
+    outputs:
+      code_change: ${{ steps.filter.outputs.code }}
+      matrix: ${{ env.MATRIX }}
+    steps:
+      - uses: actions/checkout@v4
+        if: github.event_name != 'pull_request'
+      - name: Check for code changes
+        uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            code:
+              - 'colorcet/**'
+              - 'pixi.toml'
+              - 'pyproject.toml'
+              - '.github/workflows/test.yaml'
+      - name: Set matrix option
+        run: |
+          if [[ '${{ github.event_name }}' == 'workflow_dispatch' ]]; then
+            OPTION=${{ github.event.inputs.target }}
+          elif [[ '${{ github.event_name }}' == 'schedule' ]]; then
+            OPTION="full"
+          elif [[ '${{ github.event_name }}' == 'push' && '${{ github.ref_type }}' == 'tag' ]]; then
+            OPTION="full"
+          else
+            OPTION="default"
+          fi
+          echo "MATRIX_OPTION=$OPTION" >> $GITHUB_ENV
+      - name: Set test matrix with 'default' option
+        if: env.MATRIX_OPTION == 'default'
+        run: |
+          MATRIX=$(jq -nsc '{
+              "os": ["ubuntu-latest", "macos-latest", "windows-latest"],
+              "environment": ["test-39", "test-312"],
+            }')
+          echo "MATRIX=$MATRIX" >> $GITHUB_ENV
+      - name: Set test matrix with 'full' option
+        if: env.MATRIX_OPTION == 'full'
+        run: |
+          MATRIX=$(jq -nsc '{
+              "os": ["ubuntu-latest", "macos-latest", "windows-latest"],
+              "environment": ["test-38", "test-39", "test-310", "test-311", "test-312"],
+            }')
+          echo "MATRIX=$MATRIX" >> $GITHUB_ENV
+
+  pixi_lock:
+      name: Pixi lock
+      runs-on: ubuntu-latest
+      steps:
+        - uses: holoviz-dev/holoviz_tasks/pixi_lock@v0
+          with:
+            cache: ${{ github.event.inputs.cache == 'true' || github.event.inputs.cache == '' }}
+
+  unit_test_suite:
+    name: unit:${{ matrix.environment }}:${{ matrix.os }}
+    needs: [pre_commit, setup, pixi_lock]
     runs-on: ${{ matrix.os }}
+    if: needs.setup.outputs.code_change == 'true'
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJson(needs.setup.outputs.matrix) }}
+    timeout-minutes: 60
+    steps:
+      - uses: holoviz-dev/holoviz_tasks/pixi_install@v0
+        with:
+          environments: ${{ matrix.environment }}
+      - name: Test Unit
+        run: |
+          pixi run -e ${{ matrix.environment }} test-unit $COV
+      - name: Test Examples
+        run: |
+          pixi run -e ${{ matrix.environment }} test-example
+      - uses: codecov/codecov-action@v4
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+
+  core_test_suite:
+    name: core:${{ matrix.environment }}:${{ matrix.os }}
+    needs: [pre_commit, setup, pixi_lock]
+    runs-on: ${{ matrix.os }}
+    if: needs.setup.outputs.code_change == 'true'
     strategy:
       fail-fast: false
       matrix:
-        os: ["ubuntu-latest", "macos-latest", "windows-latest"]
-        # Run on the full set on schedule, workflow_dispatch and push&tags events, otherwise on a subset.
-        # python-version: ${{ ( github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' || ( github.event_name == 'push' && github.ref_type == 'tag' ) ) && fromJSON('["3.7", "3.8", "3.9", "3.10", "3.11", "3.12", "3.13"]') || fromJSON('["3.7", "3.13"]') }}
-        python-version: ["3.7", "3.8", "3.9", "3.10", "3.11", "3.12", "3.13"]
-        exclude:
-          - os: 'macos-latest'
-            python-version: "3.7"
+        os: ["ubuntu-latest"]
+        environment: ["test-core"]
     timeout-minutes: 60
-    defaults:
-      run:
-        shell: bash -e {0}
-    env:
-      MPLBACKEND: "Agg"
-      DISPLAY: ":99.0"
     steps:
-      - uses: actions/checkout@v4
+      - uses: holoviz-dev/holoviz_tasks/pixi_install@v0
         with:
-          fetch-depth: "100"
-      - name: Fetch
-        run: git fetch --prune --tags -f
-      - name: Set up Python ${{ matrix.python-version }}
-        uses: astral-sh/setup-uv@v5
-        with:
-          python-version: ${{ matrix.python-version }}
-          enable-cache: false
-      - name: install
-        run: uv pip install -e ."[tests,tests_examples,tests_extra]"
-      - name: unit tests
-        run: uv run python -m pytest colorcet --cov=colorcet --cov-append --cov-report xml
-      - name: examples tests
-        run: uv run python -m pytest doc --nbval-lax -p no:python
-      - name: doit test_unit_extra
-        run: uv run python -m pytest colorcet --mpl
-      - uses: codecov/codecov-action@v4
-        if: github.event_name == 'push'
+          environments: ${{ matrix.environment }}
+      - name: Test Unit
+        run: |
+          pixi run -e ${{ matrix.environment }} test-unit
+
+  result_test_suite:
+    name: result:test
+    needs: [unit_test_suite, core_test_suite]
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - name: check for failures
+        if: contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled')
+        run: echo job failed && exit 1

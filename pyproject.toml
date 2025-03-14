@@ -83,5 +83,7 @@ include = ["colorcet"]
 write_to = "colorcet/_version.py"
 
 [tool.pytest.ini_options]
-addopts = "-v --pyargs"
-norecursedirs = "doc .git dist build _build .ipynb_checkpoints"
+addopts = ["--strict-config", "--strict-markers", "--color=yes"]
+minversion = "7"
+xfail_strict = true
+log_cli_level = "INFO"

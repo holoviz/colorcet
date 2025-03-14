@@ -1,0 +1,17 @@
+name: nightly_lock
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 0 * * *"
+
+env:
+  PACKAGE: "colorcet"
+
+jobs:
+  pixi_lock:
+    if: ${{ !github.event.repository.fork }}
+    name: Pixi lock
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: holoviz-dev/holoviz_tasks/pixi_lock@v0
