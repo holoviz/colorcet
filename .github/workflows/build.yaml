@@ -132,7 +132,7 @@ jobs:
     permissions:
       id-token: write
     steps:
-      - uses: pypa/gh-action-pypi-publish@release/v1
+      - uses: actions/download-artifact@v4
         with:
           name: pip
           path: dist/
