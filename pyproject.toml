@@ -11,7 +11,7 @@ dynamic = ["version"]
 description = "Collection of perceptually uniform colormaps"
 readme = "README.md"
 license = { text = "CC-BY License" }
-requires-python = ">=3.7"
+requires-python = ">=3.9"
 authors = [
     { name = "James A. Bednar", email = "jbednar@anaconda.com" },
 ]
@@ -22,8 +22,6 @@ classifiers = [
     "License :: OSI Approved",
     "Operating System :: OS Independent",
     "Programming Language :: Python",
-    "Programming Language :: Python :: 3.7",
-    "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
@@ -79,8 +77,7 @@ include-package-data = false
 include = ["colorcet"]
 
 [tool.setuptools_scm]
-# Replace with version_file when Python 3.7 is dropped.
-write_to = "colorcet/_version.py"
+version_file = "colorcet/_version.py"
 
 [tool.pytest.ini_options]
 addopts = ["--strict-config", "--strict-markers", "--color=yes"]

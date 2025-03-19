@@ -5,7 +5,7 @@ Getting started
 Installation
 ------------
 
-Colorcet supports Python 3.7 and greater on Linux, Windows, or Mac
+Colorcet supports Python 3.9 and greater on Linux, Windows, or Mac
 and can be installed with conda::
 
     conda install colorcet
