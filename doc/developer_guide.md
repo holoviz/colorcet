@@ -11,9 +11,11 @@ If you have any problems with the steps here, please reach out in the `dev` chan
 2. Install [`pixi`](https://pixi.sh)
 3. Run `pixi run setup-dev` to create your development environment
 4. Make some changes and run:
-  - `pixi run test-unit` if you updated the source code to run the unit tests
-  - `pixi run test-example` if you updated the notebooks to run them
-  - `pixi run docs-build` if you need to build the website locally
+
+- `pixi run test-unit` if you updated the source code to run the unit tests
+- `pixi run test-example` if you updated the notebooks to run them
+- `pixi run docs-build` if you need to build the website locally
+
 5. Open a Pull Request
 
 ## Preliminaries
@@ -78,7 +80,6 @@ pixi run setup-dev
 ```
 
 This will create an environment called `default` (in `.pixi/envs`), install colorcet in [editable mode](https://pip.pypa.io/en/stable/topics/local-project-installs/#editable-installs), and install `pre-commit`:
-
 
 :::{admonition} Note
 :class: info
@@ -153,6 +154,22 @@ pre-commit run --all-files  # To run on all files
 ```
 
 :::
+
+## Type Checking
+
+In addition to linting, Colorcet now uses Python type hints throughout the codebase to improve readability, maintainability, and error detection. The repository is statically checked using [mypy](http://mypy-lang.org/). This helps catch type errors early during development.
+
+You can run the type checker locally by executing:
+
+```bash
+pixi run typecheck
+```
+
+Type checking is also integrated into the CI pipeline, and a mypy pre-commit hook has been configured to catch issues before commits are accepted. If you haven’t already set up your pre-commit hooks, run:
+
+```bash
+pre-commit install
+```
 
 ## Testing
 
