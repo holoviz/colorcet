@@ -84,13 +84,13 @@ try:
                 # The last condition will raise an error
                 colormaps.register(cmap, name=name)
     except ImportError:
-        # PendingDeprecationWarning from matplotlib 3.6
-        from matplotlib.cm import register_cmap
+        # Removed `register_cmap` in 3.9.0 see https://matplotlib.org/stable/api/prev_api_changes/api_changes_3.9.0.html#removals
+        from matplotlib.colormaps import register as register_cmap # type: ignore
 except ImportError:
-    def LinearSegmentedColormap(colorlist,name): pass
-    def ListedColormap(colorlist,name): pass
-    def register_cmap(name,cmap): pass
-    LinearSegmentedColormap.from_list=lambda n,c,N: None
+    def LinearSegmentedColormap(colorlist,name): pass # type: ignore[no-redef]
+    def ListedColormap(colorlist,name): pass # type: ignore[no-redef]
+    def register_cmap(name,cmap): pass # type: ignore[no-redef]
+    LinearSegmentedColormap.from_list=lambda n,c,N: None # type: ignore
 
 
 def rgb_to_hex(r,g,b):

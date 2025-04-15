@@ -5,7 +5,7 @@ documentation.
 """
 
 import numpy as np
-import holoviews as hv
+import holoviews as hv # type: ignore[import]
 from holoviews import opts
 
 from . import get_aliases, all_original_names, palette, cm
