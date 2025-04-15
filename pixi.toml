@@ -8,7 +8,7 @@ MPLBACKEND = "Agg"
 PYTHONIOENCODING = "utf-8"
 
 [environments]
-default = ["py312", "required", "test-core", "test", "example", "test-example", "lint", "dev"]
+default = ["py312", "required", "test-core", "test", "example", "test-example", "lint", "dev", "mypy"]
 
 [environments.test-39]
 features = ["py39", "required", "test-core", "test", "example", "test-example"]
@@ -158,3 +158,15 @@ pre-commit = "*"
 [feature.lint.tasks]
 lint = 'pre-commit run --all-files'
 lint-install = 'pre-commit install'
+
+# =================== TYPE CHECKING ===================
+
+[feature.mypy.dependencies]
+mypy = "*"
+
+[feature.mypy.tasks]
+typecheck = "mypy colorcet"
+
+[tool.mypy]
+ignore_missing_imports = true
+# disallow_untyped_defs = true  # saved for later
