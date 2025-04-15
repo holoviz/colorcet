@@ -103,15 +103,23 @@ July  2013  Original version.
 March 2014  Adjustments to make it better for evaluating cyclic colour maps.
 June  2014  Default wavelength changed from 10 to 8.
 """
-import numpy as np
 
-def sineramp(size=(256, 512), amp=12.5, wavelen=8, p=2):
+import numpy as np
+from typing import Tuple, Union
+
+
+def sineramp(
+    size: Tuple[int, ...] = (256, 512),
+    amp: float = 12.5,
+    wavelen: int = 8,
+    p: Union[int, float] = 2,
+) -> np.ndarray:
     if len(size) == 1:
-        rows = cols = size
+        rows = cols = size[0]
     elif len(size) == 2:
         rows, cols = size
     else:
-        raise ValueError('size must be of length 1 or 2')
+        raise ValueError("size must be of length 1 or 2")
 
     # Adjust width of image so that we have an integer number of cycles of
     # the sinewave.  This helps should one be using the test image to
@@ -122,23 +130,23 @@ def sineramp(size=(256, 512), amp=12.5, wavelen=8, p=2):
     cols = cycles * wavelen
 
     # Sine wave
-    fx = amp * np.array([np.sin(1/wavelen * 2*np.pi*c) for c in range(cols)])
+    fx = amp * np.array([np.sin(1 / wavelen * 2 * np.pi * c) for c in range(cols)])
 
     # Vertical modulating function
-    A = (np.arange(rows, 0, -1)/(rows-1)) ** p
+    A = (np.arange(rows, 0, -1) / (rows - 1)) ** p
     im_0, im_1 = np.meshgrid(fx, A)
     im = im_0 * im_1
 
     # Add ramp
     ramp_0, ramp_1 = np.meshgrid(range(cols), range(rows))
-    ramp = ramp_0/cols
-    im = im + ramp * (255 - 2*amp)
+    ramp = ramp_0 / cols
+    im = im + ramp * (255 - 2 * amp)
 
     # Now normalise each row so that it spans the full data range from 0 to 255.
     # This ensures that, at the lower edge of the image, the full colour map is
     # displayed.  It also helps with the evaluation of cyclic colour maps though
     # a small cyclic discontinuity will remain at the top of the test image.
     for r in range(rows):
-        im[r, :] = (im[r, :])/im[r, :].max()
+        im[r, :] = (im[r, :]) / im[r, :].max()
 
     return im * 255
