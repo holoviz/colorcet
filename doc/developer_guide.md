@@ -11,10 +11,9 @@ If you have any problems with the steps here, please reach out in the `dev` chan
 2. Install [`pixi`](https://pixi.sh)
 3. Run `pixi run setup-dev` to create your development environment
 4. Make some changes and run:
-
-- `pixi run test-unit` if you updated the source code to run the unit tests
-- `pixi run test-example` if you updated the notebooks to run them
-- `pixi run docs-build` if you need to build the website locally
+  - `pixi run test-unit` if you updated the source code to run the unit tests
+  - `pixi run test-example` if you updated the notebooks to run them
+  - `pixi run docs-build` if you need to build the website locally
 
 5. Open a Pull Request
 

@@ -113,25 +113,23 @@ except ImportError:
 
 
 def rgb_to_hex(r: int, g: int, b: int) -> str:
-    return f"#{r:02x}{g:02x}{b:02x}"
+    return '#%02x%02x%02x' % (r,g,b)
 
 
 def bokeh_palette(name: str, colorlist: Sequence[Sequence[Union[float, int]]]) -> List[str]:
-    palette[name] = [
-        rgb_to_hex(int(r * 255), int(g * 255), int(b * 255)) for r, g, b in colorlist
-    ]
+    palette[name] = [rgb_to_hex(int(r * 255),int(g * 255),int(b * 255)) for r,g,b in colorlist]
     return palette[name]
 
 
 def mpl_cm(name: str, colorlist: Sequence[Any]) -> "LinearSegmentedColormap":
-    cm[name] = LinearSegmentedColormap.from_list(name, colorlist, N=len(colorlist))
-    register_cmap("cet_" + name, cmap=cm[name])
+    cm[name]    = LinearSegmentedColormap.from_list(name, colorlist, N=len(colorlist))
+    register_cmap("cet_"+name, cmap=cm[name])
     return cm[name]
 
 
 def mpl_cl(name: str, colorlist: Sequence[Any]) -> "ListedColormap":
-    cm[name] = ListedColormap(colorlist, name)
-    register_cmap("cet_" + name, cmap=cm[name])
+    cm[name]    = ListedColormap(colorlist, name)
+    register_cmap("cet_"+name, cmap=cm[name])
     return cm[name]
 
 

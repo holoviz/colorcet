@@ -41,35 +41,22 @@ def swatch(
     if bounds is None:
         bounds = (0, 0, 256, 1)
 
-    if isinstance(cmap, tuple):
+    if type(cmap) is tuple:
         cmap = list(cmap)
 
     plot = hv.Image(array, bounds=bounds, group=title)
     backends = hv.Store.loaded_backends()
-    if "bokeh" in backends:
-        width = kwargs.pop("width", 900)
-        height = kwargs.pop("height", 100)
-        plot.opts(
-            opts.Image(
-                backend="bokeh",
-                width=width,
-                height=height,
-                toolbar="above",
-                default_tools=["xwheel_zoom", "xpan", "save", "reset"],
-                cmap=cmap or palette[name],
-            )
-        )
-    if "matplotlib" in backends:
-        aspect = kwargs.pop("aspect", 15)
-        fig_size = kwargs.pop("fig_size", 350)
-        plot.opts(
-            opts.Image(
-                backend="matplotlib",
-                aspect=aspect,
-                fig_size=fig_size,
-                cmap=cmap or cm[name],
-            )
-        )
+    if 'bokeh' in backends:
+        width = kwargs.pop('width', 900)
+        height = kwargs.pop('height', 100)
+        plot.opts(opts.Image(backend='bokeh', width=width, height=height, toolbar='above',
+                             default_tools=['xwheel_zoom', 'xpan', 'save', 'reset'],
+                             cmap=cmap or palette[name]))
+    if 'matplotlib' in backends:
+        aspect = kwargs.pop('aspect', 15)
+        fig_size = kwargs.pop('fig_size', 350)
+        plot.opts(opts.Image(backend='matplotlib', aspect=aspect, fig_size=fig_size,
+                             cmap=cmap or cm[name]))
     return plot.opts(opts.Image(xaxis=None, yaxis=None), opts.Image(**kwargs))
 
 
@@ -82,43 +69,32 @@ def swatches(
     **kwargs: Any,
 ) -> hv.Layout:
     """Show swatches for given names or names in group"""
-    args = args or all_original_names(
-        group=group, not_group=not_group, only_aliased=only_aliased
-    )
+    args = args or all_original_names(group=group, not_group=not_group,
+                                      only_aliased=only_aliased)
     if not cols:
         cols = 3 if len(args) >= 3 else 1
 
     backends = hv.Store.loaded_backends()
-    if "matplotlib" in backends:
-        if "aspect" not in kwargs:
-            kwargs["aspect"] = 12 // cols
-        if "fig_size" not in kwargs:
-            kwargs["fig_size"] = 500 // cols
-    if "bokeh" in backends:
-        if "height" not in kwargs:
-            kwargs["height"] = 100
-        if "width" not in kwargs:
-            kwargs["width"] = (9 * kwargs["height"]) // cols
+    if 'matplotlib' in backends:
+        if 'aspect' not in kwargs:
+            kwargs['aspect'] = 12 // cols
+        if 'fig_size' not in kwargs:
+            kwargs['fig_size'] = 500 // cols
+    if 'bokeh' in backends:
+        if 'height' not in kwargs:
+            kwargs['height'] = 100
+        if 'width' not in kwargs:
+            kwargs['width'] = (9 * kwargs['height']) // cols
 
-    images = [
-        swatch(arg, **kwargs) if isinstance(arg, str) else swatch(*arg, **kwargs)
-        for arg in args
-    ]
+    images = [swatch(arg, **kwargs) if isinstance(arg, str) else
+              swatch(*arg, **kwargs)for
+              arg in args]
 
-    plot = (
-        hv.Layout(images)
-        .opts(transpose=True)
-        .cols(int(np.ceil(len(images) * 1.0 / cols)))
-    )
+    plot = (hv.Layout(images).opts(transpose=True).cols(int(np.ceil(len(images) * 1.0 / cols))))
 
-    if "matplotlib" in backends:
-        plot.opts(
-            opts.Layout(
-                backend="matplotlib",
-                sublabel_format=None,
-                fig_size=kwargs.get("fig_size", 150),
-            )
-        )
+    if 'matplotlib' in backends:
+        plot.opts(opts.Layout(backend='matplotlib', sublabel_format=None,
+                              fig_size=kwargs.get('fig_size', 150)))
     return plot
 
 
@@ -131,22 +107,12 @@ def sine_comb(name: str, cmap: Optional[Any] = None, **kwargs: Any) -> hv.Image:
     plot = hv.Image(sine, group=title)
 
     backends = hv.Store.loaded_backends()
-    if "bokeh" in backends:
-        plot.opts(
-            opts.Image(
-                backend="bokeh",
-                width=400,
-                height=150,
-                toolbar="above",
-                cmap=cmap or palette[name],
-            )
-        )
-    if "matplotlib" in backends:
-        plot.opts(
-            opts.Image(
-                backend="matplotlib", aspect=3, fig_size=200, cmap=cmap or cm[name]
-            )
-        )
+    if 'bokeh' in backends:
+        plot.opts(opts.Image(backend='bokeh', width=400, height=150, toolbar='above',
+                             cmap=cmap or palette[name]))
+    if 'matplotlib' in backends:
+        plot.opts(opts.Image(backend='matplotlib', aspect=3, fig_size=200,
+                             cmap=cmap or cm[name]))
 
     return plot.opts(opts.Image(xaxis=None, yaxis=None), opts.Image(**kwargs))
 
@@ -160,55 +126,34 @@ def sine_combs(
     **kwargs: Any,
 ) -> hv.Layout:
     """Show sine_combs for given names or names in group"""
-    args = args or all_original_names(
-        group=group, not_group=not_group, only_aliased=only_aliased
-    )
-    images = [
-        sine_comb(arg, **kwargs) if isinstance(arg, str) else sine_comb(*arg, **kwargs)
-        for arg in args
-    ]
+    args = args or all_original_names(group=group, not_group=not_group,
+                                      only_aliased=only_aliased)
+    images = [sine_comb(arg, **kwargs) if isinstance(arg, str) else
+              sine_comb(*arg, **kwargs)for
+              arg in args]
 
-    plot = (
-        hv.Layout(images)
-        .opts(transpose=True)
-        .cols(int(np.ceil(len(images) * 1.0 / cols)))
-    )
+    plot = hv.Layout(images).opts(transpose=True).cols(int(np.ceil(len(images)*1.0/cols)))
 
     backends = hv.Store.loaded_backends()
-    if "matplotlib" in backends:
-        plot.opts(
-            opts.Layout(
-                backend="matplotlib",
-                sublabel_format=None,
-                fig_size=kwargs.get("fig_size", 200),
-            )
-        )
+    if 'matplotlib' in backends:
+        plot.opts(opts.Layout(backend='matplotlib', sublabel_format=None,
+                              fig_size=kwargs.get('fig_size', 200)))
     return plot
 
 
 arr = np.arange(0, 100)
 np.random.shuffle(arr)
 zz = arr.reshape(10, 10)
-xx, yy = np.meshgrid(np.arange(0, 10), np.arange(0, 10))
+xx, yy = np.meshgrid(np.arange(0,10), np.arange(0,10))
 
 data = np.array([xx, yy, zz]).transpose().reshape(100, 3)
 
 
-def candy_buttons(
-    name: str, cmap: Optional[Any] = None, size: int = 450, **kwargs: Any
-) -> hv.Points:
+def candy_buttons(name: str, cmap: Optional[Any] = None, size: int = 450, **kwargs: Any) -> hv.Points:
     if cmap is None:
         cmap = palette[name][:100]
         name = get_aliases(name)
-    options = opts.Points(
-        color="color",
-        size=size / 13.0,
-        tools=["hover"],
-        yaxis=None,
-        xaxis=None,
-        height=size,
-        width=size,
-        cmap=cmap,
-        **kwargs,
-    )
-    return hv.Points(data, vdims="color").opts(options).relabel(name)
+    options = opts.Points(color='color', size=size / 13.0, tools=['hover'],
+                          yaxis=None, xaxis=None, height=size, width=size,
+                          cmap=cmap, **kwargs)
+    return hv.Points(data, vdims='color').opts(options).relabel(name)

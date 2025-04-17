@@ -94,12 +94,12 @@ jobs:
           echo "MATRIX=$MATRIX" >> $GITHUB_ENV
 
   pixi_lock:
-    name: Pixi lock
-    runs-on: ubuntu-latest
-    steps:
-      - uses: holoviz-dev/holoviz_tasks/pixi_lock@v0
-        with:
-          cache: ${{ github.event.inputs.cache == 'true' || github.event.inputs.cache == '' }}
+      name: Pixi lock
+      runs-on: ubuntu-latest
+      steps:
+        - uses: holoviz-dev/holoviz_tasks/pixi_lock@v0
+          with:
+            cache: ${{ github.event.inputs.cache == 'true' || github.event.inputs.cache == '' }}
 
   typecheck:
     name: Type Check

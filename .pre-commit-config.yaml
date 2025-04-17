@@ -7,34 +7,34 @@ default_stages: [pre-commit]
 exclude: '.+\.m$'
 
 repos:
-  - repo: https://github.com/nbQA-dev/nbQA
+-   repo: https://github.com/nbQA-dev/nbQA
     rev: 1.7.1
     hooks:
-      - id: nbqa-flake8
-  - repo: https://github.com/pre-commit/pre-commit-hooks
+    -   id: nbqa-flake8
+-   repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.5.0
     hooks:
-      - id: check-builtin-literals
-      - id: check-case-conflict
-      - id: check-docstring-first
-      - id: check-executables-have-shebangs
-      - id: check-toml
-      - id: detect-private-key
-      - id: end-of-file-fixer
+    -   id: check-builtin-literals
+    -   id: check-case-conflict
+    -   id: check-docstring-first
+    -   id: check-executables-have-shebangs
+    -   id: check-toml
+    -   id: detect-private-key
+    -   id: end-of-file-fixer
         exclude: (\.min\.js$|\.svg$)
-      - id: trailing-whitespace
-  - repo: https://github.com/PyCQA/flake8
+    -   id: trailing-whitespace
+-   repo: https://github.com/PyCQA/flake8
     rev: 7.0.0
     hooks:
-      - id: flake8 # See 'setup.cfg' for args
+    -   id: flake8  # See 'setup.cfg' for args
         args: [colorcet]
         files: colorcet/
-  - repo: https://github.com/hoxbro/clean_notebook
+-   repo: https://github.com/hoxbro/clean_notebook
     rev: v0.1.15a2
     hooks:
       - id: clean-notebook
 
-  - repo: https://github.com/pre-commit/mirrors-mypy
+-   repo: https://github.com/pre-commit/mirrors-mypy
     rev: v1.15.0
     hooks:
       - id: mypy
