@@ -90,7 +90,7 @@ def swatches(
               swatch(*arg, **kwargs) for
               arg in args]
 
-    plot = (hv.Layout(images).opts(transpose=True).cols(int(np.ceil(len(images)*1.0/cols))))
+    plot = hv.Layout(images).opts(transpose=True).cols(int(np.ceil(len(images)*1.0/cols)))
 
     if 'matplotlib' in backends:
         plot.opts(opts.Layout(backend='matplotlib', sublabel_format=None,
