@@ -14,7 +14,6 @@ If you have any problems with the steps here, please reach out in the `dev` chan
   - `pixi run test-unit` if you updated the source code to run the unit tests
   - `pixi run test-example` if you updated the notebooks to run them
   - `pixi run docs-build` if you need to build the website locally
-
 5. Open a Pull Request
 
 ## Preliminaries
@@ -79,6 +78,7 @@ pixi run setup-dev
 ```
 
 This will create an environment called `default` (in `.pixi/envs`), install colorcet in [editable mode](https://pip.pypa.io/en/stable/topics/local-project-installs/#editable-installs), and install `pre-commit`:
+
 
 :::{admonition} Note
 :class: info

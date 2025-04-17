@@ -68,29 +68,22 @@ except (ModuleNotFoundError, ImportError):
 class AttrODict(OrderedDict):
     """Ordered dictionary with attribute access (e.g. for tab completion)"""
 
-    def __dir__(self) -> List[str]:
-        return list(self.keys())
+    def __dir__(self) -> List[str]: return list(self.keys())
 
-    def __delattr__(self, name: str) -> None:
-        del self[name]
+    def __delattr__(self, name: str) -> None: del self[name]
 
     def __getattr__(self, name: str) -> Any:
-        return (
-            self[name] if not name.startswith("_") else super().__getattribute__(name)
-        )
+        return self[name] if not name.startswith("_") else super().__getattribute__(name)
 
     def __setattr__(self, name: str, value: Any) -> None:
-        if name.startswith("_"):
-            return super().__setattr__(name, value)
+        if (name.startswith('_')): return super().__setattr__(name, value)
         self[name] = value
 
 
 try:
     from matplotlib.colors import LinearSegmentedColormap, ListedColormap
-
     try:
         from matplotlib import colormaps
-
         def register_cmap(name, cmap):
             if name not in colormaps or colormaps[name] != cmap:
                 # The last condition will raise an error
@@ -99,13 +92,10 @@ try:
         # Removed `register_cmap` in 3.9.0 see https://matplotlib.org/stable/api/prev_api_changes/api_changes_3.9.0.html#removals
         from matplotlib.colormaps import register as register_cmap  # type: ignore
 except ImportError:
-
     def LinearSegmentedColormap(colorlist, name):  # type: ignore[no-redef]
         pass
-
     def ListedColormap(colorlist, name):  # type: ignore[no-redef]
         pass
-
     def register_cmap(name, cmap):  # type: ignore[no-redef]
         pass
 
@@ -117,18 +107,18 @@ def rgb_to_hex(r: int, g: int, b: int) -> str:
 
 
 def bokeh_palette(name: str, colorlist: Sequence[Sequence[Union[float, int]]]) -> List[str]:
-    palette[name] = [rgb_to_hex(int(r * 255),int(g * 255),int(b * 255)) for r,g,b in colorlist]
+    palette[name] = [rgb_to_hex(int(r*255),int(g*255),int(b*255)) for r,g,b in colorlist]
     return palette[name]
 
 
 def mpl_cm(name: str, colorlist: Sequence[Any]) -> "LinearSegmentedColormap":
-    cm[name]    = LinearSegmentedColormap.from_list(name, colorlist, N=len(colorlist))
+    cm[name]     = LinearSegmentedColormap.from_list(name, colorlist, N=len(colorlist))
     register_cmap("cet_"+name, cmap=cm[name])
     return cm[name]
 
 
 def mpl_cl(name: str, colorlist: Sequence[Any]) -> "ListedColormap":
-    cm[name]    = ListedColormap(colorlist, name)
+    cm[name]     = ListedColormap(colorlist, name)
     register_cmap("cet_"+name, cmap=cm[name])
     return cm[name]
 

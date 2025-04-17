@@ -87,19 +87,17 @@ def swatches(
             kwargs['width'] = (9 * kwargs['height']) // cols
 
     images = [swatch(arg, **kwargs) if isinstance(arg, str) else
-              swatch(*arg, **kwargs)for
+              swatch(*arg, **kwargs) for
               arg in args]
 
-    plot = (hv.Layout(images).opts(transpose=True).cols(int(np.ceil(len(images) * 1.0 / cols))))
+    plot = (hv.Layout(images).opts(transpose=True).cols(int(np.ceil(len(images)*1.0/cols))))
 
     if 'matplotlib' in backends:
         plot.opts(opts.Layout(backend='matplotlib', sublabel_format=None,
                               fig_size=kwargs.get('fig_size', 150)))
     return plot
 
-
 sine = sineramp()
-
 
 def sine_comb(name: str, cmap: Optional[Any] = None, **kwargs: Any) -> hv.Image:
     """Show sine_comb using matplotlib or bokeh via holoviews"""
@@ -129,7 +127,7 @@ def sine_combs(
     args = args or all_original_names(group=group, not_group=not_group,
                                       only_aliased=only_aliased)
     images = [sine_comb(arg, **kwargs) if isinstance(arg, str) else
-              sine_comb(*arg, **kwargs)for
+              sine_comb(*arg, **kwargs) for
               arg in args]
 
     plot = hv.Layout(images).opts(transpose=True).cols(int(np.ceil(len(images)*1.0/cols)))
@@ -139,7 +137,6 @@ def sine_combs(
         plot.opts(opts.Layout(backend='matplotlib', sublabel_format=None,
                               fig_size=kwargs.get('fig_size', 200)))
     return plot
-
 
 arr = np.arange(0, 100)
 np.random.shuffle(arr)
@@ -153,7 +150,7 @@ def candy_buttons(name: str, cmap: Optional[Any] = None, size: int = 450, **kwar
     if cmap is None:
         cmap = palette[name][:100]
         name = get_aliases(name)
-    options = opts.Points(color='color', size=size / 13.0, tools=['hover'],
+    options = opts.Points(color='color', size=size/13.0, tools=['hover'],
                           yaxis=None, xaxis=None, height=size, width=size,
                           cmap=cmap, **kwargs)
     return hv.Points(data, vdims='color').opts(options).relabel(name)
