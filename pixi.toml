@@ -166,8 +166,3 @@ mypy = "*"
 
 [feature.mypy.tasks]
 test-type = "mypy colorcet"
-
-[tool.mypy]
-ignore_missing_imports = true
-disallow_untyped_defs = true
-exclude = '(?:^|/)tests/' # exclude the tests directory

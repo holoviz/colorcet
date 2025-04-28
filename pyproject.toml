@@ -84,3 +84,8 @@ addopts = ["--strict-config", "--strict-markers", "--color=yes"]
 minversion = "7"
 xfail_strict = true
 log_cli_level = "INFO"
+
+[tool.mypy]
+ignore_missing_imports = true
+disallow_untyped_defs = true
+exclude = '(?:^|/)tests/' # exclude the tests directory
