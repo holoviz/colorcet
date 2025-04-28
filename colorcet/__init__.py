@@ -40,6 +40,8 @@ same methods described above and are named:
 Some of the Glasbey sets are aliased to short names as explained in the User Guide.
 """
 
+from __future__ import annotations
+
 from collections import OrderedDict
 from itertools import chain
 from typing import Any, Union, Sequence, Mapping
@@ -109,7 +111,7 @@ def bokeh_palette(name: str, colorlist: Sequence[Sequence[Union[float, int]]]) -
     return palette[name]
 
 
-def mpl_cm(name: str, colorlist: Sequence[Any]) -> "LinearSegmentedColormap":
+def mpl_cm(name: str, colorlist: Sequence[Any]) -> LinearSegmentedColormap:
     cm[name]      = LinearSegmentedColormap.from_list(name, colorlist, N=len(colorlist))
     register_cmap("cet_"+name, cmap=cm[name])
     return cm[name]
