@@ -7,7 +7,7 @@ documentation.
 import numpy as np
 import holoviews as hv  # type: ignore[import]
 from holoviews import opts
-from typing import Any, Optional, Tuple, Union, List
+from typing import Any, Optional, Union
 
 from . import get_aliases, all_original_names, palette, cm
 from .sineramp import sineramp
@@ -18,7 +18,7 @@ array = np.meshgrid(np.linspace(0, 1, 256), np.linspace(0, 1, 10))[0]
 def swatch(
     name: str,
     cmap: Optional[Any] = None,
-    bounds: Optional[Tuple[float, float, float, float]] = None,
+    bounds: Optional[tuple[float, float, float, float]] = None,
     array: np.ndarray = array,
     **kwargs: Any,
 ) -> hv.Image:
@@ -61,9 +61,9 @@ def swatch(
 
 
 def swatches(
-    *args: Union[str, Tuple[Any, ...]],
-    group: Optional[Union[str, List[str]]] = None,
-    not_group: Optional[Union[str, List[str]]] = None,
+    *args: Union[str, tuple[Any, ...]],
+    group: Optional[Union[str, list[str]]] = None,
+    not_group: Optional[Union[str, list[str]]] = None,
     only_aliased: bool = False,
     cols: Optional[int] = None,
     **kwargs: Any,
@@ -116,9 +116,9 @@ def sine_comb(name: str, cmap: Optional[Any] = None, **kwargs: Any) -> hv.Image:
 
 
 def sine_combs(
-    *args: Union[str, Tuple[Any, ...]],
-    group: Optional[Union[str, List[str]]] = None,
-    not_group: Optional[Union[str, List[str]]] = None,
+    *args: Union[str, tuple[Any, ...]],
+    group: Optional[Union[str, list[str]]] = None,
+    not_group: Optional[Union[str, list[str]]] = None,
     only_aliased: bool = False,
     cols: int = 1,
     **kwargs: Any,

@@ -42,7 +42,7 @@ Some of the Glasbey sets are aliased to short names as explained in the User Gui
 
 from collections import OrderedDict
 from itertools import chain
-from typing import Any, List, Union, Sequence, Mapping
+from typing import Any, Union, Sequence, Mapping
 
 # Define '__version__'
 try:
@@ -67,7 +67,7 @@ except (ModuleNotFoundError, ImportError):
 
 class AttrODict(OrderedDict):
     """Ordered dictionary with attribute access (e.g. for tab completion)"""
-    def __dir__(self) -> List[str]: return list(self.keys())
+    def __dir__(self) -> list[str]: return list(self.keys())
     def __delattr__(self, name: str) -> None: del self[name]
     def __getattr__(self, name: str) -> Any:
         return self[name] if not name.startswith('_') else super().__getattribute__(name)
@@ -102,7 +102,7 @@ def rgb_to_hex(r: int, g: int, b: int) -> str:
     return '#%02x%02x%02x' % (r,g,b)
 
 
-def bokeh_palette(name: str, colorlist: Sequence[Sequence[Union[float, int]]]) -> List[str]:
+def bokeh_palette(name: str, colorlist: Sequence[Sequence[Union[float, int]]]) -> list[str]:
     palette[name] = [rgb_to_hex(int(r*255),int(g*255),int(b*255)) for r,g,b in colorlist]
     return palette[name]
 
@@ -124,11 +124,11 @@ def get_aliases(name: str) -> str:
     names = [name]
 
     def check_aliases(
-        names: List[str],
-        d: Mapping[str, Union[str, List[str]]],
+        names: list[str],
+        d: Mapping[str, Union[str, list[str]]],
         k_position: int = -1,
         v_position: int = 0,
-    ) -> List[str]:
+    ) -> list[str]:
         for name in [n for n in names]:
             for k, v in d.items():
                 v = [v] if not isinstance(v, list) else v
@@ -2791,7 +2791,7 @@ m_rainbow_bgyrm_35_85_c71_r = mpl_cm('rainbow_bgyrm_35_85_c71_r',list(reversed(r
 
 
 
-linear_ternary_green_0_46_c42: List[List[Union[int, float]]] = [  # cmap_def
+linear_ternary_green_0_46_c42: list[list[Union[int, float]]] = [  # cmap_def
 [0, 0, 0],
 [0, 0.0035927, 0],
 [0, 0.0071431, 1.452e-17],
@@ -5532,7 +5532,7 @@ register_cmap('cet_CET_L7_r',m_linear_bmw_5_95_c86_r)
 
 
 
-linear_grey_0_100_c0: List[List[Union[int, float]]] = [  # cmap_def
+linear_grey_0_100_c0: list[list[Union[int, float]]] = [  # cmap_def
 [0, 0, 0],
 [0.0055606, 0.0055631, 0.0055625],
 [0.011212, 0.011219, 0.011217],
@@ -7446,7 +7446,7 @@ register_cmap('cet_CET_L12_r',m_linear_blue_95_50_c20_r)
 
 
 
-linear_ternary_red_0_50_c52: List[List[Union[int, float]]] = [  # cmap_def
+linear_ternary_red_0_50_c52: list[list[Union[int, float]]] = [  # cmap_def
 [0, 0, 0],
 [0.0080248, 0.0015152, 4.5084e-17],
 [0.016166, 0.0030536, 0],
@@ -8531,7 +8531,7 @@ register_cmap('cet_CET_R1_r',m_rainbow_bgyrm_35_85_c69_r)
 
 
 
-linear_kryw_0_100_c71: List[List[Union[int, float]]] = [  # cmap_def
+linear_kryw_0_100_c71: list[list[Union[int, float]]] = [  # cmap_def
 [0, 0, 0],
 [0.027065, 2.143e-05, 0],
 [0.052054, 7.4728e-05, 0],
@@ -11290,7 +11290,7 @@ register_cmap('cet_CET_L11_r',m_linear_gow_65_90_c35_r)
 
 
 
-linear_ternary_blue_0_44_c57: List[List[Union[int, float]]] = [  # cmap_def
+linear_ternary_blue_0_44_c57: list[list[Union[int, float]]] = [  # cmap_def
 [0, 0, 0],
 [0.00074336, 0.0024531, 0.0074342],
 [0.0014922, 0.0049243, 0.014921],
@@ -18999,7 +18999,7 @@ register_cmap('cet_CET_CBTC1_r',m_cyclic_tritanopic_cwrk_40_100_c20_r)
 
 
 
-linear_kry_0_97_c73: List[List[Union[int, float]]] = [  # cmap_def
+linear_kry_0_97_c73: list[list[Union[int, float]]] = [  # cmap_def
 [0, 0, 0],
 [0.025875, 1.8579e-05, 0],
 [0.050536, 6.891e-05, 2.2895e-17],

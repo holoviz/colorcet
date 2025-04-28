@@ -105,11 +105,11 @@ June  2014  Default wavelength changed from 10 to 8.
 """
 
 import numpy as np
-from typing import Tuple, Union
+from typing import Union
 
 
 def sineramp(
-    size: Tuple[int, ...] = (256, 512),
+    size: tuple[int, ...] = (256, 512),
     amp: float = 12.5,
     wavelen: int = 8,
     p: Union[int, float] = 2,
