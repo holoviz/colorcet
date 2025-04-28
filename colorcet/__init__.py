@@ -67,8 +67,10 @@ except (ModuleNotFoundError, ImportError):
 
 class AttrODict(OrderedDict):
     """Ordered dictionary with attribute access (e.g. for tab completion)"""
-    def __dir__(self) -> list[str]: return list(self.keys())
-    def __delattr__(self, name: str) -> None: del self[name]
+    def __dir__(self) -> list[str]:
+        return list(self.keys())
+    def __delattr__(self, name: str) -> None:
+        del self[name]
     def __getattr__(self, name: str) -> Any:
         return self[name] if not name.startswith('_') else super().__getattribute__(name)
     def __setattr__(self, name: str, value: Any) -> None:
@@ -80,7 +82,7 @@ try:
     from matplotlib.colors import LinearSegmentedColormap, ListedColormap
     try:
         from matplotlib import colormaps
-        def register_cmap(name, cmap):
+        def register_cmap(name: str, cmap: Any) -> None:
             if name not in colormaps or colormaps[name] != cmap:
                 # The last condition will raise an error
                 colormaps.register(cmap, name=name)
@@ -88,11 +90,11 @@ try:
         # Removed `register_cmap` in 3.9.0 see https://matplotlib.org/stable/api/prev_api_changes/api_changes_3.9.0.html#removals
         from matplotlib.colormaps import register as register_cmap  # type: ignore
 except ImportError:
-    def LinearSegmentedColormap(colorlist, name):  # type: ignore[no-redef]
+    def LinearSegmentedColormap(colorlist: list[Union[str, tuple[float, float, float]]], name: str) -> None:  # type: ignore[no-redef]
         pass
-    def ListedColormap(colorlist, name):  # type: ignore[no-redef]
+    def ListedColormap(colorlist: list[Union[str, tuple[float, float, float]]], name: str) -> None:  # type: ignore[no-redef]
         pass
-    def register_cmap(name, cmap):  # type: ignore[no-redef]
+    def register_cmap(name: str, cmap: Any) -> None:  # type: ignore[no-redef]
         pass
 
     LinearSegmentedColormap.from_list = lambda n, c, N: None  # type: ignore
@@ -155,7 +157,7 @@ def get_aliases(name: str) -> str:
         n_names = len(names)
 
     # Sort names as 1or0_underscores, CET, multiple_under_scores (alias, cetname, algorithmicname)
-    def name_sortfn(name):
+    def name_sortfn(name: str) -> int:
         if name.count("_") > 1:
             return 2
         if "CET" in name:
