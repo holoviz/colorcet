@@ -165,7 +165,7 @@ lint-install = 'pre-commit install'
 mypy = "*"
 
 [feature.mypy.tasks]
-typecheck = "mypy colorcet"
+test-type = "mypy colorcet"
 
 [tool.mypy]
 ignore_missing_imports = true

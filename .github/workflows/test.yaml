@@ -101,7 +101,7 @@ jobs:
           with:
             cache: ${{ github.event.inputs.cache == 'true' || github.event.inputs.cache == '' }}
 
-  typecheck:
+  type_test_suite:
     name: Type Check
     needs: [pre_commit, setup, pixi_lock]
     runs-on: ubuntu-latest
@@ -111,11 +111,11 @@ jobs:
         with:
           environments: test-312
       - name: Run Type Check
-        run: pixi run typecheck
+        run: pixi run test-type
 
   unit_test_suite:
     name: unit:${{ matrix.environment }}:${{ matrix.os }}
-    needs: [pre_commit, setup, pixi_lock, typecheck]
+    needs: [pre_commit, setup, pixi_lock, type_test_suite]
     runs-on: ${{ matrix.os }}
     if: needs.setup.outputs.code_change == 'true'
     strategy:
