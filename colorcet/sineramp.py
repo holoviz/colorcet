@@ -113,7 +113,7 @@ def sineramp(
     size: Union[tuple[int], tuple[int,int]] = (256, 512),
     amp: float = 12.5,
     wavelen: int = 8,
-    p: Union[int, float] = 2,
+    p: float = 2,
 ) -> np.ndarray:
     if len(size) == 1:
         rows = cols = size[0]
