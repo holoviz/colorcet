@@ -4,10 +4,11 @@ to facilitate plotting of colormaps - and is mainly used in the
 documentation.
 """
 
+from typing import Any, Optional, Union, Sequence
 import numpy as np
-import holoviews as hv  # type: ignore[import]
+import holoviews as hv
 from holoviews import opts
-from typing import Any, Optional, Union
+import matplotlib.colors as mcolors
 
 from . import get_aliases, all_original_names, palette, cm
 from .sineramp import sineramp
@@ -17,7 +18,7 @@ array = np.meshgrid(np.linspace(0, 1, 256), np.linspace(0, 1, 10))[0]
 
 def swatch(
     name: str,
-    cmap: Optional[Any] = None,
+    cmap: Optional[Union[Sequence[str], mcolors.Colormap]] = None,
     bounds: Optional[tuple[float, float, float, float]] = None,
     array: np.ndarray = array,
     **kwargs: Any,

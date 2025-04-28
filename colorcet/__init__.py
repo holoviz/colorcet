@@ -167,7 +167,7 @@ def get_aliases(name: str) -> str:
     return ',  '.join(sorted(names, key=name_sortfn))
 
 
-def all_original_names(group=None, not_group=None, only_aliased=False, only_CET=False):
+def all_original_names(group=None, not_group=None, only_aliased=False, only_CET=False): # type: ignore[no-untyped-def] # temp fix
     """
     Returns a list (optionally filtered) of the names of the available colormaps
     Filters available:

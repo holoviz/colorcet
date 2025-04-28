@@ -161,13 +161,7 @@ In addition to linting, Colorcet now uses Python type hints throughout the codeb
 You can run the type checker locally by executing:
 
 ```bash
-pixi run typecheck
-```
-
-Type checking is also integrated into the CI pipeline, and a mypy pre-commit hook has been configured to catch issues before commits are accepted. If you haven’t already set up your pre-commit hooks, run:
-
-```bash
-pre-commit install
+pixi run test-type
 ```
 
 ## Testing

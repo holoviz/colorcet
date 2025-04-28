@@ -109,7 +109,7 @@ from typing import Union
 
 
 def sineramp(
-    size: tuple[int, ...] = (256, 512),
+    size: Union[tuple[int], tuple[int,int]] = (256, 512),
     amp: float = 12.5,
     wavelen: int = 8,
     p: Union[int, float] = 2,
