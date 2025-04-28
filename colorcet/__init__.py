@@ -89,8 +89,9 @@ try:
                 # The last condition will raise an error
                 colormaps.register(cmap, name=name)
     except ImportError:
-        # Removed `register_cmap` in 3.9.0 see https://matplotlib.org/stable/api/prev_api_changes/api_changes_3.9.0.html#removals
-        from matplotlib.colormaps import register as register_cmap  # type: ignore
+        # PendingDeprecationWarning from matplotlib 3.6
+        # `register_cmap` is removed in matplotlib 3.9.0 see https://matplotlib.org/stable/api/prev_api_changes/api_changes_3.9.0.html#removals
+        from matplotlib.cm import register_cmap # type: ignore
 except ImportError:
     def LinearSegmentedColormap(colorlist: list[Union[str, tuple[float, float, float]]], name: str) -> None:  # type: ignore[no-redef]
         pass
