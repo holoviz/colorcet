@@ -44,7 +44,7 @@ from __future__ import annotations
 
 from collections import OrderedDict
 from itertools import chain
-from typing import Any, Union, Sequence, Mapping
+from typing import Any, Union, Sequence, Mapping, Optional
 
 # Define '__version__'
 try:
@@ -170,7 +170,12 @@ def get_aliases(name: str) -> str:
     return ',  '.join(sorted(names, key=name_sortfn))
 
 
-def all_original_names(group=None, not_group=None, only_aliased=False, only_CET=False): # type: ignore[no-untyped-def] # temp fix
+def all_original_names(
+        group: Optional[Any] = None,
+        not_group: Optional[Any] = None,
+        only_aliased: bool = False,
+        only_CET: bool = False
+) -> Any: # temp fix
     """
     Returns a list (optionally filtered) of the names of the available colormaps
     Filters available:
@@ -180,7 +185,7 @@ def all_original_names(group=None, not_group=None, only_aliased=False, only_CET=
     - only_aliased: only include maps with shorter/simpler aliases
     - only_CET: only include maps from CET
     """
-    names = palette.keys()
+    names = list(palette.keys())
     if group:
         groups = group if isinstance(group, list) else [group]
         names = [n for ns in [list(filter(lambda x: g in x, names)) for g in groups] for n in ns]
@@ -189,13 +194,13 @@ def all_original_names(group=None, not_group=None, only_aliased=False, only_CET=
         for g in not_groups:
             names = list(filter(lambda x: g not in x, names))
     if only_aliased:
-        names = filter(lambda x: x in aliases.keys(), names)
+        names = list(filter(lambda x: x in aliases.keys(), names))
     else:
-        names = filter(lambda x: x not in chain.from_iterable(aliases.values()), names)
+        names = list(filter(lambda x: x not in chain.from_iterable(aliases.values()), names))
     if only_CET:
-        names = filter(lambda x: x in cetnames_flipped.values(), names)
+        names = list(filter(lambda x: x in cetnames_flipped.values(), names))
     else:
-        names = filter(lambda x: x not in cetnames_flipped.values(), names)
+        names = list(filter(lambda x: x not in cetnames_flipped.values(), names))
     return sorted(list(names))
 
 
