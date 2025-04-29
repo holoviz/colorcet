@@ -162,7 +162,7 @@ lint-install = 'pre-commit install'
 # =================== TYPE CHECKING ===================
 
 [feature.mypy.dependencies]
-mypy = "*"
+mypy = ">=1.15.0"
 
 [feature.mypy.tasks]
 test-type = "mypy colorcet"
