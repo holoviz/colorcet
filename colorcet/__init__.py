@@ -74,7 +74,13 @@ class AttrODict(OrderedDict):
     def __delattr__(self, name: str) -> None:
         del self[name]
     def __getattr__(self, name: str) -> Any:
-        return self[name] if not name.startswith('_') else super().__getattribute__(name)
+        if not name.startswith('_'):
+            try:
+                return self[name]
+            except KeyError:
+                raise AttributeError(f"{type(self).__name__} object has no attribute or key '{name}'")
+        else:
+            return super().__getattribute__(name)
     def __setattr__(self, name: str, value: Any) -> None:
         if (name.startswith('_')): return super().__setattr__(name, value)
         self[name] = value
