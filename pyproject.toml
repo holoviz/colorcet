@@ -79,6 +79,9 @@ include = ["colorcet"]
 [tool.setuptools_scm]
 version_file = "colorcet/_version.py"
 
+[tool.setuptools.package-data]
+colorcet = ["py.typed"]
+
 [tool.pytest.ini_options]
 addopts = ["--strict-config", "--strict-markers", "--color=yes"]
 minversion = "7"
