@@ -22,7 +22,7 @@ def swatch(
     name: str,
     cmap: Optional[Union[Sequence[str], mcolors.Colormap]] = None,
     bounds: Optional[tuple[float, float, float, float]] = None,
-    array: np.ndarray = array,
+    array: np.ndarray[Any, Any] = array,
     **kwargs: Any,
 ) -> hv.Image:
     """Show a color swatch for a colormap using matplotlib or bokeh via holoviews.
@@ -72,10 +72,10 @@ def swatches(
     **kwargs: Any,
 ) -> hv.Layout:
     """Show swatches for given names or names in group"""
-    args = args or all_original_names(group=group, not_group=not_group,
+    args_ = args or all_original_names(group=group, not_group=not_group,
                                       only_aliased=only_aliased)
     if not cols:
-        cols = 3 if len(args) >= 3 else 1
+        cols = 3 if len(args_) >= 3 else 1
 
     backends = hv.Store.loaded_backends()
     if 'matplotlib' in backends:
@@ -91,7 +91,7 @@ def swatches(
 
     images = [swatch(arg, **kwargs) if isinstance(arg, str) else
               swatch(*arg, **kwargs) for
-              arg in args]
+              arg in args_]
 
     plot = hv.Layout(images).opts(transpose=True).cols(int(np.ceil(len(images)*1.0/cols)))
 
@@ -127,11 +127,11 @@ def sine_combs(
     **kwargs: Any,
 ) -> hv.Layout:
     """Show sine_combs for given names or names in group"""
-    args = args or all_original_names(group=group, not_group=not_group,
+    args_ = args or all_original_names(group=group, not_group=not_group,
                                       only_aliased=only_aliased)
     images = [sine_comb(arg, **kwargs) if isinstance(arg, str) else
               sine_comb(*arg, **kwargs) for
-              arg in args]
+              arg in args_]
 
     plot = hv.Layout(images).opts(transpose=True).cols(int(np.ceil(len(images)*1.0/cols)))
 

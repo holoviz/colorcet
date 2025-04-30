@@ -44,7 +44,7 @@ from __future__ import annotations
 
 from collections import OrderedDict
 from itertools import chain
-from typing import Any, Union, Sequence, Mapping, Optional
+from typing import Any, Union, Sequence, Mapping, Optional, Iterable
 
 # Define '__version__'
 try:
@@ -67,20 +67,17 @@ except (ModuleNotFoundError, ImportError):
         __version__ = "0.0.0+unknown"
 
 
-class AttrODict(OrderedDict):
+class AttrODict(OrderedDict): # type: ignore[type-arg]
     """Ordered dictionary with attribute access (e.g. for tab completion)"""
     def __dir__(self) -> list[str]:
         return list(self.keys())
     def __delattr__(self, name: str) -> None:
         del self[name]
     def __getattr__(self, name: str) -> Any:
-        if not name.startswith('_'):
-            try:
-                return self[name]
-            except KeyError:
-                raise AttributeError(f"{type(self).__name__} object has no attribute or key '{name}'")
-        else:
-            return super().__getattribute__(name)
+        try:
+            return self[name]
+        except KeyError:
+            raise AttributeError(f"{type(self).__name__} object has no attribute or key '{name}'")
     def __setattr__(self, name: str, value: Any) -> None:
         if (name.startswith('_')): return super().__setattr__(name, value)
         self[name] = value
@@ -103,7 +100,7 @@ except ImportError:
         pass
     def ListedColormap(colorlist: list[Union[str, tuple[float, float, float]]], name: str) -> None:  # type: ignore[no-redef]
         pass
-    def register_cmap(name: str, cmap: Any) -> None:  # type: ignore[no-redef]
+    def register_cmap(name: str, cmap: Any) -> None:
         pass
 
     LinearSegmentedColormap.from_list = lambda n, c, N: None  # type: ignore
@@ -121,13 +118,13 @@ def bokeh_palette(name: str, colorlist: Sequence[Sequence[Union[float, int]]]) -
 def mpl_cm(name: str, colorlist: Sequence[Any]) -> LinearSegmentedColormap:
     cm[name]      = LinearSegmentedColormap.from_list(name, colorlist, N=len(colorlist))
     register_cmap("cet_"+name, cmap=cm[name])
-    return cm[name]
+    return cm[name] # type: ignore[no-any-return]
 
 
 def mpl_cl(name: str, colorlist: Sequence[Any]) -> "ListedColormap":
     cm[name]      = ListedColormap(colorlist, name)
     register_cmap("cet_"+name, cmap=cm[name])
-    return cm[name]
+    return cm[name] # type: ignore[no-any-return]
 
 
 def get_aliases(name: str) -> str:
@@ -177,11 +174,11 @@ def get_aliases(name: str) -> str:
 
 
 def all_original_names(
-        group: Optional[Any] = None,
-        not_group: Optional[Any] = None,
-        only_aliased: bool = False,
-        only_CET: bool = False
-) -> Any: # temp fix
+    group: Optional[Union[str, list[str]]] = None,
+    not_group: Optional[Union[str, list[str]]] = None,
+    only_aliased: bool = False,
+    only_CET: bool = False
+) -> list[str]:
     """
     Returns a list (optionally filtered) of the names of the available colormaps
     Filters available:
@@ -191,7 +188,7 @@ def all_original_names(
     - only_aliased: only include maps with shorter/simpler aliases
     - only_CET: only include maps from CET
     """
-    names = list(palette.keys())
+    names: Iterable[str] = palette.keys()
     if group:
         groups = group if isinstance(group, list) else [group]
         names = [n for ns in [list(filter(lambda x: g in x, names)) for g in groups] for n in ns]
@@ -200,17 +197,17 @@ def all_original_names(
         for g in not_groups:
             names = list(filter(lambda x: g not in x, names))
     if only_aliased:
-        names = list(filter(lambda x: x in aliases.keys(), names))
+        names = filter(lambda x: x in aliases.keys(), names)
     else:
-        names = list(filter(lambda x: x not in chain.from_iterable(aliases.values()), names))
+        names = filter(lambda x: x not in chain.from_iterable(aliases.values()), names)
     if only_CET:
-        names = list(filter(lambda x: x in cetnames_flipped.values(), names))
+        names = filter(lambda x: x in cetnames_flipped.values(), names)
     else:
-        names = list(filter(lambda x: x not in cetnames_flipped.values(), names))
+        names = filter(lambda x: x not in cetnames_flipped.values(), names)
     return sorted(list(names))
 
 
-palette = AttrODict()
+palette: dict[str, list[str]] = AttrODict()
 cm = AttrODict()
 palette_n = AttrODict()
 cm_n = AttrODict()
