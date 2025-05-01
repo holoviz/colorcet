@@ -105,8 +105,7 @@ June  2014  Default wavelength changed from 10 to 8.
 """
 from __future__ import annotations
 
-from typing import Union
-from numpy.typing import NDArray
+from typing import Union, Any
 import numpy as np
 
 
@@ -115,7 +114,7 @@ def sineramp(
     amp: float = 12.5,
     wavelen: int = 8,
     p: float = 2,
-) -> NDArray[np.float64]:
+) -> Any:
     if len(size) == 1:
         rows = cols = size[0]
     elif len(size) == 2:
@@ -151,4 +150,4 @@ def sineramp(
     for r in range(rows):
         im[r, :] = (im[r, :])/im[r, :].max()
 
-    return im * 255  # type: ignore[no-any-return]
+    return im * 255
