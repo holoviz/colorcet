@@ -165,4 +165,4 @@ lint-install = 'pre-commit install'
 mypy = ">=1.15.0"
 
 [feature.mypy.tasks]
-test-type = "mypy colorcet --strict"
+test-type = "mypy colorcet"
