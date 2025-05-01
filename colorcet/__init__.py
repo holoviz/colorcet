@@ -40,8 +40,6 @@ same methods described above and are named:
 Some of the Glasbey sets are aliased to short names as explained in the User Guide.
 """
 
-from __future__ import annotations
-
 from collections import OrderedDict
 from itertools import chain
 from typing import Any, Union, Sequence, Mapping, Optional, Iterable

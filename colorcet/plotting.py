@@ -4,8 +4,6 @@ to facilitate plotting of colormaps - and is mainly used in the
 documentation.
 """
 
-from __future__ import annotations
-
 from typing import Any, Optional, Union, Sequence
 import numpy as np
 import holoviews as hv
