@@ -108,7 +108,7 @@ def rgb_to_hex(r: int, g: int, b: int) -> str:
     return '#%02x%02x%02x' % (r,g,b)
 
 
-def bokeh_palette(name: str, colorlist: Sequence[Sequence[Union[float, int]]]) -> list[str]:
+def bokeh_palette(name: str, colorlist: Sequence[Sequence[float]]) -> list[str]:
     palette[name] = [rgb_to_hex(int(r*255),int(g*255),int(b*255)) for r,g,b in colorlist]
     return palette[name]
 
