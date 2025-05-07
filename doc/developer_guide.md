@@ -154,6 +154,16 @@ pre-commit run --all-files  # To run on all files
 
 :::
 
+## Type Checking
+
+In addition to linting, Colorcet now uses Python type hints throughout the codebase to improve readability, maintainability, and error detection. The repository is statically checked using [mypy](http://mypy-lang.org/). This helps catch type errors early during development.
+
+You can run the type checker locally by executing:
+
+```bash
+pixi run test-type
+```
+
 ## Testing
 
 To help keep colorcet maintainable, all Pull Requests (PR) with code changes should typically be accompanied by relevant tests. While exceptions may be made for specific circumstances, the default assumption should be that a Pull Request without tests will not be merged.
