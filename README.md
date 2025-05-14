@@ -83,6 +83,6 @@ and the [discussion of how the mpl maps were created](https://bids.github.io/col
 Some of the Colorcet colormaps that have short, memorable names (which are probably
 the most useful ones) are visible here:
 
-<img src="./examples/assets/images/named.png" width="800">
+<img src="./doc/assets/images/named.png" width="800">
 
 But the complete set of 100+ is shown in the [User Guide](http://colorcet.holoviz.org/user_guide).
