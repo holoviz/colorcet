@@ -81,7 +81,7 @@ jobs:
         run: |
           MATRIX=$(jq -nsc '{
               "os": ["ubuntu-latest", "macos-latest", "windows-latest"],
-              "environment": ["test-39", "test-314"],
+              "environment": ["test-39", "test-313", "test-314"],
             }')
           echo "MATRIX=$MATRIX" >> $GITHUB_ENV
       - name: Set test matrix with 'full' option
@@ -132,6 +132,8 @@ jobs:
         run: |
           pixi run -e ${{ matrix.environment }} test-unit $COV
       - name: Test Examples
+        # Ignore for test-314 for now
+        if: ${{ matrix.environment != 'test-314' }}
         run: |
           pixi run -e ${{ matrix.environment }} test-example
       - uses: codecov/codecov-action@v4
