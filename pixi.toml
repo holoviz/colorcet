@@ -30,6 +30,10 @@ no-default-feature = true
 features = ["py313", "required", "test-core", "test", "example", "test-example"]
 no-default-feature = true
 
+[environments.test-314]
+features = ["py314", "required", "test-core-314"]
+no-default-feature = true
+
 [environments.test-core]
 features = ["py313", "required", "test-core"]
 no-default-feature = true
@@ -76,6 +80,16 @@ python = "3.13.*"
 [feature.py313.activation.env]
 COVERAGE_CORE = "sysmon"
 
+[feature.py314]
+channels = ["conda-forge/label/python_rc"]
+
+[feature.py314.dependencies]
+python = "3.14.*"
+_python_rc = { version = "*", channel = "conda-forge/label/python_rc" }
+
+[feature.py314.activation.env]
+COVERAGE_CORE = "sysmon"
+
 # =================== DEV ===================
 
 [feature.dev.dependencies]
@@ -103,6 +117,16 @@ parameterized = "*"
 pytest = "*"
 pytest-cov = "*"
 pytest-mpl = "*"
+
+[feature.test-core-314.dependencies]
+# Minimum dependencies required to run the test suite.
+parameterized = "*"
+pytest = "*"
+pytest-cov = "*"
+# pytest-mpl = "*"
+
+[feature.test-core-314.tasks]
+test-unit = 'pytest colorcet/tests'
 
 [feature.test-example.dependencies]
 # Dependencies required to run the examples notebooks.
