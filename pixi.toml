@@ -125,6 +125,9 @@ pytest = "*"
 pytest-cov = "*"
 # pytest-mpl = "*"
 
+[feature.test-core-314.tasks]
+test-unit = 'pytest colorcet/tests'
+
 [feature.test-example.dependencies]
 # Dependencies required to run the examples notebooks.
 nbval = "*"
