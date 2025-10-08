@@ -80,12 +80,8 @@ python = "3.13.*"
 [feature.py313.activation.env]
 COVERAGE_CORE = "sysmon"
 
-[feature.py314]
-channels = ["conda-forge/label/python_rc"]
-
 [feature.py314.dependencies]
 python = "3.14.*"
-_python_rc = { version = "*", channel = "conda-forge/label/python_rc" }
 
 [feature.py314.activation.env]
 COVERAGE_CORE = "sysmon"
