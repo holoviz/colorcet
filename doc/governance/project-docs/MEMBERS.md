@@ -10,4 +10,4 @@ The Colorcet Project’s equivalently named documents take precedence over any e
 | **NAME** | **Role** | **GitHub Handle** |
 | --- | --- | --- |
 | James Bednar | Project Director | [jbednar](https://github.com/jbednar) |
-| Ian Thomas | Maintainer | [ianthomas23](https://github.com/ianthomas23) |
+| Simon Hansen | Maintainer | [hoxbro](https://github.com/hoxbro) |
