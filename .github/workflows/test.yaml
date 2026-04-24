@@ -119,10 +119,12 @@ jobs:
       - uses: holoviz-dev/holoviz_tasks/pixi_install@v0
         with:
           environments: test-314
-      - name: Run Type Check 3.9
-        run: pixi run test-type --python-version=3.9
-      - name: Run Type Check 3.14
-        run: pixi run test-type --python-version=3.14
+      - name: Run mypy - Python 3.9
+        run: pixi run type-mypy --python-version=3.9
+      - name: Run mypy - Python 3.14
+        run: pixi run type-mypy --python-version=3.14
+      - name: Run TY
+        run: pixi run type-ty
 
   unit_test_suite:
     name: unit:${{ matrix.environment }}:${{ matrix.os }}

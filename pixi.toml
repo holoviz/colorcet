@@ -1,14 +1,24 @@
-[project]
+[workspace]
 name = "colorcet"
 channels = ["pyviz/label/dev", "conda-forge"]
-platforms = ["linux-64", "osx-arm64", "osx-64", "win-64"]
+platforms = ["linux-64", "osx-arm64", "win-64"]
 
 [activation.env]
 MPLBACKEND = "Agg"
 PYTHONIOENCODING = "utf-8"
 
 [environments]
-default = ["py312", "required", "test-core", "test", "example", "test-example", "lint", "dev", "mypy"]
+default = [
+    "py312",
+    "required",
+    "test-core",
+    "test",
+    "example",
+    "test-example",
+    "lint",
+    "dev",
+    "type",
+]
 
 [environments.test-39]
 features = ["py39", "required", "test-core", "test", "example", "test-example"]
@@ -185,8 +195,11 @@ lint-install = 'pre-commit install'
 
 # =================== TYPE CHECKING ===================
 
-[feature.mypy.dependencies]
+[feature.type.dependencies]
 mypy = ">=1.15.0"
+ty = "*"
 
-[feature.mypy.tasks]
-test-type = "mypy colorcet"
+[feature.type.tasks]
+type-mypy = "mypy colorcet"
+type-ty = "ty check colorcet"
+type-all = { depends-on = ["type-ty", "type-mypy"] }

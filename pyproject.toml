@@ -29,6 +29,7 @@ classifiers = [
     "Programming Language :: Python :: 3.13",
     "Programming Language :: Python :: 3.14",
     "Development Status :: 5 - Production/Stable",
+    "Typing :: Typed"
 ]
 dependencies = []
 
@@ -94,3 +95,6 @@ ignore_missing_imports = true
 disallow_untyped_defs = true
 exclude = '(?:^|/)tests/' # exclude the tests directory
 strict = true
+
+[tool.ty.src]
+include = ["colorcet"]

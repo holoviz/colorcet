@@ -116,7 +116,7 @@ def sineramp(
     if len(size) == 1:
         rows = cols = size[0]
     elif len(size) == 2:
-        rows, cols = size
+        rows, cols = size  # ty:ignore[invalid-assignment] https://github.com/astral-sh/ty/issues/560
     else:
         raise ValueError('size must be of length 1 or 2')
 
