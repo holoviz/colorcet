@@ -1,4 +1,4 @@
-<img src="https://github.com/holoviz/colorcet/blob/main/doc/_static/logo.png" width=200><br>
+<img src="https://raw.githubusercontent.com/holoviz/colorcet/main/doc/_static/logo.png" width="200"><br>
 
 -----------------
 
