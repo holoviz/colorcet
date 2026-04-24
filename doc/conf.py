@@ -1,5 +1,11 @@
-
-from nbsite.shared_conf import *
+from nbsite.shared_conf import *  # noqa: F403
+from nbsite.shared_conf import (
+    base_version,
+    extensions,
+    html_context,
+    html_css_files,
+    html_static_path,
+)
 
 project = 'colorcet'
 authors = 'Anaconda'
@@ -24,12 +30,6 @@ html_css_files += [
 html_theme_options = {
     "github_url": "https://github.com/holoviz/colorcet",
     "icon_links": [
-        {
-            # Pointing to Holoviz since colorcet has no dedicated twitter account
-            "name": "Twitter",
-            "url": "https://twitter.com/HoloViz_org",
-            "icon": "fab fa-twitter-square",
-        },
         {
             "name": "Discourse",
             "url": "https://discourse.holoviz.org/",

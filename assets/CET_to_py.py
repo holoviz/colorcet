@@ -391,7 +391,7 @@ def gen_init_py(output_file, csv_folders):
                 with open(csv_path) as csvfile:
                     reader = csv.reader(csvfile)
                     for row in reader:
-                        output.write("[{0}],\n".format(", ".join(row)))
+                        output.write("[{}],\n".format(", ".join(row)))
                 output.write("]\n")
                 output.write(f"b_{base} = bokeh_palette('{base}',{base})\n")
                 output.write(f"m_{base} = {cmtype}('{base}',{base})\n")

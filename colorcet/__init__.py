@@ -45,7 +45,7 @@ from __future__ import annotations
 from collections import OrderedDict
 from collections.abc import Iterable, Mapping, Sequence
 from itertools import chain
-from typing import Any, Optional, Union
+from typing import Any
 
 from .__version import __version__  # noqa: F401
 from ._dependencies import LinearSegmentedColormap, ListedColormap, register_cmap
@@ -63,13 +63,14 @@ class AttrODict(OrderedDict): # type: ignore[type-arg]
         except KeyError:
             raise AttributeError(f"{type(self).__name__} object has no attribute or key '{name}'")
     def __setattr__(self, name: str, value: Any) -> None:
-        if (name.startswith('_')): return super().__setattr__(name, value)
+        if (name.startswith('_')):
+            return super().__setattr__(name, value)
         self[name] = value
 
 
 
 def rgb_to_hex(r: int, g: int, b: int) -> str:
-    return '#%02x%02x%02x' % (r,g,b)
+    return f'#{r:02x}{g:02x}{b:02x}'
 
 
 def bokeh_palette(name: str, colorlist: Sequence[Sequence[float]]) -> list[str]:
@@ -95,7 +96,7 @@ def get_aliases(name: str) -> str:
 
     def check_aliases(
         names: list[str],
-        d: Mapping[str, Union[str, list[str]]],
+        d: Mapping[str, str | list[str]],
         k_position: int = -1,
         v_position: int = 0,
     ) -> list[str]:
@@ -136,8 +137,8 @@ def get_aliases(name: str) -> str:
 
 
 def all_original_names(
-    group: Optional[Union[str, list[str]]] = None,
-    not_group: Optional[Union[str, list[str]]] = None,
+    group: str | list[str] | None = None,
+    not_group: str | list[str] | None = None,
     only_aliased: bool = False,
     only_CET: bool = False
 ) -> list[str]:

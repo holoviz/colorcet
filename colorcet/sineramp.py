@@ -138,7 +138,7 @@ def sineramp(
     im = im_0 * im_1
 
     # Add ramp
-    ramp_0, ramp_1 = np.meshgrid(range(cols), range(rows))
+    ramp_0, _ = np.meshgrid(range(cols), range(rows))
     ramp = ramp_0/cols
     im = im + ramp * (255 - 2*amp)
 
