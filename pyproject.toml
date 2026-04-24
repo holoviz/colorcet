@@ -10,7 +10,8 @@ name = "colorcet"
 dynamic = ["version"]
 description = "Collection of perceptually uniform colormaps"
 readme = "README.md"
-license = { text = "CC-BY License" }
+license = "CC-BY-4.0"
+license-files = ["LICENSE.txt"]
 requires-python = ">=3.10"
 authors = [
     { name = "James A. Bednar", email = "jbednar@anaconda.com" },
@@ -19,7 +20,6 @@ maintainers = [
     { name = "James A. Bednar", email = "jbednar@anaconda.com" },
 ]
 classifiers = [
-    "License :: OSI Approved",
     "Operating System :: OS Independent",
     "Programming Language :: Python",
     "Programming Language :: Python :: 3.10",
