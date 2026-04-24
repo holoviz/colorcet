@@ -96,5 +96,35 @@ disallow_untyped_defs = true
 exclude = '(?:^|/)tests/' # exclude the tests directory
 strict = true
 
+[tool.ruff]
+fix = true
+line-length = 99
+
+[tool.ruff.lint]
+select = [
+    "E",
+    "F",
+    "I",
+    "RUF",
+    "UP",
+    "W",
+]
+
+ignore = [
+    "E402", # Module level import not at top of file
+    "E501", # Line too long
+    "E712", # Comparison to true should be is
+    "E731", # Do not assign a lambda expression, use a def
+    "E741", # Ambiguous variable name
+]
+extend-unsafe-fixes = [
+    "F401", # Unused imports
+    "F841", # Unused variables
+]
+
+[tool.ruff.lint.isort]
+known-first-party = ["colorcet"]
+combine-as-imports = true
+
 [tool.ty.src]
 include = ["colorcet"]
