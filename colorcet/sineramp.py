@@ -103,13 +103,13 @@ July  2013  Original version.
 March 2014  Adjustments to make it better for evaluating cyclic colour maps.
 June  2014  Default wavelength changed from 10 to 8.
 """
-from typing import Any, Union
+from typing import Any
 
 import numpy as np
 
 
 def sineramp(
-    size: Union[tuple[int], tuple[int,int]] = (256, 512),
+    size: tuple[int] | tuple[int, int] = (256, 512),
     amp: float = 12.5,
     wavelen: int = 8,
     p: float = 2,
