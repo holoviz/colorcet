@@ -37,11 +37,11 @@ features = ["py313", "required", "test-core", "test", "example", "test-example"]
 no-default-feature = true
 
 [environments.test-314]
-features = ["py314", "required", "test-core-314"]
+features = ["py314", "required", "test-core", "test", "example", "test-example"]
 no-default-feature = true
 
 [environments.test-core]
-features = ["py313", "required", "test-core"]
+features = ["py314", "required", "test-core"]
 no-default-feature = true
 
 [environments.docs]
@@ -116,16 +116,6 @@ parameterized = "*"
 pytest = "*"
 pytest-cov = "*"
 pytest-mpl = "*"
-
-[feature.test-core-314.dependencies]
-# Minimum dependencies required to run the test suite.
-parameterized = "*"
-pytest = "*"
-pytest-cov = "*"
-# pytest-mpl = "*"
-
-[feature.test-core-314.tasks]
-test-unit = 'pytest colorcet/tests'
 
 [feature.test-example.dependencies]
 # Dependencies required to run the examples notebooks.
