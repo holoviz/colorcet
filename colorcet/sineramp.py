@@ -103,7 +103,8 @@ July  2013  Original version.
 March 2014  Adjustments to make it better for evaluating cyclic colour maps.
 June  2014  Default wavelength changed from 10 to 8.
 """
-from typing import Union, Any
+from typing import Any, Union
+
 import numpy as np
 
 

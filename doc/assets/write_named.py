@@ -1,8 +1,8 @@
-import colorcet as cc
-from colorcet.plotting import swatches, sine_combs
-
 import holoviews as hv
 import panel as pn
+
+import colorcet as cc
+from colorcet.plotting import sine_combs, swatches
 
 hv.extension('bokeh')
 

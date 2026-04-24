@@ -1,13 +1,13 @@
-# -*- coding: utf-8 -*-
 
 from nbsite.shared_conf import *
 
 project = 'colorcet'
-authors = u'Anaconda'
-copyright = u'2017-2021 ' + authors
+authors = 'Anaconda'
+copyright = '2017-2021 ' + authors
 description = 'Collection of perceptually uniform colormaps'
 
 import colorcet
+
 version = release = base_version(colorcet.__version__)
 
 nbbuild_cell_timeout = 10000
