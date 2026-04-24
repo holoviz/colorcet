@@ -4,13 +4,15 @@ to facilitate plotting of colormaps - and is mainly used in the
 documentation.
 """
 
-from typing import Any, Optional, Union, Sequence
-import numpy as np
-import holoviews as hv
-from holoviews import opts
-import matplotlib.colors as mcolors
+from collections.abc import Sequence
+from typing import Any, Optional, Union
 
-from . import get_aliases, all_original_names, palette, cm
+import holoviews as hv
+import matplotlib.colors as mcolors
+import numpy as np
+from holoviews import opts
+
+from . import all_original_names, cm, get_aliases, palette
 from .sineramp import sineramp
 
 array = np.meshgrid(np.linspace(0, 1, 256), np.linspace(0, 1, 10))[0]

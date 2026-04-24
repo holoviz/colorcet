@@ -1,13 +1,19 @@
-# -*- coding: utf-8 -*-
-
-from nbsite.shared_conf import *
+from nbsite.shared_conf import *  # noqa: F403
+from nbsite.shared_conf import (
+    base_version,
+    extensions,
+    html_context,
+    html_css_files,
+    html_static_path,
+)
 
 project = 'colorcet'
-authors = u'Anaconda'
-copyright = u'2017-2021 ' + authors
+authors = 'Anaconda'
+copyright = '2017-2021 ' + authors
 description = 'Collection of perceptually uniform colormaps'
 
 import colorcet
+
 version = release = base_version(colorcet.__version__)
 
 nbbuild_cell_timeout = 10000
@@ -24,12 +30,6 @@ html_css_files += [
 html_theme_options = {
     "github_url": "https://github.com/holoviz/colorcet",
     "icon_links": [
-        {
-            # Pointing to Holoviz since colorcet has no dedicated twitter account
-            "name": "Twitter",
-            "url": "https://twitter.com/HoloViz_org",
-            "icon": "fab fa-twitter-square",
-        },
         {
             "name": "Discourse",
             "url": "https://discourse.holoviz.org/",

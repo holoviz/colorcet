@@ -6,8 +6,8 @@ folder.
 This was run in the assets/ dir on holoviz/colorcet commit 1dad8be
 """
 
-from pathlib import Path
 import subprocess
+from pathlib import Path
 
 from CET_to_py import mapping
 
