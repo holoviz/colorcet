@@ -23,12 +23,12 @@ if find_spec("matplotlib") or t.TYPE_CHECKING:
         from matplotlib.cm import register_cmap  # type: ignore
 else:
     MPL_VERSION = (0, 0, 0)
-    class LinearSegmentedColormap(t.Protocol):
+    class LinearSegmentedColormap:
         def __init__(self, name: str, segmentdata: dict[str, t.Any], N: int = 256, gamma: float = 1.0) -> None: ...
-        @classmethod
-        def from_list(cls, name: str, colors: t.Any, N: int = 256, gamma: float = 1.0) -> LinearSegmentedColormap: ...
+        @staticmethod
+        def from_list(name: str, colors: t.Any, N: int = 256, gamma: float = 1.0) -> LinearSegmentedColormap: ...  # ty:ignore[empty-body]
 
-    class ListedColormap(t.Protocol):
+    class ListedColormap:
         def __init__(self, colors: t.Any, name: str = "from_list", N: int | None = None) -> None: ...
 
     def register_cmap(name: str, cmap: t.Any) -> None: ...
