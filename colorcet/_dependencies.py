@@ -25,8 +25,8 @@ else:
     MPL_VERSION = (0, 0, 0)
     class LinearSegmentedColormap:
         def __init__(self, name: str, segmentdata: dict[str, t.Any], N: int = 256, gamma: float = 1.0) -> None: ...
-        @classmethod
-        def from_list(cls, name: str, colors: t.Any, N: int = 256, gamma: float = 1.0) -> LinearSegmentedColormap: ...
+        @staticmethod
+        def from_list(name: str, colors: t.Any, N: int = 256, gamma: float = 1.0) -> LinearSegmentedColormap: ...  # ty:ignore[empty-body]
 
     class ListedColormap:
         def __init__(self, colors: t.Any, name: str = "from_list", N: int | None = None) -> None: ...
