@@ -180,7 +180,7 @@ lint-install = 'pre-commit install'
 
 [feature.type.dependencies]
 mypy = ">=1.15.0"
-ty = "*"
+ty = "==0.0.34" # Loosen pin when out of beta
 
 [feature.type.tasks]
 type-mypy = "mypy colorcet"

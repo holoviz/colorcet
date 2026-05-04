@@ -45,7 +45,7 @@ def swatch(
         bounds = (0, 0, 256, 1)
 
     if type(cmap) is tuple:
-        cmap = list(cmap)
+        cmap = list(cmap)  # ty:ignore[invalid-assignment]
 
     plot = hv.Image(array, bounds=bounds, group=title)
     backends = hv.Store.loaded_backends()
