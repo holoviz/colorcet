@@ -20,9 +20,10 @@ on:
         description: "Use cache"
         type: boolean
         default: true
-
   schedule:
     - cron: "0 9 * * SUN"
+
+permissions: {}
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
@@ -55,6 +56,8 @@ jobs:
     steps:
       - uses: actions/checkout@v6
         if: github.event_name != 'pull_request'
+        with:
+          persist-credentials: false
       - name: Check for code changes
         uses: dorny/paths-filter@v4
         id: filter
@@ -66,12 +69,14 @@ jobs:
               - 'pyproject.toml'
               - '.github/workflows/test.yaml'
       - name: Set matrix option
+        env:
+          GITHUB_EVENT_INPUTS_TARGET: ${{ github.event.inputs.target }}
         run: |
-          if [[ '${{ github.event_name }}' == 'workflow_dispatch' ]]; then
-            OPTION=${{ github.event.inputs.target }}
-          elif [[ '${{ github.event_name }}' == 'schedule' ]]; then
+          if [[ "${GITHUB_EVENT_NAME}" == 'workflow_dispatch' ]]; then
+            OPTION=${GITHUB_EVENT_INPUTS_TARGET}
+          elif [[ "${GITHUB_EVENT_NAME}" == 'schedule' ]]; then
             OPTION="full"
-          elif [[ '${{ github.event_name }}' == 'push' && '${{ github.ref_type }}' == 'tag' ]]; then
+          elif [[ "${GITHUB_EVENT_NAME}" == 'push' && "${GITHUB_REF_TYPE}" == 'tag' ]]; then
             OPTION="full"
           else
             OPTION="default"
@@ -103,12 +108,12 @@ jobs:
           echo "MATRIX=$MATRIX" >> $GITHUB_ENV
 
   pixi_lock:
-      name: Pixi lock
-      runs-on: ubuntu-latest
-      steps:
-        - uses: holoviz-dev/holoviz_tasks/pixi_lock@v0
-          with:
-            cache: ${{ github.event.inputs.cache == 'true' || github.event.inputs.cache == '' }}
+    name: Pixi lock
+    runs-on: ubuntu-latest
+    steps:
+      - uses: holoviz-dev/holoviz_tasks/pixi_lock@v0
+        with:
+          cache: ${{ github.event.inputs.cache == 'true' || github.event.inputs.cache == '' }}
 
   type_test_suite:
     name: Type Check
@@ -135,18 +140,20 @@ jobs:
       fail-fast: false
       matrix: ${{ fromJson(needs.setup.outputs.matrix) }}
     timeout-minutes: 60
+    env:
+      ENV: ${{ matrix.environment }}
     steps:
       - uses: holoviz-dev/holoviz_tasks/pixi_install@v0
         with:
           environments: ${{ matrix.environment }}
       - name: Test Unit
         run: |
-          pixi run -e ${{ matrix.environment }} test-unit $COV
+          pixi run -e "${ENV}" test-unit $COV
       - name: Test Examples
         # Ignore for test-314 for now
         if: ${{ matrix.environment != 'test-314' }}
         run: |
-          pixi run -e ${{ matrix.environment }} test-example
+          pixi run -e "${ENV}" test-example
       - uses: codecov/codecov-action@v6
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
@@ -161,6 +168,8 @@ jobs:
       matrix:
         os: ["ubuntu-latest"]
         environment: ["test-core"]
+    env:
+      ENV: ${{ matrix.environment }}
     timeout-minutes: 60
     steps:
       - uses: holoviz-dev/holoviz_tasks/pixi_install@v0
@@ -168,7 +177,7 @@ jobs:
           environments: ${{ matrix.environment }}
       - name: Test Unit
         run: |
-          pixi run -e ${{ matrix.environment }} test-unit
+          pixi run -e "${ENV}" test-unit
 
   result_test_suite:
     name: result:test

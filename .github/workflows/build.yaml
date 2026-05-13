@@ -10,13 +10,19 @@ on:
   schedule:
     - cron: "0 9 * * SUN"
 
-env:
-  PYTHON_VERSION: "3.10"
-  PACKAGE: "colorcet"
+permissions: {}
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
 
 defaults:
   run:
     shell: bash -e {0}
+
+env:
+  PYTHON_VERSION: "3.10"
+  PACKAGE: "colorcet"
 
 jobs:
   waiting_room:
