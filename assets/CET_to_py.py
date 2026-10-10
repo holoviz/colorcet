@@ -309,20 +309,20 @@ cetnames_flipped = {v.replace('-', '_'): k.replace('-', '_') for
                      k, v in cetnames.items()}
 
 def create_alias(alias, base, output, cmtype='mpl_cm', is_name=True):
-    output.write("{0} = b_{1}\n".format(alias,base))
-    output.write("m_{0} = m_{1}\n".format(alias,base))
-    output.write("m_{0}_r = m_{1}_r\n".format(alias,base))
-    output.write("palette['{0}'] = b_{1}\n".format(alias,base))
+    output.write(f"{alias} = b_{base}\n")
+    output.write(f"m_{alias} = m_{base}\n")
+    output.write(f"m_{alias}_r = m_{base}_r\n")
+    output.write(f"palette['{alias}'] = b_{base}\n")
     if is_name:
-        output.write("palette_n['{0}'] = b_{1}\n".format(alias,base))
-    output.write("cm['{0}'] = m_{1}\n".format(alias,base))
-    output.write("cm['{0}_r'] = m_{1}_r\n".format(alias,base))
+        output.write(f"palette_n['{alias}'] = b_{base}\n")
+    output.write(f"cm['{alias}'] = m_{base}\n")
+    output.write(f"cm['{alias}_r'] = m_{base}_r\n")
     if is_name:
-        output.write("cm_n['{0}'] = {2}('{0}',{1})\n".format(alias,base,cmtype))
-        output.write("cm_n['{0}_r'] = {2}('{0}_r',list(reversed({1})))\n".format(alias,base,cmtype))
+        output.write(f"cm_n['{alias}'] = {cmtype}('{alias}',{base})\n")
+        output.write(f"cm_n['{alias}_r'] = {cmtype}('{alias}_r',list(reversed({base})))\n")
     else:
-        output.write("register_cmap('cet_{0}',m_{1})\n".format(alias,base))
-        output.write("register_cmap('cet_{0}_r',m_{1}_r)\n".format(alias,base))
+        output.write(f"register_cmap('cet_{alias}',m_{base})\n")
+        output.write(f"register_cmap('cet_{alias}_r',m_{base}_r)\n")
 
 
 def get_csvs_in_order(output_file, csv_folders):
@@ -363,10 +363,10 @@ def get_csvs_in_order(output_file, csv_folders):
 def format_dict(name, d, tabs=0):
     t4 = " "*4
     tabs = t4*tabs
-    s = tabs + "{} = {{\n".format(name)
+    s = tabs + f"{name} = {{\n"
     for k, v in d.items():
-        v = "'{}'".format(v) if isinstance(v, str) else v
-        s += tabs + t4 + "'{}': {},\n".format(k, v)
+        v = f"'{v}'" if isinstance(v, str) else v
+        s += tabs + t4 + f"'{k}': {v},\n"
     s += tabs + "}\n"
     return s
 
@@ -387,15 +387,15 @@ def gen_init_py(output_file, csv_folders):
                 if base in cmaps:
                     continue
                 output.write("\n\n")
-                output.write("{0} = [  # cmap_def\n".format(base))
-                with open(csv_path, 'r') as csvfile:
+                output.write(f"{base} = [  # cmap_def\n")
+                with open(csv_path) as csvfile:
                     reader = csv.reader(csvfile)
                     for row in reader:
-                        output.write("[{0}],\n".format(", ".join(row)))
+                        output.write("[{}],\n".format(", ".join(row)))
                 output.write("]\n")
-                output.write("b_{0} = bokeh_palette('{0}',{0})\n".format(base))
-                output.write("m_{0} = {1}('{0}',{0})\n".format(base, cmtype))
-                output.write("m_{0}_r = {1}('{0}_r',list(reversed({0})))\n".format(base, cmtype))
+                output.write(f"b_{base} = bokeh_palette('{base}',{base})\n")
+                output.write(f"m_{base} = {cmtype}('{base}',{base})\n")
+                output.write(f"m_{base}_r = {cmtype}('{base}_r',list(reversed({base})))\n")
                 if base in aliases:
                     for alias in aliases[base]:
                         create_alias(alias, base, output, cmtype, is_name=True)

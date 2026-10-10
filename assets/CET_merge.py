@@ -72,7 +72,7 @@ def print_dict(name, d, braces=False, tabs=0, evenspace=False, sortfn=None):
         k_maxlen = 0
         for k in d:
             k_maxlen = max(k_maxlen, len(k))
-        fmt0 = "{{0:{0:d}s}}".format(k_maxlen)
+        fmt0 = f"{{0:{k_maxlen:d}s}}"
     else:
         fmt0 = "{0}"
     start = "{" if braces else "dict("
@@ -80,12 +80,12 @@ def print_dict(name, d, braces=False, tabs=0, evenspace=False, sortfn=None):
     end = "}" if braces else ")"
     s4 = " " * 4
     tabs = s4 * tabs
-    print(tabs + "{0} = {1}".format(name, start))
+    print(tabs + f"{name} = {start}")
     keys = d.keys()
     if sortfn:
         keys = sorted(keys, key=sortfn)
     for k in keys:
-        val = "'{0}'".format(d[k]) if isinstance(d[k], str) else d[k]
+        val = f"'{d[k]}'" if isinstance(d[k], str) else d[k]
         print(tabs + s4 + fmt.format(k, val))
     print(tabs + end)
 
@@ -110,10 +110,10 @@ if __name__ == "__main__":
         print("# ## NOTICE: Found the following aliases conflicts, with old alias assignment retained over new:")
         print("# ## alias, old_descriptorname, new_descriptorname")
         for als, old, new in aliases_conflicts:
-            print("# {}, {}, {}".format(als, old, new))
+            print(f"# {als}, {old}, {new}")
     if cetnames_conflicts:
         print("#")
         print("# ## NOTICE: Found the following cetnames conflicts, with old cetname assignment retained over new:")
         print("# ## cetname, old_descriptorname, new_descriptorname")
         for name, old, new in cetnames_conflicts:
-            print("# {}, {}, {}".format(name, old, new))
+            print(f"# {name}, {old}, {new}")

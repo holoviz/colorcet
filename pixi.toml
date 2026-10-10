@@ -1,18 +1,24 @@
-[project]
+[workspace]
 name = "colorcet"
 channels = ["pyviz/label/dev", "conda-forge"]
-platforms = ["linux-64", "osx-arm64", "osx-64", "win-64"]
+platforms = ["linux-64", "osx-arm64", "win-64"]
 
 [activation.env]
 MPLBACKEND = "Agg"
 PYTHONIOENCODING = "utf-8"
 
 [environments]
-default = ["py312", "required", "test-core", "test", "example", "test-example", "lint", "dev", "mypy"]
-
-[environments.test-39]
-features = ["py39", "required", "test-core", "test", "example", "test-example"]
-no-default-feature = true
+default = [
+    "py312",
+    "required",
+    "test-core",
+    "test",
+    "example",
+    "test-example",
+    "lint",
+    "dev",
+    "type",
+]
 
 [environments.test-310]
 features = ["py310", "required", "test-core", "test", "example", "test-example"]
@@ -31,11 +37,11 @@ features = ["py313", "required", "test-core", "test", "example", "test-example"]
 no-default-feature = true
 
 [environments.test-314]
-features = ["py314", "required", "test-core-314"]
+features = ["py314", "required", "test-core", "test", "example", "test-example"]
 no-default-feature = true
 
 [environments.test-core]
-features = ["py313", "required", "test-core"]
+features = ["py314", "required", "test-core"]
 no-default-feature = true
 
 [environments.docs]
@@ -58,9 +64,6 @@ pip = "*"
 install = 'python -m pip install --no-deps --disable-pip-version-check -e .'
 setup-dev = { depends-on = ["install", "lint-install"] }
 sync-git-tags = 'python scripts/sync_git_tags.py colorcet'
-
-[feature.py39.dependencies]
-python = "3.9.*"
 
 [feature.py310.dependencies]
 python = "3.10.*"
@@ -113,16 +116,6 @@ parameterized = "*"
 pytest = "*"
 pytest-cov = "*"
 pytest-mpl = "*"
-
-[feature.test-core-314.dependencies]
-# Minimum dependencies required to run the test suite.
-parameterized = "*"
-pytest = "*"
-pytest-cov = "*"
-# pytest-mpl = "*"
-
-[feature.test-core-314.tasks]
-test-unit = 'pytest colorcet/tests'
 
 [feature.test-example.dependencies]
 # Dependencies required to run the examples notebooks.
@@ -185,8 +178,11 @@ lint-install = 'pre-commit install'
 
 # =================== TYPE CHECKING ===================
 
-[feature.mypy.dependencies]
+[feature.type.dependencies]
 mypy = ">=1.15.0"
+ty = "==0.0.34" # Loosen pin when out of beta
 
-[feature.mypy.tasks]
-test-type = "mypy colorcet"
+[feature.type.tasks]
+type-mypy = "mypy colorcet"
+type-ty = "ty check colorcet"
+type-all = { depends-on = ["type-ty", "type-mypy"] }

@@ -43,5 +43,5 @@ test:
 about:
   home: {{ project['urls']['Homepage'] }}
   summary: {{ project['description'] }}
-  license: {{ project['license']['text'] }}
+  license: {{ project['license'] }}
   license_file: LICENSE.txt

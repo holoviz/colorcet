@@ -15,13 +15,15 @@ on:
         options:
           - default
           - full
+          - downstream
       cache:
         description: "Use cache"
         type: boolean
         default: true
-
   schedule:
     - cron: "0 9 * * SUN"
+
+permissions: {}
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
@@ -41,7 +43,7 @@ jobs:
     name: Run pre-commit
     runs-on: "ubuntu-latest"
     steps:
-      - uses: holoviz-dev/holoviz_tasks/pre-commit@v0
+      - uses: holoviz-dev/holoviz_tasks/pre-commit@ffddda04b2894fea39b407f64d3622d2f19e5a9f # v1
 
   setup:
     name: Setup workflow
@@ -52,10 +54,12 @@ jobs:
       code_change: ${{ steps.filter.outputs.code }}
       matrix: ${{ env.MATRIX }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         if: github.event_name != 'pull_request'
+        with:
+          persist-credentials: false
       - name: Check for code changes
-        uses: dorny/paths-filter@v3
+        uses: dorny/paths-filter@fbd0ab8f3e69293af611ebaee6363fc25e6d187d # v4
         id: filter
         with:
           filters: |
@@ -65,12 +69,14 @@ jobs:
               - 'pyproject.toml'
               - '.github/workflows/test.yaml'
       - name: Set matrix option
+        env:
+          GITHUB_EVENT_INPUTS_TARGET: ${{ github.event.inputs.target }}
         run: |
-          if [[ '${{ github.event_name }}' == 'workflow_dispatch' ]]; then
-            OPTION=${{ github.event.inputs.target }}
-          elif [[ '${{ github.event_name }}' == 'schedule' ]]; then
+          if [[ "${GITHUB_EVENT_NAME}" == 'workflow_dispatch' ]]; then
+            OPTION=${GITHUB_EVENT_INPUTS_TARGET}
+          elif [[ "${GITHUB_EVENT_NAME}" == 'schedule' ]]; then
             OPTION="full"
-          elif [[ '${{ github.event_name }}' == 'push' && '${{ github.ref_type }}' == 'tag' ]]; then
+          elif [[ "${GITHUB_EVENT_NAME}" == 'push' && "${GITHUB_REF_TYPE}" == 'tag' ]]; then
             OPTION="full"
           else
             OPTION="default"
@@ -81,7 +87,7 @@ jobs:
         run: |
           MATRIX=$(jq -nsc '{
               "os": ["ubuntu-latest", "macos-latest", "windows-latest"],
-              "environment": ["test-39", "test-313", "test-314"],
+              "environment": ["test-310", "test-314"],
             }')
           echo "MATRIX=$MATRIX" >> $GITHUB_ENV
       - name: Set test matrix with 'full' option
@@ -89,17 +95,25 @@ jobs:
         run: |
           MATRIX=$(jq -nsc '{
               "os": ["ubuntu-latest", "macos-latest", "windows-latest"],
-              "environment": ["test-39", "test-310", "test-311", "test-312", "test-313", "test-314"],
+              "environment": ["test-310", "test-311", "test-312", "test-313", "test-314"],
             }')
+          echo "MATRIX=$MATRIX" >> $GITHUB_ENV
+      - name: Set test matrix with 'downstream' option
+        if: env.MATRIX_OPTION == 'downstream'
+        run: |
+          MATRIX=$(jq -nsc '{
+              "os": ["ubuntu-latest"],
+              "environment": ["test-310"]
+          }')
           echo "MATRIX=$MATRIX" >> $GITHUB_ENV
 
   pixi_lock:
-      name: Pixi lock
-      runs-on: ubuntu-latest
-      steps:
-        - uses: holoviz-dev/holoviz_tasks/pixi_lock@v0
-          with:
-            cache: ${{ github.event.inputs.cache == 'true' || github.event.inputs.cache == '' }}
+    name: Pixi lock
+    runs-on: ubuntu-latest
+    steps:
+      - uses: holoviz-dev/holoviz_tasks/pixi-lock@ffddda04b2894fea39b407f64d3622d2f19e5a9f # v1
+        with:
+          cache: ${{ github.event.inputs.cache == 'true' || github.event.inputs.cache == '' }}
 
   type_test_suite:
     name: Type Check
@@ -107,13 +121,15 @@ jobs:
     runs-on: ubuntu-latest
     if: needs.setup.outputs.code_change == 'true'
     steps:
-      - uses: holoviz-dev/holoviz_tasks/pixi_install@v0
+      - uses: holoviz-dev/holoviz_tasks/pixi-install@ffddda04b2894fea39b407f64d3622d2f19e5a9f # v1
         with:
           environments: test-314
-      - name: Run Type Check 3.9
-        run: pixi run test-type --python-version=3.9
-      - name: Run Type Check 3.14
-        run: pixi run test-type --python-version=3.14
+      - name: Run mypy - Python 3.10
+        run: pixi run type-mypy --python-version=3.10
+      - name: Run mypy - Python 3.14
+        run: pixi run type-mypy --python-version=3.14
+      - name: Run TY
+        run: pixi run type-ty
 
   unit_test_suite:
     name: unit:${{ matrix.environment }}:${{ matrix.os }}
@@ -124,19 +140,21 @@ jobs:
       fail-fast: false
       matrix: ${{ fromJson(needs.setup.outputs.matrix) }}
     timeout-minutes: 60
+    env:
+      ENV: ${{ matrix.environment }}
     steps:
-      - uses: holoviz-dev/holoviz_tasks/pixi_install@v0
+      - uses: holoviz-dev/holoviz_tasks/pixi-install@ffddda04b2894fea39b407f64d3622d2f19e5a9f # v1
         with:
           environments: ${{ matrix.environment }}
       - name: Test Unit
         run: |
-          pixi run -e ${{ matrix.environment }} test-unit $COV
+          pixi run -e "${ENV}" test-unit $COV
       - name: Test Examples
         # Ignore for test-314 for now
         if: ${{ matrix.environment != 'test-314' }}
         run: |
-          pixi run -e ${{ matrix.environment }} test-example
-      - uses: codecov/codecov-action@v4
+          pixi run -e "${ENV}" test-example
+      - uses: codecov/codecov-action@57e3a136b779b570ffcdbf80b3bdc90e7fab3de2 # v6
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
 
@@ -150,14 +168,16 @@ jobs:
       matrix:
         os: ["ubuntu-latest"]
         environment: ["test-core"]
+    env:
+      ENV: ${{ matrix.environment }}
     timeout-minutes: 60
     steps:
-      - uses: holoviz-dev/holoviz_tasks/pixi_install@v0
+      - uses: holoviz-dev/holoviz_tasks/pixi-install@ffddda04b2894fea39b407f64d3622d2f19e5a9f # v1
         with:
           environments: ${{ matrix.environment }}
       - name: Test Unit
         run: |
-          pixi run -e ${{ matrix.environment }} test-unit
+          pixi run -e "${ENV}" test-unit
 
   result_test_suite:
     name: result:test

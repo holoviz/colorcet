@@ -4,13 +4,15 @@ to facilitate plotting of colormaps - and is mainly used in the
 documentation.
 """
 
-from typing import Any, Optional, Union, Sequence
-import numpy as np
-import holoviews as hv
-from holoviews import opts
-import matplotlib.colors as mcolors
+from collections.abc import Sequence
+from typing import Any
 
-from . import get_aliases, all_original_names, palette, cm
+import holoviews as hv
+import matplotlib.colors as mcolors
+import numpy as np
+from holoviews import opts
+
+from . import all_original_names, cm, get_aliases, palette
 from .sineramp import sineramp
 
 array = np.meshgrid(np.linspace(0, 1, 256), np.linspace(0, 1, 10))[0]
@@ -18,8 +20,8 @@ array = np.meshgrid(np.linspace(0, 1, 256), np.linspace(0, 1, 10))[0]
 
 def swatch(
     name: str,
-    cmap: Optional[Union[Sequence[str], mcolors.Colormap]] = None,
-    bounds: Optional[tuple[float, float, float, float]] = None,
+    cmap: Sequence[str] | mcolors.Colormap | None = None,
+    bounds: tuple[float, float, float, float] | None = None,
     array: np.ndarray[Any, Any] = array,
     **kwargs: Any,
 ) -> hv.Image:
@@ -43,7 +45,7 @@ def swatch(
         bounds = (0, 0, 256, 1)
 
     if type(cmap) is tuple:
-        cmap = list(cmap)
+        cmap = list(cmap)  # ty:ignore[invalid-assignment]
 
     plot = hv.Image(array, bounds=bounds, group=title)
     backends = hv.Store.loaded_backends()
@@ -62,11 +64,11 @@ def swatch(
 
 
 def swatches(
-    *args: Union[str, tuple[Any, ...]],
-    group: Optional[Union[str, list[str]]] = None,
-    not_group: Optional[Union[str, list[str]]] = None,
+    *args: str | tuple[Any, ...],
+    group: str | list[str] | None = None,
+    not_group: str | list[str] | None = None,
     only_aliased: bool = False,
-    cols: Optional[int] = None,
+    cols: int | None = None,
     **kwargs: Any,
 ) -> hv.Layout:
     """Show swatches for given names or names in group"""
@@ -100,7 +102,7 @@ def swatches(
 
 sine = sineramp()
 
-def sine_comb(name: str, cmap: Optional[Any] = None, **kwargs: Any) -> hv.Image:
+def sine_comb(name: str, cmap: Any | None = None, **kwargs: Any) -> hv.Image:
     """Show sine_comb using matplotlib or bokeh via holoviews"""
     title = name if cmap else get_aliases(name)
     plot = hv.Image(sine, group=title)
@@ -117,9 +119,9 @@ def sine_comb(name: str, cmap: Optional[Any] = None, **kwargs: Any) -> hv.Image:
 
 
 def sine_combs(
-    *args: Union[str, tuple[Any, ...]],
-    group: Optional[Union[str, list[str]]] = None,
-    not_group: Optional[Union[str, list[str]]] = None,
+    *args: str | tuple[Any, ...],
+    group: str | list[str] | None = None,
+    not_group: str | list[str] | None = None,
     only_aliased: bool = False,
     cols: int = 1,
     **kwargs: Any,
@@ -147,7 +149,7 @@ xx, yy = np.meshgrid(np.arange(0,10), np.arange(0,10))
 data = np.array([xx, yy, zz]).transpose().reshape(100, 3)
 
 
-def candy_buttons(name: str, cmap: Optional[Any] = None, size: int = 450, **kwargs: Any) -> hv.Points:
+def candy_buttons(name: str, cmap: Any | None = None, size: int = 450, **kwargs: Any) -> hv.Points:
     if cmap is None:
         cmap = palette[name][:100]
         name = get_aliases(name)

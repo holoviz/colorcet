@@ -10,8 +10,9 @@ name = "colorcet"
 dynamic = ["version"]
 description = "Collection of perceptually uniform colormaps"
 readme = "README.md"
-license = { text = "CC-BY License" }
-requires-python = ">=3.9"
+license = "CC-BY-4.0"
+license-files = ["LICENSE.txt"]
+requires-python = ">=3.10"
 authors = [
     { name = "James A. Bednar", email = "jbednar@anaconda.com" },
 ]
@@ -19,23 +20,28 @@ maintainers = [
     { name = "James A. Bednar", email = "jbednar@anaconda.com" },
 ]
 classifiers = [
-    "License :: OSI Approved",
     "Operating System :: OS Independent",
     "Programming Language :: Python",
-    "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
     "Programming Language :: Python :: 3.14",
     "Development Status :: 5 - Production/Stable",
+    "Typing :: Typed"
 ]
 dependencies = []
 
 [project.urls]
-Homepage = "https://colorcet.holoviz.org"
-Source = "http://github.com/holoviz/colorcet"
+"Issue Tracker" = "https://github.com/holoviz/colorcet/issues?q=sort%3Aupdated-desc+is%3Aissue+is%3Aopen"
+Blog = "https://blog.holoviz.org/"
+Discord = "https://discord.gg/AXRHnJU6sP"
+Discourse = "https://discourse.holoviz.org"
+Documentation = "https://colorcet.holoviz.org"
+Funding = "https://opencollective.com/holoviz"
 HoloViz = "https://holoviz.org/"
+Homepage = "https://colorcet.holoviz.org"
+Repository = "https://github.com/holoviz/colorcet"
 
 [project.optional-dependencies]
 tests = [
@@ -94,3 +100,36 @@ ignore_missing_imports = true
 disallow_untyped_defs = true
 exclude = '(?:^|/)tests/' # exclude the tests directory
 strict = true
+
+[tool.ruff]
+fix = true
+line-length = 99
+
+[tool.ruff.lint]
+select = [
+    "E",
+    "F",
+    "I",
+    "RUF",
+    "UP",
+    "W",
+]
+
+ignore = [
+    "E402", # Module level import not at top of file
+    "E501", # Line too long
+    "E712", # Comparison to true should be is
+    "E731", # Do not assign a lambda expression, use a def
+    "E741", # Ambiguous variable name
+]
+extend-unsafe-fixes = [
+    "F401", # Unused imports
+    "F841", # Unused variables
+]
+
+[tool.ruff.lint.isort]
+known-first-party = ["colorcet"]
+combine-as-imports = true
+
+[tool.ty.src]
+include = ["colorcet"]

@@ -40,29 +40,15 @@ same methods described above and are named:
 Some of the Glasbey sets are aliased to short names as explained in the User Guide.
 """
 
+from __future__ import annotations
+
 from collections import OrderedDict
+from collections.abc import Iterable, Mapping, Sequence
 from itertools import chain
-from typing import Any, Union, Sequence, Mapping, Optional, Iterable
+from typing import Any
 
-# Define '__version__'
-try:
-    # __version__ was added in _version in setuptools-scm 7.0.0, we rely on
-    # the hopefully stable version variable.
-    from ._version import version as __version__
-except (ModuleNotFoundError, ImportError):
-    # Either _version doesn't exist (ModuleNotFoundError) or version isn't
-    # in _version (ImportError). ModuleNotFoundError is a subclass of
-    # ImportError, let's be explicit anyway.
-
-    # Try something else:
-    from importlib.metadata import version as mversion, PackageNotFoundError
-
-    try:
-        __version__ = mversion("colorcet")
-    except PackageNotFoundError:
-        # The user is probably trying to run this without having installed
-        # the package.
-        __version__ = "0.0.0+unknown"
+from .__version import __version__  # noqa: F401
+from ._dependencies import LinearSegmentedColormap, ListedColormap, register_cmap
 
 
 class AttrODict(OrderedDict): # type: ignore[type-arg]
@@ -77,35 +63,14 @@ class AttrODict(OrderedDict): # type: ignore[type-arg]
         except KeyError:
             raise AttributeError(f"{type(self).__name__} object has no attribute or key '{name}'")
     def __setattr__(self, name: str, value: Any) -> None:
-        if (name.startswith('_')): return super().__setattr__(name, value)
+        if (name.startswith('_')):
+            return super().__setattr__(name, value)
         self[name] = value
 
 
-try:
-    from matplotlib.colors import LinearSegmentedColormap, ListedColormap
-    try:
-        from matplotlib import colormaps
-        def register_cmap(name: str, cmap: Any) -> None:
-            if name not in colormaps or colormaps[name] != cmap:
-                # The last condition will raise an error
-                colormaps.register(cmap, name=name)
-    except ImportError:
-        # PendingDeprecationWarning from matplotlib 3.6
-        # `register_cmap` is removed in matplotlib 3.9.0 see https://matplotlib.org/stable/api/prev_api_changes/api_changes_3.9.0.html#removals
-        from matplotlib.cm import register_cmap # type: ignore
-except ImportError:
-    def LinearSegmentedColormap(colorlist: list[Union[str, tuple[float, float, float]]], name: str) -> None:  # type: ignore[no-redef]
-        pass
-    def ListedColormap(colorlist: list[Union[str, tuple[float, float, float]]], name: str) -> None:  # type: ignore[no-redef]
-        pass
-    def register_cmap(name: str, cmap: Any) -> None:
-        pass
-
-    LinearSegmentedColormap.from_list = lambda n, c, N: None  # type: ignore
-
 
 def rgb_to_hex(r: int, g: int, b: int) -> str:
-    return '#%02x%02x%02x' % (r,g,b)
+    return f'#{r:02x}{g:02x}{b:02x}'
 
 
 def bokeh_palette(name: str, colorlist: Sequence[Sequence[float]]) -> list[str]:
@@ -114,15 +79,15 @@ def bokeh_palette(name: str, colorlist: Sequence[Sequence[float]]) -> list[str]:
 
 
 def mpl_cm(name: str, colorlist: Sequence[Any]) -> LinearSegmentedColormap:
-    cm[name]      = LinearSegmentedColormap.from_list(name, colorlist, N=len(colorlist))
-    register_cmap("cet_"+name, cmap=cm[name])
-    return cm[name] # type: ignore[no-any-return]
+    cm[name] = cmap = LinearSegmentedColormap.from_list(name, colorlist, N=len(colorlist))
+    register_cmap(f"cet_{name}", cmap=cmap)
+    return cmap
 
 
-def mpl_cl(name: str, colorlist: Sequence[Any]) -> "ListedColormap":
-    cm[name]      = ListedColormap(colorlist, name)
-    register_cmap("cet_"+name, cmap=cm[name])
-    return cm[name] # type: ignore[no-any-return]
+def mpl_cl(name: str, colorlist: Sequence[Any]) -> ListedColormap:
+    cm[name] = cmap = ListedColormap(colorlist, name)
+    register_cmap(f"cet_{name}", cmap=cmap)
+    return cmap
 
 
 def get_aliases(name: str) -> str:
@@ -131,7 +96,7 @@ def get_aliases(name: str) -> str:
 
     def check_aliases(
         names: list[str],
-        d: Mapping[str, Union[str, list[str]]],
+        d: Mapping[str, str | list[str]],
         k_position: int = -1,
         v_position: int = 0,
     ) -> list[str]:
@@ -172,8 +137,8 @@ def get_aliases(name: str) -> str:
 
 
 def all_original_names(
-    group: Optional[Union[str, list[str]]] = None,
-    not_group: Optional[Union[str, list[str]]] = None,
+    group: str | list[str] | None = None,
+    not_group: str | list[str] | None = None,
     only_aliased: bool = False,
     only_CET: bool = False
 ) -> list[str]:
