@@ -9,7 +9,7 @@ def test_get_aliases():
     assert set(cc.get_aliases('linear_kbc_5_95_c73').split(",  ")) == expected
 
 def test_all_original_names():
-    assert len(cc.all_original_names()) == 99
+    assert len(cc.all_original_names()) == 100
 
 def test_all_original_names_only_aliased():
     assert len(cc.all_original_names(only_aliased=True)) == 32
