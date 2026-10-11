@@ -59,21 +59,11 @@ def test_matplotlib_default_colormap_plot_kbc():
 
 @pytest.mark.parametrize('k,v', list(cc.cm.items()))
 def test_get_cm(k, v):
-    import matplotlib as mpl
-
-    if Version(mpl.__version__) < Version("3.5"):
-        import matplotlib.cm as mcm
-        assert mcm.get_cmap('cet_' + k) is v
-    else:
-        from matplotlib import colormaps
-        assert colormaps['cet_' + k] == v
+    from matplotlib import colormaps
+    assert colormaps['cet_' + k] == v
 
 
 def test_register_cmap():
-    import matplotlib as mpl
-    if Version(mpl.__version__) < Version("3.5"):
-        return
-
     cmap0 = cc.ListedColormap([[0, 0, 0], [1, 1, 1]])
     cmap1 = cc.ListedColormap([[0, 0, 0], [1, 1, 1]])
     cmap2 = cc.ListedColormap([[1, 1, 1], [0, 0, 0]])

@@ -147,6 +147,6 @@ def sineramp(
     # displayed.  It also helps with the evaluation of cyclic colour maps though
     # a small cyclic discontinuity will remain at the top of the test image.
     for r in range(rows):
-        im[r, :] = (im[r, :])/im[r, :].max()
+        im[r, :] = (im[r, :])/np.max(im[r, :])
 
     return im * 255
