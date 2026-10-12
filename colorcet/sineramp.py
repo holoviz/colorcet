@@ -117,7 +117,7 @@ def sineramp(
     if len(size) == 1:
         rows = cols = size[0]
     elif len(size) == 2:
-        rows, cols = size  # ty:ignore[invalid-assignment] https://github.com/astral-sh/ty/issues/560
+        rows, cols = size
     else:
         raise ValueError('size must be of length 1 or 2')
 
@@ -146,7 +146,6 @@ def sineramp(
     # This ensures that, at the lower edge of the image, the full colour map is
     # displayed.  It also helps with the evaluation of cyclic colour maps though
     # a small cyclic discontinuity will remain at the top of the test image.
-    for r in range(rows):
-        im[r, :] = (im[r, :])/im[r, :].max()
+    im = im / im.max(axis=1, keepdims=True)
 
     return im * 255
