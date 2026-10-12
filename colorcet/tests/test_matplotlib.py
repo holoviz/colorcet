@@ -8,7 +8,7 @@ MPL_VERSION = Version(mpl.__version__).release
 MPL_GE_3_10 = MPL_VERSION >= (3, 10, 0)
 
 def test_matplotlib_colormaps_available():
-    assert len(cc.cm.items()) == 420
+    assert len(cc.cm.items()) == 422
     assert len(cc.cm_n.items()) == 68
 
 
