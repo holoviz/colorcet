@@ -63,7 +63,7 @@ def test_get_cm(k, v):
 
     if Version(mpl.__version__) < Version("3.5"):
         import matplotlib.cm as mcm
-        assert mcm.get_cmap('cet_' + k) is v
+        assert mcm.get_cmap('cet_' + k) is v  # ty: ignore[unresolved-attribute]
     else:
         from matplotlib import colormaps
         assert colormaps['cet_' + k] == v

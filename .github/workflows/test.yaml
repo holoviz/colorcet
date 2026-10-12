@@ -124,12 +124,13 @@ jobs:
       - uses: holoviz-dev/holoviz_tasks/pixi-install@ffddda04b2894fea39b407f64d3622d2f19e5a9f # v1
         with:
           environments: test-314
-      - name: Run mypy - Python 3.10
-        run: pixi run type-mypy --python-version=3.10
-      - name: Run mypy - Python 3.14
-        run: pixi run type-mypy --python-version=3.14
-      - name: Run TY
-        run: pixi run type-ty
+      - parallel:
+          - name: Run mypy - Python 3.10
+            run: pixi run type-mypy --python-version=3.10
+          - name: Run mypy - Python 3.14
+            run: pixi run type-mypy --python-version=3.14
+          - name: Run TY
+            run: pixi run type-ty
 
   unit_test_suite:
     name: unit:${{ matrix.environment }}:${{ matrix.os }}
